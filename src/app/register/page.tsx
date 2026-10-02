@@ -8,13 +8,20 @@ import {
   Building2,
   Eye,
   EyeOff,
-  CheckCircle,
+  CheckCircle2,
   AlertCircle,
   ChevronRight,
   ArrowLeft,
   Sparkles,
   Lock,
   RefreshCw,
+  Mail,
+  User,
+  MapPin,
+  ShieldCheck,
+  ChevronDown,
+  Globe,
+  Award,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,14 +66,14 @@ const PROVINCES = [
   "Yukon",
 ];
 
-const STEP_LABELS = ["Your Details", "Create Account", "Verify Email"];
+const STEP_LABELS = ["Organization", "Credentials", "Email Verify"];
 
 /* ── Helpers ────────────────────────────────────────────────────────── */
 function FieldError({ msg }: { msg?: string }) {
   if (!msg) return null;
   return (
-    <p className="flex items-center gap-1.5 text-xs text-red-600 mt-1">
-      <AlertCircle size={12} className="flex-shrink-0" />
+    <p className="flex items-center gap-1 text-[11px] text-red-500 font-medium mt-0.5">
+      <AlertCircle size={11} className="flex-shrink-0" />
       {msg}
     </p>
   );
@@ -74,17 +81,9 @@ function FieldError({ msg }: { msg?: string }) {
 
 function LogoMark() {
   return (
-    <Link href="/" className="inline-flex items-center group mb-6">
-      <span
-        className="flex flex-col leading-tight"
-        style={{ fontFamily: "'Playfair Display', serif" }}
-      >
-        <span className="font-bold text-2xl tracking-tight text-[#6B3A2A] group-hover:text-[#C8782A] transition-colors duration-200 leading-none">
-          GetJobsCanada
-        </span>
-        <span className="text-[10px] font-semibold tracking-[0.25em] text-[#C8782A] uppercase mt-0.5">
-          Canada
-        </span>
+    <Link href="/" className="inline-flex items-center gap-1 group mb-2">
+      <span className="font-extrabold text-2xl tracking-tight text-slate-900 group-hover:text-[#059669] transition-colors">
+        GetJobs<span className="text-[#059669] font-black">Canada</span>
       </span>
     </Link>
   );
@@ -93,7 +92,7 @@ function LogoMark() {
 /* ── Step indicator ─────────────────────────────────────────────────── */
 function StepIndicator({ current, total }: { current: number; total: number }) {
   return (
-    <div className="flex items-center justify-center gap-2 mb-8">
+    <div className="flex items-center justify-center gap-2 mb-4">
       {Array.from({ length: total }).map((_, i) => {
         const step = i + 1;
         const done = step < current;
@@ -101,20 +100,20 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
         return (
           <div key={step} className="flex items-center gap-2">
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                 done
-                  ? "bg-[#7A9E7E] text-white"
+                  ? "bg-[#059669] text-white shadow-sm"
                   : active
-                    ? "bg-[#C8782A] text-white shadow-md"
-                    : "bg-[#C8782A]/10 text-[#6B3A2A]/40"
+                    ? "bg-[#059669] text-white shadow-md ring-4 ring-[#059669]/15"
+                    : "bg-slate-100 text-slate-400 border border-slate-200"
               }`}
             >
-              {done ? <CheckCircle size={14} /> : step}
+              {done ? <CheckCircle2 size={14} /> : step}
             </div>
             {i < total - 1 && (
               <div
-                className={`w-8 h-0.5 rounded-full transition-all duration-300 ${
-                  done ? "bg-[#7A9E7E]" : "bg-[#C8782A]/15"
+                className={`w-10 sm:w-12 h-1 rounded-full transition-all duration-300 ${
+                  done ? "bg-[#059669]" : "bg-slate-200"
                 }`}
               />
             )}
@@ -128,18 +127,18 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
 /* ── Slide animation ────────────────────────────────────────────────── */
 const slideVariants = {
   enter: (dir: number) => ({
-    x: dir > 0 ? 40 : -40,
+    x: dir > 0 ? 30 : -30,
     opacity: 0,
   }),
   center: {
     x: 0,
     opacity: 1,
-    transition: { duration: 0.35, ease: "easeOut" as const },
+    transition: { duration: 0.25, ease: "easeOut" as const },
   },
   exit: (dir: number) => ({
-    x: dir > 0 ? -40 : 40,
+    x: dir > 0 ? -30 : 30,
     opacity: 0,
-    transition: { duration: 0.25, ease: "easeIn" as const },
+    transition: { duration: 0.15, ease: "easeIn" as const },
   }),
 };
 
@@ -187,29 +186,29 @@ function PasswordStrength({ password }: { password: string }) {
     "bg-red-400",
     "bg-yellow-400",
     "bg-blue-400",
-    "bg-[#7A9E7E]",
+    "bg-[#059669]",
   ];
   const textColors = [
     "",
     "text-red-500",
     "text-yellow-600",
     "text-blue-600",
-    "text-[#7A9E7E]",
+    "text-[#059669]",
   ];
 
   return (
-    <div className="mt-2">
-      <div className="flex gap-1 mb-1">
+    <div className="mt-1">
+      <div className="flex gap-1 mb-0.5">
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
             className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-              i <= score ? colors[score] : "bg-[#C8782A]/10"
+              i <= score ? colors[score] : "bg-slate-100"
             }`}
           />
         ))}
       </div>
-      <p className={`text-xs font-medium ${textColors[score]}`}>
+      <p className={`text-[10px] font-bold ${textColors[score]}`}>
         {labels[score]}
       </p>
     </div>
@@ -231,7 +230,7 @@ function RegisterForm() {
   const [otpCountdown, setOtpCountdown] = useState(0);
   const [otpSentMsg, setOtpSentMsg] = useState("");
   const [devOtp, setDevOtp] = useState("");
-  const [emailForOtp, setEmailForOtp] = useState(""); // Store email for OTP resend
+  const [emailForOtp, setEmailForOtp] = useState("");
 
   const [form, setForm] = useState<FormData>({
     firstName: "",
@@ -246,13 +245,10 @@ function RegisterForm() {
 
   useEffect(() => {
     if (step === 3) {
-      // Push a new state to prevent back navigation
       window.history.pushState(null, "", window.location.href);
 
-      const handlePopState = (event: PopStateEvent) => {
-        // When back button is pressed on step 3, push state again
+      const handlePopState = () => {
         window.history.pushState(null, "", window.location.href);
-        // Show a warning message
         setServerError(
           'Please complete verification or use the "Continue" button.',
         );
@@ -264,7 +260,6 @@ function RegisterForm() {
     }
   }, [step]);
 
-  // Countdown timer for Resend OTP
   useEffect(() => {
     if (otpCountdown <= 0) return;
     const interval = setInterval(() => {
@@ -299,7 +294,7 @@ function RegisterForm() {
       setLoading(true);
       setServerError("");
       setOtpSentMsg("");
-      setEmailForOtp(form.email); // Store email for resend
+      setEmailForOtp(form.email);
 
       try {
         const res = await fetch("/api/auth/otp/send", {
@@ -348,7 +343,6 @@ function RegisterForm() {
       setLoading(true);
       setServerError("");
       try {
-        // Verify the OTP
         const verifyRes = await fetch("/api/auth/otp/verify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -365,7 +359,6 @@ function RegisterForm() {
           return;
         }
 
-        // Register the employer
         const registerRes = await fetch("/api/auth/register-employer", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -388,7 +381,6 @@ function RegisterForm() {
           setLoading(false);
           return;
         }
-        // Auto login after successful registration
         const loginResult = await signIn.email({
           email: form.email,
           password: form.password,
@@ -403,7 +395,7 @@ function RegisterForm() {
           return;
         }
 
-        toast.success("Account created successfully! Welcome aboard!");
+        toast.success("Employer Account Created Successfully!");
         window.scrollTo({ top: 0, behavior: "smooth" });
         setSubmitted(true);
       } catch {
@@ -458,10 +450,8 @@ function RegisterForm() {
     }
   };
 
-  // Back button - disabled on step 3
   const goBack = () => {
     if (step === 3) {
-      // No back navigation on OTP step
       setServerError(
         "Cannot go back after verification step. Please complete verification.",
       );
@@ -475,509 +465,483 @@ function RegisterForm() {
     setOtpSentMsg("");
   };
 
-  /* ── Success ─────────────────────────────────────────────────────── */
+  /* ── Success State ─────────────────────────────────────────────────── */
   if (submitted) {
     return (
-      <section className="bg-[#FAF5EE] min-h-[85vh] flex items-center justify-center py-16 px-4">
+      <section className="bg-gradient-to-br from-slate-50 via-emerald-50/20 to-slate-100 min-h-[calc(100vh-4.2rem)] flex items-center justify-center py-4 px-4 font-sans">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="w-full max-w-md"
+          transition={{ duration: 0.3 }}
+          className="w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-2xl text-center my-auto"
         >
-          <div className="bg-white rounded-3xl p-10 border border-[#C8782A]/10 shadow-sm text-center">
-            <div className="w-16 h-16 rounded-full bg-[#C8782A]/10 flex items-center justify-center mx-auto mb-5">
-              <Sparkles size={28} className="text-[#C8782A]" />
-            </div>
-            <h1
-              className="text-2xl font-bold text-[#1C1C1C] mb-2"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Welcome to GetJobsCanada!
-            </h1>
-            <p className="text-[#6B3A2A]/70 text-sm mb-1">
-              Your employer account has been created for
+          <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center mx-auto mb-4 shadow-inner">
+            <Sparkles size={26} />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1">
+            Welcome to GetJobsCanada!
+          </h1>
+          <p className="text-slate-500 text-xs mb-1">
+            Your employer account has been created for
+          </p>
+          <p className="text-[#059669] font-bold text-sm mb-5">{form.email}</p>
+
+          <div className="bg-slate-50 rounded-2xl p-4 mb-5 text-left border border-slate-200/60">
+            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+              Your Employer Onboarding Steps
             </p>
-            <p className="text-[#C8782A] font-semibold mb-6">{form.email}</p>
+            <ul className="space-y-2">
+              {[
+                "Complete your organization profile",
+                "Post your first job listing to nationwide talent",
+                "Review incoming applications in recruiter dashboard",
+              ].map((item, i) => (
+                <li key={item} className="flex items-center gap-2.5 text-xs text-slate-700">
+                  <div className="w-5 h-5 rounded-full bg-[#059669] text-white flex items-center justify-center flex-shrink-0 font-bold text-[10px]">
+                    {i + 1}
+                  </div>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <div className="bg-[#FAF5EE] rounded-2xl p-5 mb-7 text-left">
-              <p className="text-xs font-semibold text-[#6B3A2A]/50 uppercase tracking-wider mb-3">
-                Your next steps
-              </p>
-              <ul className="flex flex-col gap-2.5">
-                {[
-                  "Complete your employer profile",
-                  "Post your first job listing",
-                  "Review incoming applications",
-                ].map((item, i) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-2.5 text-sm text-[#6B3A2A]/75"
-                  >
-                    <div className="w-5 h-5 rounded-full bg-[#C8782A] flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs font-bold">
-                        {i + 1}
-                      </span>
-                    </div>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <a href="/post-a-job">
-                <Button className="w-full bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold">
-                  Post Your First Job
-                  <ChevronRight size={15} className="ml-1" />
-                </Button>
-              </a>
-              <a href="/employers/dashboard">
-                <Button
-                  variant="outline"
-                  className="w-full border-[#C8782A]/25 text-[#6B3A2A] hover:bg-[#C8782A]/5 hover:text-black font-medium"
-                >
-                  Go to Dashboard
-                </Button>
-              </a>
-            </div>
+          <div className="flex flex-col gap-2.5">
+            <a href="/post-a-job">
+              <Button className="w-full h-10 bg-[#059669] hover:bg-[#047857] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-emerald-900/15">
+                Post Your First Job Now
+                <ChevronRight size={15} className="ml-1" />
+              </Button>
+            </a>
+            <a href="/employers/dashboard">
+              <Button
+                variant="outline"
+                className="w-full h-10 border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-xs sm:text-sm rounded-xl"
+              >
+                Go to Employer Dashboard
+              </Button>
+            </a>
           </div>
         </motion.div>
       </section>
     );
   }
 
-  /* ── Form ────────────────────────────────────────────────────────── */
+  /* ── Form View ──────────────────────────────────────────────────────── */
   return (
-    <section className="bg-[#FAF5EE] min-h-[85vh] flex items-center justify-center py-16 px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45 }}
-        className="w-full max-w-md"
-      >
-        {/* Header */}
-        <div className="text-center mb-2">
-          <LogoMark />
-          <h1
-            className="text-3xl font-bold text-[#1C1C1C]"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            Employer Registration
-          </h1>
-          <p className="text-[#6B3A2A]/65 mt-2 text-sm">
-            Join Canada's Indigenous job platform — connect with top talent
-          </p>
-        </div>
+    <section className="bg-gradient-to-br from-slate-50 via-emerald-50/20 to-slate-100 min-h-[calc(100vh-4.2rem)] flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="w-full max-w-[1240px] bg-white rounded-3xl border border-slate-200/80 shadow-2xl shadow-emerald-950/5 overflow-hidden grid grid-cols-1 lg:grid-cols-12 my-auto">
+        
+        {/* Left Hero Panel (5 Cols) */}
+        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#059669]/20 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Step indicator */}
-        <div className="mt-7">
-          <StepIndicator current={step} total={3} />
-        </div>
+          <div className="relative z-10">
+            {/* Executive Dual-Pill Badge */}
+            <div className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-slate-900/90 border border-slate-800 shadow-xs mb-5">
+              <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+                RECRUITMENT
+              </span>
+              <span className="text-xs font-semibold text-slate-300 leading-none">
+                Employer Recruitment Portal
+              </span>
+            </div>
 
-        {/* Step label */}
-        <p className="text-center text-xs font-semibold text-[#C8782A] uppercase tracking-widest mb-5">
-          Step {step} of 3 — {STEP_LABELS[step - 1]}
-        </p>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-tight mb-3">
+              Hire Top Canadian Candidates Coast to Coast.
+            </h2>
+            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">
+              Create an employer account to post job openings, manage candidates, and reach verified job seekers across Canada.
+            </p>
 
-        {/* Animated step content */}
-        <div className="bg-white rounded-3xl border border-[#C8782A]/10 shadow-sm overflow-hidden">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={step}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="p-8"
-            >
-              {/* ── STEP 1: Personal / org details ───────────────── */}
-              {step === 1 && (
-                <div className="flex flex-col gap-5">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1.5">
-                      <Label
-                        htmlFor="reg-first"
-                        className="text-[#6B3A2A] font-medium text-sm"
-                      >
-                        First Name <span className="text-[#C8782A]">*</span>
-                      </Label>
-                      <Input
-                        id="reg-first"
-                        value={form.firstName}
-                        onChange={(e) => set("firstName", e.target.value)}
-                        placeholder="First name"
-                        className={`border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30 focus-visible:ring-[#C8782A]/30 ${errors.firstName ? "border-red-400" : ""}`}
-                      />
-                      <FieldError msg={errors.firstName} />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <Label
-                        htmlFor="reg-last"
-                        className="text-[#6B3A2A] font-medium text-sm"
-                      >
-                        Last Name <span className="text-[#C8782A]">*</span>
-                      </Label>
-                      <Input
-                        id="reg-last"
-                        value={form.lastName}
-                        onChange={(e) => set("lastName", e.target.value)}
-                        placeholder="Last name"
-                        className={`border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30 focus-visible:ring-[#C8782A]/30 ${errors.lastName ? "border-red-400" : ""}`}
-                      />
-                      <FieldError msg={errors.lastName} />
-                    </div>
+            <div className="space-y-3 mb-6">
+              {[
+                { title: "Targeted Canadian Reach", desc: "Post to job seekers in Ontario, BC, Alberta, Quebec & all provinces" },
+                { title: "Dedicated Recruiter Tools", desc: "Easy job management & application review dashboard" },
+                { title: "100% Free & Transparent", desc: "Simple pricing with no hidden recruitment fees" },
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-start gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-[#059669]/20 text-[#059669] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <CheckCircle2 size={13} />
                   </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <Label
-                      htmlFor="reg-org"
-                      className="text-[#6B3A2A] font-medium text-sm"
-                    >
-                      Organization Name{" "}
-                      <span className="text-[#C8782A]">*</span>
-                    </Label>
-                    <Input
-                      id="reg-org"
-                      value={form.orgName}
-                      onChange={(e) => set("orgName", e.target.value)}
-                      placeholder="Your organization or company"
-                      className={`border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30 focus-visible:ring-[#C8782A]/30 ${errors.orgName ? "border-red-400" : ""}`}
-                    />
-                    <FieldError msg={errors.orgName} />
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <Label
-                      htmlFor="reg-province"
-                      className="text-[#6B3A2A] font-medium text-sm"
-                    >
-                      Province / Territory{" "}
-                      <span className="text-[#C8782A]">*</span>
-                    </Label>
-                    <select
-                      id="reg-province"
-                      value={form.province}
-                      onChange={(e) => set("province", e.target.value)}
-                      className={`w-full rounded-md border bg-white px-3 py-2 text-sm text-[#1C1C1C] focus:outline-none focus:ring-2 focus:ring-[#C8782A]/30 ${errors.province ? "border-red-400" : "border-[#C8782A]/20"}`}
-                    >
-                      <option value="">Select province / territory</option>
-                      {PROVINCES.map((p) => (
-                        <option key={p}>{p}</option>
-                      ))}
-                    </select>
-                    <FieldError msg={errors.province} />
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-200">{item.title}</h4>
+                    <p className="text-[11px] text-slate-400 leading-normal">{item.desc}</p>
                   </div>
                 </div>
-              )}
+              ))}
+            </div>
 
-              {/* ── STEP 2: Credentials ───────────────────────────── */}
-              {step === 2 && (
-                <div className="flex flex-col gap-5">
-                  {serverError && (
-                    <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3">
-                      <AlertCircle size={15} className="flex-shrink-0" />
-                      {serverError}
-                    </div>
-                  )}
-                  <div className="flex flex-col gap-1.5">
-                    <Label
-                      htmlFor="reg-email"
-                      className="text-[#6B3A2A] font-medium text-sm"
-                    >
-                      Email Address <span className="text-[#C8782A]">*</span>
-                    </Label>
-                    <Input
-                      id="reg-email"
-                      type="email"
-                      autoComplete="email"
-                      value={form.email}
-                      onChange={(e) => set("email", e.target.value)}
-                      placeholder="your@email.com"
-                      className={`border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30 focus-visible:ring-[#C8782A]/30 ${errors.email ? "border-red-400" : ""}`}
-                    />
-                    <FieldError msg={errors.email} />
-                  </div>
+            {/* Quick Stat Pill */}
+            <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800/80 backdrop-blur-sm flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                <Globe size={18} />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-slate-200">100% Verified Canadian Network</h4>
+                <p className="text-[10px] text-slate-400">Trusted by recruiters across 10 provinces & 3 territories</p>
+              </div>
+            </div>
+          </div>
 
-                  <div className="flex flex-col gap-1.5">
-                    <Label
-                      htmlFor="reg-password"
-                      className="text-[#6B3A2A] font-medium text-sm"
-                    >
-                      Password <span className="text-[#C8782A]">*</span>
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="reg-password"
-                        type={showPw ? "text" : "password"}
-                        autoComplete="new-password"
-                        value={form.password}
-                        onChange={(e) => set("password", e.target.value)}
-                        placeholder="Create a strong password"
-                        className={`border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30 focus-visible:ring-[#C8782A]/30 pr-10 ${errors.password ? "border-red-400" : ""}`}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPw((v) => !v)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B3A2A]/40 hover:text-[#C8782A] transition-colors"
-                        aria-label={showPw ? "Hide password" : "Show password"}
-                      >
-                        {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
-                      </button>
-                    </div>
-                    <PasswordStrength password={form.password} />
-                    <FieldError msg={errors.password} />
-                  </div>
-
-                  <div className="flex flex-col gap-1.5">
-                    <Label
-                      htmlFor="reg-confirm"
-                      className="text-[#6B3A2A] font-medium text-sm"
-                    >
-                      Confirm Password <span className="text-[#C8782A]">*</span>
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="reg-confirm"
-                        type={showConfirmPw ? "text" : "password"}
-                        autoComplete="new-password"
-                        value={form.confirmPassword}
-                        onChange={(e) => set("confirmPassword", e.target.value)}
-                        placeholder="Repeat your password"
-                        className={`border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30 focus-visible:ring-[#C8782A]/30 pr-10 ${errors.confirmPassword ? "border-red-400" : ""}`}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowConfirmPw((v) => !v)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B3A2A]/40 hover:text-[#C8782A] transition-colors"
-                        aria-label={
-                          showConfirmPw ? "Hide password" : "Show password"
-                        }
-                      >
-                        {showConfirmPw ? (
-                          <EyeOff size={16} />
-                        ) : (
-                          <Eye size={16} />
-                        )}
-                      </button>
-                    </div>
-                    <FieldError msg={errors.confirmPassword} />
-                  </div>
-
-                  <div className="flex flex-col gap-1">
-                    <label className="flex items-start gap-2.5 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={form.agreeTerms}
-                        onChange={(e) => set("agreeTerms", e.target.checked)}
-                        className="mt-0.5 w-4 h-4 accent-[#C8782A] flex-shrink-0"
-                      />
-                      <span className="text-sm text-[#6B3A2A]/70 leading-relaxed">
-                        I agree to GetJobsCanada's{" "}
-                        <a
-                          href="/terms"
-                          target="blank"
-                          className="text-[#C8782A] hover:underline font-medium"
-                        >
-                          Terms of Service
-                        </a>{" "}
-                        and{" "}
-                        <a
-                          href="privacy"
-                          target="blank"
-                          className="text-[#C8782A] hover:underline font-medium"
-                        >
-                          Privacy Policy
-                        </a>
-                        .
-                      </span>
-                    </label>
-                    <FieldError msg={errors.agreeTerms} />
-                  </div>
-                </div>
-              )}
-
-              {/* ── STEP 3: OTP Verification (No Back Button) ─────── */}
-              {step === 3 && (
-                <div className="flex flex-col items-center gap-5">
-                  <div className="w-12 h-12 rounded-full bg-[#C8782A]/10 flex items-center justify-center">
-                    <Lock size={20} className="text-[#C8782A]" />
-                  </div>
-
-                  <div className="text-center">
-                    <h3 className="font-bold text-lg text-[#1C1C1C]">
-                      Enter Verification Code
-                    </h3>
-                    <p className="text-xs text-[#6B3A2A]/60 mt-1 max-w-xs mx-auto leading-relaxed">
-                      We sent a 6-digit verification code to
-                    </p>
-                    <p className="text-sm text-[#C8782A] font-semibold mt-0.5">
-                      {form.email}
-                    </p>
-                  </div>
-
-                  {otpSentMsg && (
-                    <div className="text-center text-xs text-green-600 bg-green-50 border border-green-200 py-1.5 px-3 rounded-lg w-full">
-                      {otpSentMsg}
-                    </div>
-                  )}
-
-                  {serverError && (
-                    <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3 w-full">
-                      <AlertCircle size={15} className="flex-shrink-0" />
-                      {serverError}
-                    </div>
-                  )}
-
-                  {/* InputOTP Component */}
-                  <div className="my-3">
-                    <InputOTP
-                      maxLength={6}
-                      value={otpVal}
-                      onChange={setOtpVal}
-                      disabled={loading}
-                    >
-                      <InputOTPGroup>
-                        <InputOTPSlot
-                          index={0}
-                          className="border-[#C8782A]/30 focus:border-[#C8782A] w-10 h-12 sm:w-12 sm:h-14 text-lg"
-                        />
-                        <InputOTPSlot
-                          index={1}
-                          className="border-[#C8782A]/30 focus:border-[#C8782A] w-10 h-12 sm:w-12 sm:h-14 text-lg"
-                        />
-                        <InputOTPSlot
-                          index={2}
-                          className="border-[#C8782A]/30 focus:border-[#C8782A] w-10 h-12 sm:w-12 sm:h-14 text-lg"
-                        />
-                      </InputOTPGroup>
-                      <InputOTPSeparator />
-                      <InputOTPGroup>
-                        <InputOTPSlot
-                          index={3}
-                          className="border-[#C8782A]/30 focus:border-[#C8782A] w-10 h-12 sm:w-12 sm:h-14 text-lg"
-                        />
-                        <InputOTPSlot
-                          index={4}
-                          className="border-[#C8782A]/30 focus:border-[#C8782A] w-10 h-12 sm:w-12 sm:h-14 text-lg"
-                        />
-                        <InputOTPSlot
-                          index={5}
-                          className="border-[#C8782A]/30 focus:border-[#C8782A] w-10 h-12 sm:w-12 sm:h-14 text-lg"
-                        />
-                      </InputOTPGroup>
-                    </InputOTP>
-                  </div>
-
-                  {/* Resend timer */}
-                  <div className="text-center w-full">
-                    {otpCountdown > 0 ? (
-                      <p className="text-xs text-[#6B3A2A]/50">
-                        Resend code in{" "}
-                        <span className="font-semibold text-[#6B3A2A]">
-                          {otpCountdown}s
-                        </span>
-                      </p>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={handleResendOtp}
-                        disabled={loading}
-                        className="inline-flex items-center gap-1.5 text-xs text-[#C8782A] hover:text-[#B06820] font-semibold transition-colors disabled:opacity-50"
-                      >
-                        <RefreshCw
-                          size={12}
-                          className={loading ? "animate-spin" : ""}
-                        />
-                        Resend Verification Code
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Dev OTP for testing */}
-                  {/* {devOtp && (
-                    <div className="w-full bg-[#FAF5EE] border border-[#C8782A]/20 rounded-xl p-3.5 text-left mt-2">
-                      <p className="text-[10px] font-bold text-[#C8782A] uppercase tracking-wider mb-1">
-                        🛠️ Development Mode
-                      </p>
-                      <p className="text-xs text-[#6B3A2A]/70">
-                        Use this code to test: <span className="text-[#C8782A] font-mono text-sm tracking-wider font-bold">{devOtp}</span>
-                      </p>
-                    </div>
-                  )} */}
-                </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation buttons - Back button hidden on step 3 */}
-          <div
-            className={`flex gap-3 px-8 pb-8 ${step > 1 && step !== 3 ? "justify-between" : "justify-end"}`}
-          >
-            {step > 1 && step !== 3 && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={goBack}
-                disabled={loading}
-                className="border-[#C8782A]/25 text-[#6B3A2A] hover:bg-[#C8782A]/5 hover:text-black font-medium"
-              >
-                <ArrowLeft size={15} className="mr-1.5" /> Back
-              </Button>
-            )}
-            <Button
-              type="button"
-              onClick={goNext}
-              disabled={loading}
-              className="font-semibold px-8 text-white transition-all duration-200 bg-[#6B3A2A] hover:bg-[#5A2F1F]"
-            >
-              {loading ? (
-                <span className="flex items-center gap-2">
-                  <svg
-                    className="animate-spin w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v8H4z"
-                    />
-                  </svg>
-                  Processing…
-                </span>
-              ) : step === 3 ? (
-                <span className="flex items-center gap-1.5">
-                  Verify & Register <CheckCircle size={15} />
-                </span>
-              ) : (
-                <span className="flex items-center gap-1.5">
-                  Continue <ChevronRight size={15} />
-                </span>
-              )}
-            </Button>
+          <div className="relative z-10 pt-4 mt-6 border-t border-slate-900 flex items-center justify-between text-[11px] text-slate-500">
+            <span className="font-semibold text-slate-400">© {new Date().getFullYear()} GetJobsCanada</span>
+            <span className="flex items-center gap-1 text-emerald-400 font-medium">
+              <ShieldCheck size={13} /> Employer Access
+            </span>
           </div>
         </div>
 
-        <p className="text-center text-sm text-[#6B3A2A]/60 mt-5">
-          Already have an account?{" "}
-          <Link
-            href="/login"
-            className="text-[#C8782A] font-semibold hover:underline"
-          >
-            Sign in
-          </Link>
-        </p>
-      </motion.div>
+        {/* Right Multi-step Form (7 Cols) */}
+        <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between">
+          <div>
+            <div className="mb-4">
+              <LogoMark />
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Employer Registration
+              </h1>
+              <p className="text-slate-500 text-xs mt-0.5">
+                Step {step} of 3 — <span className="text-[#059669] font-bold">{STEP_LABELS[step - 1]}</span>
+              </p>
+            </div>
+
+            {/* Step Pills */}
+            <StepIndicator current={step} total={3} />
+
+            {serverError && (
+              <div className="mb-4 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-xs rounded-2xl p-3">
+                <AlertCircle size={15} className="flex-shrink-0 text-red-600" />
+                <span>{serverError}</span>
+              </div>
+            )}
+
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={step}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+              >
+                {/* STEP 1: Details */}
+                {step === 1 && (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {/* First Name */}
+                      <div className="space-y-1">
+                        <Label htmlFor="reg-first" className="text-[10px] sm:text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                          First Name <span className="text-[#059669]">*</span>
+                        </Label>
+                        <div className="relative">
+                          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                          <input
+                            id="reg-first"
+                            type="text"
+                            value={form.firstName}
+                            onChange={(e) => set("firstName", e.target.value)}
+                            placeholder="First name"
+                            className={`w-full h-10 bg-slate-50/60 border border-slate-200 rounded-xl pl-10 pr-4 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all ${
+                              errors.firstName ? "border-red-500 bg-red-50/20" : ""
+                            }`}
+                          />
+                        </div>
+                        <FieldError msg={errors.firstName} />
+                      </div>
+
+                      {/* Last Name */}
+                      <div className="space-y-1">
+                        <Label htmlFor="reg-last" className="text-[10px] sm:text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                          Last Name <span className="text-[#059669]">*</span>
+                        </Label>
+                        <div className="relative">
+                          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                          <input
+                            id="reg-last"
+                            type="text"
+                            value={form.lastName}
+                            onChange={(e) => set("lastName", e.target.value)}
+                            placeholder="Last name"
+                            className={`w-full h-10 bg-slate-50/60 border border-slate-200 rounded-xl pl-10 pr-4 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all ${
+                              errors.lastName ? "border-red-500 bg-red-50/20" : ""
+                            }`}
+                          />
+                        </div>
+                        <FieldError msg={errors.lastName} />
+                      </div>
+                    </div>
+
+                    {/* Organization Name */}
+                    <div className="space-y-1">
+                      <Label htmlFor="reg-org" className="text-[10px] sm:text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                        Organization Name <span className="text-[#059669]">*</span>
+                      </Label>
+                      <div className="relative">
+                        <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                        <input
+                          id="reg-org"
+                          type="text"
+                          value={form.orgName}
+                          onChange={(e) => set("orgName", e.target.value)}
+                          placeholder="Company or organization name"
+                          className={`w-full h-10 bg-slate-50/60 border border-slate-200 rounded-xl pl-10 pr-4 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all ${
+                            errors.orgName ? "border-red-500 bg-red-50/20" : ""
+                          }`}
+                        />
+                      </div>
+                      <FieldError msg={errors.orgName} />
+                    </div>
+
+                    {/* Province / Territory */}
+                    <div className="space-y-1">
+                      <Label htmlFor="reg-province" className="text-[10px] sm:text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                        Province / Territory <span className="text-[#059669]">*</span>
+                      </Label>
+                      <div className="relative">
+                        <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                        <select
+                          id="reg-province"
+                          value={form.province}
+                          onChange={(e) => set("province", e.target.value)}
+                          className={`w-full h-10 bg-slate-50/60 border border-slate-200 rounded-xl pl-10 pr-10 text-xs sm:text-sm text-slate-900 appearance-none focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all cursor-pointer ${
+                            errors.province ? "border-red-500 bg-red-50/20" : ""
+                          }`}
+                        >
+                          <option value="">Select province or territory</option>
+                          {PROVINCES.map((p) => (
+                            <option key={p} value={p}>{p}</option>
+                          ))}
+                        </select>
+                        <ChevronDown size={15} className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                      </div>
+                      <FieldError msg={errors.province} />
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 2: Credentials */}
+                {step === 2 && (
+                  <div className="space-y-3">
+                    <div className="space-y-1">
+                      <Label htmlFor="reg-email" className="text-[10px] sm:text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                        Email Address <span className="text-[#059669]">*</span>
+                      </Label>
+                      <div className="relative">
+                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                        <input
+                          id="reg-email"
+                          type="email"
+                          value={form.email}
+                          onChange={(e) => set("email", e.target.value)}
+                          placeholder="recruiter@company.ca"
+                          className={`w-full h-10 bg-slate-50/60 border border-slate-200 rounded-xl pl-10 pr-4 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all ${
+                            errors.email ? "border-red-500 bg-red-50/20" : ""
+                          }`}
+                        />
+                      </div>
+                      <FieldError msg={errors.email} />
+                    </div>
+
+                    <div className="space-y-1">
+                      <Label htmlFor="reg-password" className="text-[10px] sm:text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                        Password <span className="text-[#059669]">*</span>
+                      </Label>
+                      <div className="relative">
+                        <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                        <input
+                          id="reg-password"
+                          type={showPw ? "text" : "password"}
+                          value={form.password}
+                          onChange={(e) => set("password", e.target.value)}
+                          placeholder="Min 8 characters"
+                          className={`w-full h-10 bg-slate-50/60 border border-slate-200 rounded-xl pl-10 pr-10 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all ${
+                            errors.password ? "border-red-500 bg-red-50/20" : ""
+                          }`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPw((v) => !v)}
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors"
+                        >
+                          {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </button>
+                      </div>
+                      <PasswordStrength password={form.password} />
+                      <FieldError msg={errors.password} />
+                    </div>
+
+                    <div className="space-y-1">
+                      <Label htmlFor="reg-confirm" className="text-[10px] sm:text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                        Confirm Password <span className="text-[#059669]">*</span>
+                      </Label>
+                      <div className="relative">
+                        <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                        <input
+                          id="reg-confirm"
+                          type={showConfirmPw ? "text" : "password"}
+                          value={form.confirmPassword}
+                          onChange={(e) => set("confirmPassword", e.target.value)}
+                          placeholder="Repeat password"
+                          className={`w-full h-10 bg-slate-50/60 border border-slate-200 rounded-xl pl-10 pr-10 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all ${
+                            errors.confirmPassword ? "border-red-500 bg-red-50/20" : ""
+                          }`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowConfirmPw((v) => !v)}
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors"
+                        >
+                          {showConfirmPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </button>
+                      </div>
+                      <FieldError msg={errors.confirmPassword} />
+                    </div>
+
+                    <div className="pt-1">
+                      <label className="flex items-start gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={form.agreeTerms}
+                          onChange={(e) => set("agreeTerms", e.target.checked)}
+                          className="mt-0.5 w-3.5 h-3.5 rounded border-slate-300 text-[#059669] focus:ring-[#059669] accent-[#059669]"
+                        />
+                        <span className="text-xs text-slate-600 leading-relaxed">
+                          I agree to GetJobsCanada's{" "}
+                          <a href="/terms" target="_blank" className="text-[#059669] font-bold hover:underline">
+                            Terms of Service
+                          </a>{" "}
+                          and{" "}
+                          <a href="/privacy" target="_blank" className="text-[#059669] font-bold hover:underline">
+                            Privacy Policy
+                          </a>.
+                        </span>
+                      </label>
+                      <FieldError msg={errors.agreeTerms} />
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 3: OTP Verification */}
+                {step === 3 && (
+                  <div className="space-y-4 text-center">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center mx-auto mb-1">
+                      <Mail size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-extrabold text-slate-900">Verify Your Email</h3>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        We sent a 6-digit verification code to <span className="font-bold text-slate-800">{form.email}</span>
+                      </p>
+                    </div>
+
+                    {otpSentMsg && (
+                      <p className="text-xs text-[#059669] font-semibold bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
+                        {otpSentMsg}
+                      </p>
+                    )}
+
+                    {devOtp && (
+                      <div className="p-2.5 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl text-xs font-mono">
+                        Dev OTP: <strong>{devOtp}</strong>
+                      </div>
+                    )}
+
+                    <div className="flex justify-center py-1">
+                      <InputOTP
+                        maxLength={6}
+                        value={otpVal}
+                        onChange={(v) => setOtpVal(v)}
+                      >
+                        <InputOTPGroup className="gap-2">
+                          {[0, 1, 2, 3, 4, 5].map((idx) => (
+                            <InputOTPSlot
+                              key={idx}
+                              index={idx}
+                              className="w-9 h-11 text-base font-bold border-slate-200 bg-slate-50/80 rounded-lg focus:border-[#059669]"
+                            />
+                          ))}
+                        </InputOTPGroup>
+                      </InputOTP>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-2 text-xs text-slate-500 pt-1">
+                      <span>Didn't receive code?</span>
+                      <button
+                        type="button"
+                        onClick={handleResendOtp}
+                        disabled={otpCountdown > 0 || loading}
+                        className="text-[#059669] font-bold hover:underline disabled:opacity-50"
+                      >
+                        {otpCountdown > 0 ? `Resend code in ${otpCountdown}s` : "Resend Code"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Action Buttons */}
+            <div className="flex items-center gap-3 mt-6 pt-4 border-t border-slate-100">
+              {step > 1 && step < 3 && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={goBack}
+                  className="h-10 px-4 border-slate-200 text-slate-700 hover:bg-slate-100 rounded-xl font-semibold text-xs"
+                >
+                  <ArrowLeft size={14} className="mr-1" /> Back
+                </Button>
+              )}
+
+              <Button
+                type="button"
+                onClick={goNext}
+                disabled={loading}
+                className="flex-1 h-10 sm:h-11 bg-[#059669] hover:bg-[#047857] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-emerald-900/15 transition-all duration-200 flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin w-4 h-4 text-white" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                    </svg>
+                    Processing…
+                  </span>
+                ) : step === 3 ? (
+                  <>
+                    <span>Verify & Create Account</span>
+                    <CheckCircle2 size={15} />
+                  </>
+                ) : (
+                  <>
+                    <span>Continue to Next Step</span>
+                    <ChevronRight size={15} />
+                  </>
+                )}
+              </Button>
+            </div>
+
+            {/* Existing User Login Link */}
+            <div className="mt-4 text-center">
+              <p className="text-xs text-slate-500">
+                Already have an account?{" "}
+                <Link href="/login" className="text-[#059669] font-bold hover:underline">
+                  Sign In
+                </Link>
+              </p>
+            </div>
+          </div>
+
+          <p className="text-center text-[10px] sm:text-[11px] text-slate-400 mt-4">
+            By registering, you agree to GetJobsCanada's{" "}
+            <a href="/terms" className="hover:text-[#059669] underline">Terms of Service</a>{" "}
+            and{" "}
+            <a href="/privacy" className="hover:text-[#059669] underline">Privacy Policy</a>.
+          </p>
+        </div>
+
+      </div>
     </section>
   );
 }
@@ -986,8 +950,8 @@ export default function RegisterPage() {
   return (
     <Suspense
       fallback={
-        <div className="bg-[#FAF5EE] min-h-[85vh] flex items-center justify-center py-16 px-4">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#C8782A]" />
+        <div className="bg-slate-50 min-h-[85vh] flex items-center justify-center py-16 px-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#059669]" />
         </div>
       }
     >

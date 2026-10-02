@@ -2,62 +2,36 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Mail, MapPin, Clock, Send, Loader2 } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  Clock,
+  Send,
+  Loader2,
+  Sparkles,
+  MessageSquare,
+  Building2,
+  CheckCircle2,
+  ChevronDown,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import toast from "react-hot-toast";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
+    transition: { duration: 0.4, ease: "easeOut" as const },
   },
 };
+
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.08 } },
 };
-
-function OrganicShape({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 400 400"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle
-        cx="200"
-        cy="200"
-        r="180"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.15"
-      />
-      <circle
-        cx="200"
-        cy="200"
-        r="130"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.12"
-      />
-      <circle
-        cx="200"
-        cy="200"
-        r="80"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        opacity="0.1"
-      />
-      <circle cx="200" cy="200" r="30" fill="currentColor" opacity="0.08" />
-    </svg>
-  );
-}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -93,10 +67,12 @@ export default function ContactPage() {
     }
     if (!formData.email.trim()) {
       newErrors.email = "Email address is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim()))
-      if (!formData.subject) {
-        newErrors.subject = "Please select an option";
-      }
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      newErrors.email = "Please enter a valid email address";
+    }
+    if (!formData.subject) {
+      newErrors.subject = "Please select an inquiry type";
+    }
     if (!formData.message.trim()) {
       newErrors.message = "Message is required";
     } else if (formData.message.trim().length < 10) {
@@ -111,7 +87,7 @@ export default function ContactPage() {
     e.preventDefault();
 
     if (!validateForm()) {
-      toast.error("Please fix the errors before submitting");
+      toast.error("Please fill in all required fields correctly.");
       return;
     }
 
@@ -139,7 +115,7 @@ export default function ContactPage() {
       }
 
       toast.success(
-        "Your message has been sent successfully. We'll get back to you soon.",
+        "Your message has been sent successfully. Our team will get back to you soon!",
       );
 
       setFormData({
@@ -152,290 +128,367 @@ export default function ContactPage() {
 
       setErrors({});
     } catch (error: any) {
-      toast.error(error.message || "Failed to send message");
+      toast.error(error.message || "Failed to send message. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <>
-      {/* Hero */}
-      <section className="bg-[#FAF5EE] py-16 lg:py-24 relative overflow-hidden">
-        <OrganicShape className="absolute -right-24 top-1/2 -translate-y-1/2 w-[400px] h-[400px] text-[#C8782A] pointer-events-none" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div variants={stagger} initial="hidden" animate="visible">
-            <motion.p
+    <div className="bg-slate-50/50 min-h-screen font-sans text-slate-900 pb-20">
+      {/* Light Hero Section (Left Aligned & Fresh Theme) */}
+      <section className="relative bg-gradient-to-b from-emerald-50/60 via-white to-slate-50/50 border-b border-slate-200/60 py-12 lg:py-16 overflow-hidden">
+        {/* Subtle Light Accent */}
+        <div className="absolute top-0 right-10 w-96 h-96 bg-[#059669]/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+            className="max-w-3xl text-left"
+          >
+            {/* Premium Top Hero Badge */}
+            <motion.div
               variants={fadeUp}
-              className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-3"
+              className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-emerald-50/80 border border-emerald-200/80 shadow-xs mb-4"
             >
-              Get in Touch
-            </motion.p>
+              <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+                Support
+              </span>
+              <span className="text-xs font-semibold text-slate-700 leading-none">
+                We're Here to Help You
+              </span>
+            </motion.div>
+
             <motion.h1
               variants={fadeUp}
-              className="text-5xl lg:text-6xl font-bold text-[#1C1C1C] mb-5"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3"
             >
-              We're Here to Help
+              Get in Touch with{" "}
+              <span className="text-[#059669]">GetJobsCanada</span>
             </motion.h1>
+
             <motion.p
               variants={fadeUp}
-              className="text-[#6B3A2A]/70 text-lg max-w-xl mx-auto leading-relaxed"
+              className="text-slate-600 text-base sm:text-lg leading-relaxed"
             >
-              Have a question about posting a job, creating a profile, or our
-              packages? Our team is ready to assist you.
+              Have a question about posting a job, managing your employer
+              account, or exploring packages? Our Canadian support team is ready
+              to assist you.
             </motion.p>
+          </motion.div>
+
+          {/* Quick Contact Cards (Light Theme, Left Aligned) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10"
+          >
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-[#059669]/40 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center mb-4">
+                <Mail size={20} />
+              </div>
+              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                General Inquiries
+              </h3>
+              <a
+                href="mailto:info.getjobs@cyber-nest.ca"
+                className="text-base font-bold text-slate-900 hover:text-[#059669] transition-colors mt-1 block truncate"
+              >
+                info.getjobs@cyber-nest.ca
+              </a>
+              <p className="text-xs text-slate-500 mt-1.5">
+                Average response time: under 24 hours
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-[#059669]/40 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center mb-4">
+                <Building2 size={20} />
+              </div>
+              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                Employer Support
+              </h3>
+              <a
+                href="mailto:employer.getjobs@cyber-nest.ca"
+                className="text-base font-bold text-slate-900 hover:text-[#059669] transition-colors mt-1 block truncate"
+              >
+                employer.getjobs@cyber-nest.ca
+              </a>
+              <p className="text-xs text-slate-500 mt-1.5">
+                Dedicated support for recruiters
+              </p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-[#059669]/40 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center mb-4">
+                <Clock size={20} />
+              </div>
+              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                Support Hours
+              </h3>
+              <p className="text-base font-bold text-slate-900 mt-1">
+                Mon – Fri: 9:00 AM – 5:00 PM EST
+              </p>
+              <p className="text-xs text-slate-500 mt-1.5">
+                Nationwide Coverage Across Canada
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Content */}
-      <section className="bg-white py-12 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-            {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-2"
-            >
-              <h2
-                className="text-2xl font-bold text-[#1C1C1C] mb-8"
-                style={{ fontFamily: "'Playfair Display', serif" }}
-              >
-                Contact Information
+      {/* Main Form & Content Section */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-8 lg:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          {/* Left Info Panel (4 cols) */}
+          <motion.div
+            initial={{ opacity: 0, x: -15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+            className="lg:col-span-4 bg-[#059669] text-white rounded-3xl p-6 lg:p-7 shadow-lg flex flex-col justify-between relative overflow-hidden"
+          >
+            <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+
+            <div>
+              {/* Premium Green Card Badge */}
+              <div className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-white/15 border border-white/20 shadow-xs mb-4 text-white">
+                <span className="bg-emerald-300 text-emerald-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+                  Assistance
+                </span>
+                <span className="text-xs font-semibold text-white leading-none">
+                  Fast & Reliable Help
+                </span>
+              </div>
+
+              <h2 className="text-xl lg:text-2xl font-bold text-white tracking-tight mb-2">
+                Why reach out to GetJobsCanada?
               </h2>
-              <div className="flex flex-col gap-6 mb-10">
+              <p className="text-emerald-50 text-xs sm:text-sm leading-relaxed mb-5">
+                Whether you are a job seeker looking for career guidance or an
+                employer seeking top Canadian talent, we are here to ensure your
+                journey is smooth and successful.
+              </p>
+
+              <div className="space-y-3 mb-6">
                 {[
-                  {
-                    icon: Mail,
-                    label: "Email",
-                    value: "info.getjobs@cyber-nest.ca",
-                    href: "mailto:info.getjobs@cyber-nest.ca",
-                  },
-                  {
-                    icon: MapPin,
-                    label: "Service Area",
-                    value: "Canada-Wide",
-                    href: null,
-                  },
-                  {
-                    icon: Clock,
-                    label: "Support Hours",
-                    value: "Monday – Friday, 9am – 5pm MT",
-                    href: null,
-                  },
-                ].map((item) => (
-                  <div key={item.label} className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#C8782A]/10 flex items-center justify-center flex-shrink-0">
-                      <item.icon size={18} className="text-[#C8782A]" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold text-[#6B3A2A]/50 uppercase tracking-wider mb-0.5">
-                        {item.label}
-                      </p>
-                      {item.href ? (
-                        <a
-                          href={item.href}
-                          className="text-[#1C1C1C] font-medium hover:text-[#C8782A] transition-colors"
-                        >
-                          {item.value}
-                        </a>
-                      ) : (
-                        <p className="text-[#1C1C1C] font-medium">
-                          {item.value}
-                        </p>
-                      )}
-                    </div>
+                  "Quick resolution for employer posting questions",
+                  "Guidance on choosing the right job package",
+                  "Technical assistance for candidate accounts",
+                  "Dedicated support team across Canadian timezones",
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5">
+                    <CheckCircle2
+                      size={16}
+                      className="text-emerald-200 flex-shrink-0 mt-0.5"
+                    />
+                    <span className="text-xs sm:text-sm font-medium text-white">
+                      {item}
+                    </span>
                   </div>
                 ))}
               </div>
-              <div className="bg-[#6B3A2A] rounded-2xl p-7 text-[#FAF5EE] relative overflow-hidden">
-                <OrganicShape className="absolute -right-10 -bottom-10 w-48 h-48 text-[#C8782A] pointer-events-none" />
-                <div className="relative z-10">
-                  <h3
-                    className="font-bold text-lg mb-2"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
-                    Employer Inquiries
-                  </h3>
-                  <p className="text-[#FAF5EE]/70 text-sm leading-relaxed mb-4">
-                    Interested in posting jobs or learning about our packages?
-                    We'd love to connect and help you find the right solution.
+            </div>
+
+            <div className="pt-4 border-t border-emerald-400/40">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-white/15 text-white flex items-center justify-center font-bold text-xs">
+                  🇨🇦
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-white">
+                    Canada Wide Operations
+                  </h4>
+                  <p className="text-[11px] text-emerald-100">
+                    Connecting employers & job seekers nationwide
                   </p>
-                  <a
-                    href="mailto:employer.getjobs@cyber-nest.ca"
-                    className="text-[#C8782A] font-semibold text-sm hover:underline"
-                  >
-                    employer.getjobs@cyber-nest.ca{" "}
-                  </a>
                 </div>
               </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-3"
-            >
-              <div className="bg-[#FAF5EE] rounded-3xl p-8 lg:p-10 border border-[#C8782A]/10">
-                <h2
-                  className="text-2xl font-bold text-[#1C1C1C] mb-7"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
-                  Send Us a Message
-                </h2>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div className="flex flex-col gap-2">
-                      <Label
-                        htmlFor="firstName"
-                        className="text-[#6B3A2A] font-medium text-sm"
-                      >
-                        First Name <span className="text-[#C8782A]">*</span>
-                      </Label>
-                      <Input
-                        id="firstName"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        placeholder="Your first name"
-                        className={`bg-white border-[#C8782A]/20 focus-visible:ring-[#C8782A]/30 ${
-                          errors.firstName ? "border-red-500" : ""
-                        }`}
-                      />
-                      {errors.firstName && (
-                        <p className="text-xs text-red-500">
-                          {errors.firstName}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <Label
-                        htmlFor="lastName"
-                        className="text-[#6B3A2A] font-medium text-sm"
-                      >
-                        Last Name <span className="text-[#C8782A]">*</span>
-                      </Label>
-                      <Input
-                        id="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        placeholder="Your last name"
-                        className={`bg-white border-[#C8782A]/20 focus-visible:ring-[#C8782A]/30 ${
-                          errors.lastName ? "border-red-500" : ""
-                        }`}
-                      />
-                      {errors.lastName && (
-                        <p className="text-xs text-red-500">
-                          {errors.lastName}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <Label
-                      htmlFor="email"
-                      className="text-[#6B3A2A] font-medium text-sm"
-                    >
-                      Email Address <span className="text-[#C8782A]">*</span>
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="your@email.com"
-                      className={`bg-white border-[#C8782A]/20 focus-visible:ring-[#C8782A]/30 ${
-                        errors.email ? "border-red-500" : ""
-                      }`}
-                    />
-                    {errors.email && (
-                      <p className="text-xs text-red-500">{errors.email}</p>
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <Label
-                      htmlFor="subject"
-                      className="text-[#6B3A2A] font-medium text-sm"
-                    >
-                      I am a... <span className="text-[#C8782A]">*</span>
-                    </Label>
-                    <select
-                      id="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className={`w-full rounded-md border border-[#C8782A]/20 bg-white px-3 py-2 text-sm text-[#1C1C1C] focus:outline-none focus:ring-2 focus:ring-[#C8782A]/30 ${
-                        errors.subject ? "border-red-500" : ""
-                      }`}
-                    >
-                      <option value="">Select one</option>
-                      <option value="jobseeker">Job Seeker</option>
-                      <option value="employer">Employer</option>
-                      <option value="organization">
-                        Indigenous Organization
-                      </option>
-                      <option value="other">Other</option>
-                    </select>
-                    {errors.subject && (
-                      <p className="text-xs text-red-500">{errors.subject}</p>
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <Label
-                      htmlFor="message"
-                      className="text-[#6B3A2A] font-medium text-sm"
-                    >
-                      Message <span className="text-[#C8782A]">*</span>
-                    </Label>
-                    <textarea
-                      id="message"
-                      rows={5}
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="How can we help you?"
-                      className={`w-full rounded-md border border-[#C8782A]/20 bg-white px-3 py-2 text-sm text-[#1C1C1C] placeholder:text-[#1C1C1C]/40 focus:outline-none focus:ring-2 focus:ring-[#C8782A]/30 resize-none ${
-                        errors.message ? "border-red-500" : ""
-                      }`}
-                    />
-                    {errors.message && (
-                      <p className="text-xs text-red-500">{errors.message}</p>
-                    )}
-                  </div>
-                  <Button
-                    type="submit"
-                    size="lg"
-                    disabled={
-                      isLoading ||
-                      !formData.firstName.trim() ||
-                      !formData.lastName.trim() ||
-                      !formData.email.trim() ||
-                      !formData.subject ||
-                      !formData.message.trim()
-                    }
-                    className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold w-full disabled:opacity-70 disabled:cursor-not-allowed"
+          {/* Right Contact Form (8 cols) */}
+          <motion.div
+            initial={{ opacity: 0, x: 15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+            className="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80"
+          >
+            <div className="mb-5 text-left">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Send Us a Message
+              </h2>
+              <p className="text-slate-500 text-xs sm:text-sm mt-0.5">
+                Fill out the form below and a representative will reply within
+                24 business hours.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4 text-left">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* First Name */}
+                <div className="space-y-1.5">
+                  <Label
+                    htmlFor="firstName"
+                    className="text-[11px] font-bold text-slate-700 uppercase tracking-wider"
                   >
-                    {isLoading ? (
-                      <>
-                        <Loader2 size={16} className="mr-2 animate-spin" />
-                        Sending Message...
-                      </>
-                    ) : (
-                      <>
-                        Send Message <Send size={16} className="ml-2" />
-                      </>
-                    )}
-                  </Button>
-                </form>
+                    First Name <span className="text-[#059669]">*</span>
+                  </Label>
+                  <input
+                    id="firstName"
+                    type="text"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    placeholder="Enter your first name"
+                    className={`w-full h-11 bg-slate-50/50 border border-slate-200 rounded-2xl px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all ${
+                      errors.firstName ? "border-red-500 bg-red-50/30" : ""
+                    }`}
+                  />
+                  {errors.firstName && (
+                    <p className="text-xs text-red-500 font-medium">
+                      {errors.firstName}
+                    </p>
+                  )}
+                </div>
+
+                {/* Last Name */}
+                <div className="space-y-1.5">
+                  <Label
+                    htmlFor="lastName"
+                    className="text-[11px] font-bold text-slate-700 uppercase tracking-wider"
+                  >
+                    Last Name <span className="text-[#059669]">*</span>
+                  </Label>
+                  <input
+                    id="lastName"
+                    type="text"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    placeholder="Enter your last name"
+                    className={`w-full h-11 bg-slate-50/50 border border-slate-200 rounded-2xl px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all ${
+                      errors.lastName ? "border-red-500 bg-red-50/30" : ""
+                    }`}
+                  />
+                  {errors.lastName && (
+                    <p className="text-xs text-red-500 font-medium">
+                      {errors.lastName}
+                    </p>
+                  )}
+                </div>
               </div>
-            </motion.div>
-          </div>
+
+              {/* Email Address */}
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor="email"
+                  className="text-[11px] font-bold text-slate-700 uppercase tracking-wider"
+                >
+                  Email Address <span className="text-[#059669]">*</span>
+                </Label>
+                <input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="name@example.com"
+                  className={`w-full h-11 bg-slate-50/50 border border-slate-200 rounded-2xl px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all ${
+                    errors.email ? "border-red-500 bg-red-50/30" : ""
+                  }`}
+                />
+                {errors.email && (
+                  <p className="text-xs text-red-500 font-medium">
+                    {errors.email}
+                  </p>
+                )}
+              </div>
+
+              {/* Subject Dropdown */}
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor="subject"
+                  className="text-[11px] font-bold text-slate-700 uppercase tracking-wider"
+                >
+                  I am a... <span className="text-[#059669]">*</span>
+                </Label>
+                <div className="relative">
+                  <select
+                    id="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className={`w-full h-11 bg-slate-50/50 border border-slate-200 rounded-2xl pl-4 pr-10 text-sm text-slate-900 appearance-none focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all cursor-pointer ${
+                      errors.subject ? "border-red-500 bg-red-50/30" : ""
+                    }`}
+                  >
+                    <option value="">Select an option</option>
+                    <option value="jobseeker">Job Seeker</option>
+                    <option value="employer">Employer / Recruiter</option>
+                    <option value="organization">
+                      Community / Organization
+                    </option>
+                    <option value="other">Other Inquiry</option>
+                  </select>
+                  <ChevronDown
+                    size={16}
+                    className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"
+                  />
+                </div>
+                {errors.subject && (
+                  <p className="text-xs text-red-500 font-medium">
+                    {errors.subject}
+                  </p>
+                )}
+              </div>
+
+              {/* Message */}
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor="message"
+                  className="text-[11px] font-bold text-slate-700 uppercase tracking-wider"
+                >
+                  Message <span className="text-[#059669]">*</span>
+                </Label>
+                <textarea
+                  id="message"
+                  rows={3}
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell us how we can help you..."
+                  className={`w-full bg-slate-50/50 border border-slate-200 rounded-2xl p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 focus:border-[#059669] transition-all resize-none ${
+                    errors.message ? "border-red-500 bg-red-50/30" : ""
+                  }`}
+                />
+                {errors.message && (
+                  <p className="text-xs text-red-500 font-medium">
+                    {errors.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isLoading}
+                className="w-full h-11 bg-[#059669] hover:bg-[#047857] text-white font-bold text-sm rounded-xl shadow-md shadow-emerald-900/10 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    <span>Sending Message...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Send Message</span>
+                    <Send size={16} />
+                  </>
+                )}
+              </Button>
+            </form>
+          </motion.div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
