@@ -135,11 +135,11 @@ export default function Footer() {
                 Need Support?
               </span>
               <a
-                href="mailto:info.getjobs@cyber-nest.ca"
+                href="mailto:inquiries@getjobscanada.ca"
                 className="text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors inline-flex items-center gap-2"
               >
                 <Mail size={15} />
-                <span>info.getjobs@cyber-nest.ca</span>
+                <span>inquiries@getjobscanada.ca</span>
               </a>
             </div>
           </div>

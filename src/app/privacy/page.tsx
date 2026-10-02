@@ -175,10 +175,10 @@ export default function PrivacyPolicyPage() {
                 Have questions or requests regarding your personal data deletion or privacy preferences?
               </p>
               <a
-                href="mailto:info.getjobs@cyber-nest.ca"
+                href="mailto:support@getjobscanada.ca"
                 className="text-xs font-bold text-[#059669] hover:underline inline-flex items-center gap-1.5"
               >
-                <span>info.getjobs@cyber-nest.ca</span>
+                <span>support@getjobscanada.ca</span>
                 <ChevronRight size={13} />
               </a>
             </div>

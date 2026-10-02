@@ -67,7 +67,7 @@ const team = [
     bio: "Nikunj leads GetJobsCanada's strategic vision and nationwide growth, building high-trust partnerships with top employers and empowering job seekers across Canada.",
     initials: "ND",
     expertise: ["Executive Leadership", "Workforce Strategy", "Business Growth"],
-    email: "info.getjobs@cyber-nest.ca",
+    email: "support@getjobscanada.ca",
   },
   {
     name: "Sanket Kasvala",
@@ -75,7 +75,7 @@ const team = [
     bio: "Sanket drives our engineering and technology roadmap, engineering high-speed matching systems, intuitive UI experiences, and robust platform security.",
     initials: "SK",
     expertise: ["Platform Architecture", "Full-Stack Tech", "Data Privacy"],
-    email: "info.getjobs@cyber-nest.ca",
+    email: "support@getjobscanada.ca",
   },
 ];
 

@@ -138,7 +138,7 @@ export default function TermsPage() {
           subTitle: "Service Guarantees:",
           points: [
             "Refunds are processed if a technical malfunction prevents a paid job listing from publishing",
-            "Refund requests must be submitted to info.getjobs@cyber-nest.ca within 7 business days",
+            "Refund requests must be submitted to support@getjobscanada.ca within 7 business days",
             "Approved refunds will be credited back to the original payment method within 14 business days",
           ],
         },
@@ -251,10 +251,10 @@ export default function TermsPage() {
                 Have questions regarding our terms or legal compliance? Reach out to our legal team.
               </p>
               <a
-                href="mailto:info.getjobs@cyber-nest.ca"
+                href="mailto:support@getjobscanada.ca"
                 className="text-xs font-bold text-[#059669] hover:underline inline-flex items-center gap-1.5"
               >
-                <span>info.getjobs@cyber-nest.ca</span>
+                <span>support@getjobscanada.ca</span>
                 <ChevronRight size={13} />
               </a>
             </div>

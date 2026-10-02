@@ -194,10 +194,10 @@ export default function ContactPage() {
                 General Inquiries
               </h3>
               <a
-                href="mailto:info.getjobs@cyber-nest.ca"
+                href="mailto:inquiries@getjobscanada.ca"
                 className="text-base font-bold text-slate-900 hover:text-[#059669] transition-colors mt-1 block truncate"
               >
-                info.getjobs@cyber-nest.ca
+                inquiries@getjobscanada.ca
               </a>
               <p className="text-xs text-slate-500 mt-1.5">
                 Average response time: under 24 hours
@@ -212,10 +212,10 @@ export default function ContactPage() {
                 Employer Support
               </h3>
               <a
-                href="mailto:employer.getjobs@cyber-nest.ca"
+                href="mailto:employersupport@getjobscanada.ca"
                 className="text-base font-bold text-slate-900 hover:text-[#059669] transition-colors mt-1 block truncate"
               >
-                employer.getjobs@cyber-nest.ca
+                employersupport@getjobscanada.ca
               </a>
               <p className="text-xs text-slate-500 mt-1.5">
                 Dedicated support for recruiters
