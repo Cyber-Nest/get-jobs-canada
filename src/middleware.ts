@@ -14,7 +14,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // ─── EMPLOYER ROUTE PROTECTION ────────────────────────────────────────────
+  // ─── EMPLOYER ROUTE PROTECTION ───────────────────────────────────────────
   const token =
     req.cookies.get("better-auth.session_token")?.value ||
     req.cookies.get("__Secure-better-auth.session_token")?.value ||
