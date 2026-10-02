@@ -3,90 +3,60 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import {
-  Heart,
   Globe,
-  Users,
-  Shield,
+  ShieldCheck,
   ArrowRight,
-  CheckCircle,
-  Handshake,
-  BookOpen,
+  CheckCircle2,
   TrendingUp,
   MapPin,
+  Briefcase,
+  Zap,
+  Building2,
+  Award,
+  Mail,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
     transition: { duration: 0.5, ease: "easeOut" as const },
   },
 };
+
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.11 } },
+  visible: { transition: { staggerChildren: 0.1 } },
 };
 
-function OrganicShape({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 400 400"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle
-        cx="200"
-        cy="200"
-        r="180"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.15"
-      />
-      <circle
-        cx="200"
-        cy="200"
-        r="130"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.12"
-      />
-      <circle
-        cx="200"
-        cy="200"
-        r="80"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        opacity="0.1"
-      />
-      <circle cx="200" cy="200" r="30" fill="currentColor" opacity="0.08" />
-    </svg>
-  );
-}
+const stats = [
+  { value: "50,000+", label: "Active Canadian Listings", icon: Briefcase },
+  { value: "1,200+", label: "Verified Hiring Employers", icon: Building2 },
+  { value: "100%", label: "Coast-to-Coast Coverage", icon: MapPin },
+  { value: "98%", label: "Job Seeker Satisfaction", icon: Award },
+];
 
 const values = [
   {
-    icon: Heart,
-    title: "Respect & Dignity",
-    desc: "We honour the cultures, traditions, and sovereignty of all Indigenous Peoples across Canada in everything we do.",
-  },
-  {
     icon: Globe,
-    title: "Canada-Wide Inclusion",
-    desc: "From urban centres to remote northern communities, we connect talent and opportunity coast to coast to coast.",
+    title: "Coast-to-Coast Inclusion",
+    desc: "Connecting job seekers and employers from major metropolitan cities like Toronto, Vancouver, and Montreal to every province nationwide.",
   },
   {
-    icon: Users,
-    title: "Community First",
-    desc: "GetJobsCanada is built around community — the job seekers, employers, and Indigenous organizations that make up our network.",
+    icon: ShieldCheck,
+    title: "100% Employer Verification",
+    desc: "Every company on GetJobsCanada undergoes rigorous administrative screening to ensure legitimate, safe, and high-quality job postings.",
   },
   {
-    icon: Shield,
-    title: "Trust & Transparency",
-    desc: "We operate with integrity, ensuring every interaction on our platform is honest, respectful, and purposeful.",
+    icon: Zap,
+    title: "Direct & Fast Applications",
+    desc: "No complicated barriers or redundant forms. Candidates connect directly with decision-makers for faster hiring cycles.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Transparent Opportunity",
+    desc: "We promote clear salary ranges, honest role expectations, and equal access to career advancement for all Canadians.",
   },
 ];
 
@@ -94,535 +64,418 @@ const team = [
   {
     name: "Nikunj Desai",
     role: "Co-Founder & CEO",
-    nation: "Cree Nation, Treaty 6",
-    bio: "Nikunj brings 15 years of experience in Indigenous economic development and workforce strategy across Western Canada.",
+    bio: "Nikunj leads GetJobsCanada's strategic vision and nationwide growth, building high-trust partnerships with top employers and empowering job seekers across Canada.",
     initials: "ND",
+    expertise: ["Executive Leadership", "Workforce Strategy", "Business Growth"],
+    email: "info.getjobs@cyber-nest.ca",
   },
   {
     name: "Sanket Kasvala",
     role: "Co-Founder & CTO",
-    nation: "Métis Nation of Alberta",
-    bio: "Sanket leads our technology vision, building platforms that centre Indigenous user experience and cultural safety.",
+    bio: "Sanket drives our engineering and technology roadmap, engineering high-speed matching systems, intuitive UI experiences, and robust platform security.",
     initials: "SK",
-  },
-  // {
-  //   name: 'Diane Okalik',
-  //   role: 'Director of Community Relations',
-  //   nation: 'Inuit Tapiriit Kanatami',
-  //   bio: 'Diane ensures GetJobsCanada remains grounded in community needs, maintaining relationships with nations and organizations across Canada.',
-  //   initials: 'DO',
-  // },
-  // {
-  //   name: 'Jordan Swifthawk',
-  //   role: 'Head of Employer Partnerships',
-  //   nation: 'Anishinaabe, Treaty 3',
-  //   bio: 'Jordan works directly with employers to build meaningful Indigenous hiring strategies and long-term partnerships.',
-  //   initials: 'JS',
-  // },
-];
-
-const commitments = [
-  {
-    icon: Handshake,
-    title: "Truth & Reconciliation Alignment",
-    desc: "Our platform directly supports the TRC's Calls to Action on economic development and employment, providing a dedicated space for Indigenous economic participation.",
-  },
-  {
-    icon: BookOpen,
-    title: "Employer Education",
-    desc: "We provide employers with resources, guides, and consultation to write culturally respectful job postings and build genuinely inclusive workplaces.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Career Advancement Support",
-    desc: "Beyond job listings, we offer resume guidance, interview preparation, and career development resources tailored for Indigenous professionals.",
-  },
-  {
-    icon: MapPin,
-    title: "Remote & Northern Access",
-    desc: "We actively work to include opportunities in remote and northern communities, ensuring geography is never a barrier to meaningful employment.",
+    expertise: ["Platform Architecture", "Full-Stack Tech", "Data Privacy"],
+    email: "info.getjobs@cyber-nest.ca",
   },
 ];
 
-const stats = [
-  { value: "60+", label: "Nations & Communities Served" },
-  { value: "500+", label: "Employers on Platform" },
-  { value: "12,000+", label: "Job Seekers Registered" },
-  { value: "10", label: "Provinces & Territories" },
+const provinces = [
+  "Ontario",
+  "British Columbia",
+  "Alberta",
+  "Quebec",
+  "Nova Scotia",
+  "Manitoba",
+  "Saskatchewan",
+  "New Brunswick",
+  "Newfoundland & Labrador",
+  "Prince Edward Island",
+  "Territories (Yukon, NWT, Nunavut)",
 ];
 
 export default function AboutPage() {
   return (
-    <>
-      {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="bg-[#FAF5EE] py-20 lg:py-28 relative overflow-hidden">
-        <OrganicShape className="absolute -right-24 top-1/2 -translate-y-1/2 w-[520px] h-[520px] text-[#C8782A] pointer-events-none" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:h-[60vh]">
+    <div className="bg-slate-50/50 min-h-screen font-sans text-slate-900 pb-20">
+      {/* ── HERO BANNER ──────────────────────────────────────────────────── */}
+      <section className="relative bg-gradient-to-b from-emerald-50/60 via-white to-slate-50/50 border-b border-slate-200/60 pt-8 pb-12 sm:pt-10 sm:pb-14 lg:pt-12 lg:pb-16 overflow-hidden">
+        <div className="absolute top-0 right-10 w-96 h-96 bg-[#059669]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
           <motion.div
             variants={stagger}
             initial="hidden"
             animate="visible"
-            className="max-w-3xl"
+            className="max-w-3xl text-left"
           >
-            <motion.p
+            {/* Dual-Pill Badge */}
+            <motion.div
               variants={fadeUp}
-              className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-4"
+              className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-emerald-50/80 border border-emerald-200/80 shadow-xs mb-4"
             >
-              About GetJobsCanada
-            </motion.p>
+              <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+                ABOUT US
+              </span>
+              <span className="text-xs font-semibold text-slate-700 leading-none">
+                Empowering Canada&apos;s Modern Workforce
+              </span>
+            </motion.div>
+
             <motion.h1
               variants={fadeUp}
-              className="text-5xl lg:text-6xl font-bold text-[#1C1C1C] mb-6 leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4"
             >
-              Built with Purpose.{" "}
-              <span className="text-[#C8782A]">Built for People.</span>
+              Connecting Canadian Talent with{" "}
+              <span className="text-[#059669]">Exceptional Jobs</span>
             </motion.h1>
+
             <motion.p
               variants={fadeUp}
-              className="text-[#6B3A2A]/75 text-lg leading-relaxed mb-8"
+              className="text-slate-600 text-base sm:text-lg lg:text-xl leading-relaxed mb-8"
             >
-              GetJobsCanada is Canada's dedicated job platform
-              connecting First Nations, Métis, and Inuit job seekers with
-              employers who are committed to inclusive, respectful hiring. We
-              believe meaningful employment is a cornerstone of community
-              wellbeing and reconciliation.
+              GetJobsCanada is Canada&apos;s premier modern career network — built specifically to connect ambitious job seekers, skilled professionals, and verified employers across all 10 provinces and territories.
             </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-              <Link href="/jobs">
-                <Button className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold px-7">
-                  Search Job
-                </Button>
+
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/jobs"
+                className="px-6 py-3.5 bg-[#059669] hover:bg-[#047857] text-white font-semibold text-sm rounded-2xl shadow-lg shadow-emerald-950/20 transition-all flex items-center gap-2 group"
+              >
+                <span>Explore Opportunities</span>
+                <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
               </Link>
-              <Link href="/register">
-                <Button
-                  variant="outline"
-                  className="border-[#C8782A] text-[#C8782A] hover:bg-[#C8782A]/10 hover:text-black font-semibold px-7"
-                >
-                  Hire with Us
-                </Button>
+
+              <Link
+                href="/register"
+                className="px-6 py-3.5 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm rounded-2xl border border-slate-200 shadow-xs transition-all flex items-center gap-2"
+              >
+                <Building2 size={16} className="text-[#059669]" />
+                <span>Post a Job as Employer</span>
               </Link>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* ── STATS BAR ────────────────────────────────────────────────────── */}
-      <section className="bg-[#C8782A] py-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center"
-          >
-            {stats.map((s) => (
-              <motion.div key={s.label} variants={fadeUp}>
-                <p
-                  className="text-4xl font-bold text-white mb-1"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
+      {/* ── STATS COUNTER BAR ───────────────────────────────────────────── */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 -mt-8 relative z-10">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 bg-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl"
+        >
+          {stats.map((s) => (
+            <motion.div key={s.label} variants={fadeUp} className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-[#059669] flex items-center justify-center flex-shrink-0">
+                <s.icon size={22} />
+              </div>
+              <div>
+                <p className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                   {s.value}
                 </p>
-                <p className="text-white/75 text-sm font-medium">{s.label}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+                <p className="text-slate-400 text-xs sm:text-sm font-medium mt-0.5">
+                  {s.label}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </section>
 
-      {/* ── MISSION ──────────────────────────────────────────────────────── */}
-      <section className="bg-[#6B3A2A] py-16 lg:py-24 relative overflow-hidden">
-        <OrganicShape className="absolute -left-20 top-1/2 -translate-y-1/2 w-80 h-80 text-[#C8782A] pointer-events-none" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* ── OUR MISSION & VALUES GRID ───────────────────────────────────── */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-16 lg:py-24">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="text-left mb-12 max-w-3xl"
+        >
+          <motion.div
+            variants={fadeUp}
+            className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-emerald-50/80 border border-emerald-200/80 shadow-xs mb-3"
+          >
+            <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+              OUR MISSION
+            </span>
+            <span className="text-xs font-semibold text-slate-700 leading-none">
+              Driving Employment Growth Across Canada
+            </span>
+          </motion.div>
+          
+          <motion.h2
+            variants={fadeUp}
+            className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight"
+          >
+            Built for Job Seekers & Top Employers Nationwide
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed"
+          >
+            Our core mission is simple: eliminate hiring friction, ensure candidate dignity, and give every Canadian easy access to meaningful career advancement.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {values.map((v) => (
+            <motion.div
+              key={v.title}
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:border-emerald-300 transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center mb-5 border border-emerald-100">
+                  <v.icon size={22} />
+                </div>
+                <h3 className="font-bold text-slate-900 text-lg mb-2">
+                  {v.title}
+                </h3>
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                  {v.desc}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* ── WHY GETJOBSCANADA (SPLIT HIGHLIGHT SECTION) ─────────────────── */}
+      <section className="bg-slate-900 text-white py-16 lg:py-24 border-y border-slate-800 relative overflow-hidden">
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#059669]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Content */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              className="lg:col-span-6 text-left"
             >
-              <p className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-4">
-                Our Mission
-              </p>
-              <h2
-                className="text-4xl font-bold text-[#FAF5EE] mb-5 leading-tight"
-                style={{ fontFamily: "'Playfair Display', serif" }}
-              >
-                Connecting Indigenous Talent Across Canada
+              <div className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-slate-800 border border-slate-700 shadow-xs mb-4">
+                <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+                  WHY US
+                </span>
+                <span className="text-xs font-semibold text-slate-300 leading-none">
+                  The Preferred Platform for Canadians
+                </span>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4 leading-tight">
+                Modern Recruitment Engineered for the Canadian Market
               </h2>
-              <p className="text-[#FAF5EE]/70 leading-relaxed mb-5">
-                GetJobsCanada was created to address a clear need: a
-                dedicated, respectful space where Indigenous job seekers can
-                find meaningful employment and where employers can connect with
-                talented Indigenous professionals.
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                Finding the right job or hiring qualified candidates in Canada shouldn&apos;t require navigating outdated job boards filled with spam. GetJobsCanada delivers a streamlined, modern experience.
               </p>
-              <p className="text-[#FAF5EE]/70 leading-relaxed">
-                We are committed to supporting the Truth and Reconciliation
-                Commission's Calls to Action related to economic development and
-                employment. Every feature of our platform is designed with
-                cultural sensitivity and genuine respect for the diversity of
-                Indigenous Peoples across Turtle Island.
-              </p>
+
+              <div className="space-y-3">
+                {[
+                  "Direct connection between verified employers and candidates",
+                  "Comprehensive support across IT, Healthcare, Skilled Trades, Finance & Remote roles",
+                  "Full compliance with Canadian Labour Standards and Employment Privacy",
+                  "Fast application submission with no hidden platform fees for job seekers",
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-[#059669] flex-shrink-0 mt-0.5" />
+                    <span className="text-xs sm:text-sm text-slate-300 font-medium leading-normal">
+                      {item}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
 
+            {/* Right Interactive Card Box */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              className="lg:col-span-6"
             >
-              <div className="bg-white/8 border border-white/10 rounded-3xl p-10">
-                <h3
-                  className="text-2xl font-bold text-[#FAF5EE] mb-6"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
-                  Our Commitment
-                </h3>
-                <ul className="flex flex-col gap-4">
-                  {[
-                    "Respectful representation of all Indigenous Peoples — First Nations, Métis, and Inuit",
-                    "A safe, welcoming platform free from discrimination",
-                    "Ongoing consultation with Indigenous communities",
-                    "Support for Indigenous-owned businesses and organizations",
-                    "Continuous improvement guided by community feedback",
-                  ].map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-[#FAF5EE]/75 text-sm leading-relaxed"
+              <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+                <div className="flex items-center justify-between pb-6 border-b border-slate-800/80 mb-6">
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-1">
+                      Nationwide Hub
+                    </span>
+                    <h4 className="text-lg font-bold text-white">Canada Wide Coverage</h4>
+                  </div>
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-[#059669] flex items-center justify-center font-bold text-base">
+                    🇨🇦
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
+                  Whether you are seeking remote work in Toronto, engineering positions in Calgary, tech roles in Vancouver, or municipal jobs in Atlantic Canada, our platform aggregates top hiring companies nationwide.
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {provinces.map((prov) => (
+                    <span
+                      key={prov}
+                      className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-300"
                     >
-                      <CheckCircle
-                        size={15}
-                        className="text-[#C8782A] flex-shrink-0 mt-0.5"
-                      />
-                      {item}
-                    </li>
+                      {prov}
+                    </span>
                   ))}
-                </ul>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── VALUES ───────────────────────────────────────────────────────── */}
-      <section className="bg-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:h-[60vh]">
+      {/* ── OUR TEAM SECTION ("The People Behind GetJobsCanada") ─────────── */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-16 lg:py-24">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="text-left mb-12 max-w-3xl"
+        >
           <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-center mb-12"
+            variants={fadeUp}
+            className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-emerald-50/80 border border-emerald-200/80 shadow-xs mb-3"
           >
-            <motion.p
-              variants={fadeUp}
-              className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-3"
-            >
-              Our Values
-            </motion.p>
-            <motion.h2
-              variants={fadeUp}
-              className="text-4xl font-bold text-[#1C1C1C]"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              What Guides Us
-            </motion.h2>
-          </motion.div>
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {values.map((v) => (
-              <motion.div
-                key={v.title}
-                variants={fadeUp}
-                whileHover={{ y: -4 }}
-                className="bg-[#FAF5EE] rounded-2xl p-7 border border-[#C8782A]/10 hover:shadow-lg transition-shadow duration-200"
-              >
-                <div className="w-11 h-11 rounded-xl bg-[#C8782A]/10 flex items-center justify-center mb-5">
-                  <v.icon size={20} className="text-[#C8782A]" />
-                </div>
-                <h3
-                  className="font-bold text-[#1C1C1C] text-lg mb-2"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
-                  {v.title}
-                </h3>
-                <p className="text-[#6B3A2A]/70 text-sm leading-relaxed">
-                  {v.desc}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── TEAM ─────────────────────────────────────────────────────────── */}
-      <section className="bg-[#FAF5EE] py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <motion.p
-              variants={fadeUp}
-              className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-3"
-            >
-              Our Team
-            </motion.p>
-            <motion.h2
-              variants={fadeUp}
-              className="text-4xl font-bold text-[#1C1C1C] mb-4"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
+            <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+              OUR TEAM
+            </span>
+            <span className="text-xs font-semibold text-slate-700 leading-none">
               The People Behind GetJobsCanada
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              className="text-[#6B3A2A]/70 max-w-2xl mx-auto leading-relaxed"
-            >
-              Our team is Indigenous-led and community-driven. We bring lived
-              experience, professional expertise, and deep commitment to every
-              aspect of the platform.
-            </motion.p>
+            </span>
           </motion.div>
-
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6"
+          
+          <motion.h2
+            variants={fadeUp}
+            className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-2"
           >
-            {team.map((member) => (
-              <motion.div
-                key={member.name}
-                variants={fadeUp}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-2xl p-7 border border-[#C8782A]/10 hover:shadow-lg transition-shadow duration-200 flex flex-col"
-              >
-                {/* Avatar */}
-                <div className="w-16 h-16 rounded-full bg-[#C8782A] flex items-center justify-center mb-5 flex-shrink-0">
-                  <span
-                    className="text-white font-bold text-xl"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
+            The Leadership Team
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            className="text-slate-600 text-sm sm:text-base leading-relaxed"
+          >
+            Our founders bring deep expertise in workforce technology, business innovation, and digital platform development to serve job seekers and employers across Canada.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+        >
+          {team.map((member) => (
+            <motion.div
+              key={member.name}
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all flex flex-col justify-between text-left"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  {/* Avatar Initials Badge */}
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#059669] to-emerald-700 text-white font-extrabold text-xl flex items-center justify-center shadow-lg shadow-emerald-950/20">
                     {member.initials}
+                  </div>
+                  <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-[#059669] border border-emerald-200/60">
+                    Executive
                   </span>
                 </div>
-                <h3
-                  className="font-bold text-[#1C1C1C] text-lg mb-0.5"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
+
+                <h3 className="text-xl font-extrabold text-slate-900 mb-0.5">
                   {member.name}
                 </h3>
-                <p className="text-[#C8782A] text-sm font-semibold mb-1">
+                <p className="text-sm font-bold text-[#059669] mb-4">
                   {member.role}
                 </p>
-                <p className="text-[#6B3A2A]/50 text-xs mb-4 italic">
-                  {member.nation}
-                </p>
-                <p className="text-[#6B3A2A]/70 text-sm leading-relaxed">
+
+                <p className="text-slate-600 text-sm leading-relaxed mb-6">
                   {member.bio}
                 </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+              </div>
 
-      {/* ── INDIGENOUS HIRING COMMITMENT ─────────────────────────────────── */}
-      <section className="bg-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <motion.p
-              variants={fadeUp}
-              className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-3"
-            >
-              Indigenous Hiring
-            </motion.p>
-            <motion.h2
-              variants={fadeUp}
-              className="text-4xl font-bold text-[#1C1C1C] mb-4"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Our Commitment to Meaningful Employment
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              className="text-[#6B3A2A]/70 max-w-2xl mx-auto leading-relaxed"
-            >
-              We go beyond job listings. GetJobsCanada actively works
-              to remove barriers, educate employers, and create pathways to
-              lasting, dignified employment for Indigenous Peoples.
-            </motion.p>
-          </motion.div>
-
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-6"
-          >
-            {commitments.map((c) => (
-              <motion.div
-                key={c.title}
-                variants={fadeUp}
-                className="flex gap-5 bg-[#FAF5EE] rounded-2xl p-7 border border-[#C8782A]/10 hover:shadow-md transition-shadow duration-200"
-              >
-                <div className="w-12 h-12 rounded-xl bg-[#C8782A]/10 flex items-center justify-center flex-shrink-0">
-                  <c.icon size={22} className="text-[#C8782A]" />
+              <div>
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100 mb-4">
+                  {member.expertise.map((exp) => (
+                    <span
+                      key={exp}
+                      className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600"
+                    >
+                      {exp}
+                    </span>
+                  ))}
                 </div>
-                <div>
-                  <h3
-                    className="font-bold text-[#1C1C1C] text-lg mb-2"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
-                    {c.title}
-                  </h3>
-                  <p className="text-[#6B3A2A]/70 text-sm leading-relaxed">
-                    {c.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+
+                <a
+                  href={`mailto:${member.email}`}
+                  className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-[#059669] transition-colors"
+                >
+                  <Mail size={14} />
+                  <span>Contact Executive Team</span>
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </section>
 
-      {/* ── LAND ACKNOWLEDGEMENT ─────────────────────────────────────────── */}
-      <section className="bg-[#FAF5EE] py-16 lg:py-20">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <motion.div
-              variants={fadeUp}
-              className="w-16 h-16 rounded-full bg-[#C8782A]/15 flex items-center justify-center mx-auto mb-6"
-            >
-              <svg
-                viewBox="0 0 36 36"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-8 h-8"
-                aria-hidden="true"
-              >
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="16"
-                  stroke="#C8782A"
-                  strokeWidth="2"
-                  fill="none"
-                />
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="10"
-                  stroke="#C8782A"
-                  strokeWidth="1.5"
-                  fill="none"
-                  opacity="0.6"
-                />
-                <circle cx="18" cy="18" r="4" fill="#C8782A" />
-                <path
-                  d="M18 2 Q26 10 18 18 Q10 10 18 2Z"
-                  fill="#C8782A"
-                  opacity="0.25"
-                />
-              </svg>
-            </motion.div>
-            <motion.p
-              variants={fadeUp}
-              className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-4"
-            >
-              Land Acknowledgement
-            </motion.p>
-            <motion.h2
-              variants={fadeUp}
-              className="text-3xl font-bold text-[#1C1C1C] mb-5"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Honouring the Land
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              className="text-[#6B3A2A]/75 leading-relaxed text-lg"
-            >
-              GetJobsCanada respectfully acknowledges the Indigenous
-              Peoples of Canada on whose traditional, ancestral, and unceded
-              territories we work and live. We recognize the enduring presence
-              of First Nations, Métis, and Inuit Peoples across Turtle Island
-              and are committed to walking the path of reconciliation with
-              humility, respect, and purpose.
-            </motion.p>
-          </motion.div>
-        </div>
-      </section>
+      {/* ── CUSTOM ADVISORY & SUPPORT CALLOUT (Light Theme - Avoids Footer Duplication) ── */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="bg-gradient-to-br from-emerald-50/90 via-white to-slate-50 border border-emerald-200/80 rounded-3xl p-6 sm:p-9 shadow-sm relative overflow-hidden text-left flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="max-w-2xl">
+            {/* Dual-Pill Badge */}
+            <div className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-emerald-100/60 border border-emerald-200 shadow-xs mb-3">
+              <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+                SUPPORT & INQUIRIES
+              </span>
+              <span className="text-xs font-semibold text-slate-800 leading-none">
+                Direct Canadian Platform Assistance
+              </span>
+            </div>
 
-      {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="bg-[#C8782A] py-16 relative overflow-hidden">
-        <OrganicShape className="absolute -right-20 top-1/2 -translate-y-1/2 w-80 h-80 text-white pointer-events-none" />
-        <div className="relative max-w-4xl mx-auto px-4 text-center">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <motion.h2
-              variants={fadeUp}
-              className="text-4xl font-bold text-white mb-4"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+              Have questions or need custom employer hiring solutions?
+            </h3>
+            <p className="text-slate-600 text-xs sm:text-sm mt-1.5 leading-relaxed">
+              Our Canadian team is here to assist job seekers with candidate profiles and provide employers with tailored hiring and job posting packages.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+            <Link
+              href="/contact"
+              className="w-full sm:w-auto px-6 py-3 bg-[#059669] hover:bg-[#047857] text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md shadow-emerald-950/10 transition-all flex items-center justify-center gap-2 whitespace-nowrap"
             >
-              Join the GetJobsCanada Community
-            </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/80 mb-8 text-lg">
-              Whether you're looking for work or looking to hire — GetJobsCanada is here for you.
-            </motion.p>
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-wrap gap-4 justify-center"
+              <Mail size={15} />
+              <span>Contact Support Team</span>
+            </Link>
+
+            <Link
+              href="/pricing"
+              className="w-full sm:w-auto px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs sm:text-sm rounded-xl border border-slate-200 shadow-xs transition-all flex items-center justify-center gap-2 whitespace-nowrap"
             >
-              <Link href="/jobs">
-                <Button
-                  size="lg"
-                  className="bg-white text-[#C8782A] hover:bg-[#FAF5EE] font-semibold px-10"
-                >
-                  Search Jobs
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-[#C8782A] font-semibold px-10"
-                >
-                  Contact Us <ArrowRight size={16} className="ml-2" />
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
+              <Building2 size={15} className="text-[#059669]" />
+              <span>View Employer Packages</span>
+            </Link>
+          </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
