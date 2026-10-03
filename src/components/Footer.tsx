@@ -103,8 +103,13 @@ export default function Footer() {
             <div>
               <Link
                 href="/"
-                className="inline-flex items-center gap-1 group mb-4"
+                className="inline-flex items-center gap-2.5 group mb-4"
               >
+                <img
+                  src="/logo.svg"
+                  alt="GetJobsCanada Logo"
+                  className="w-8 h-8 rounded-xl shadow-xs"
+                />
                 <span className="font-extrabold text-2xl tracking-tight text-white group-hover:text-emerald-400 transition-colors">
                   GetJobs
                   <span className="text-[#059669] font-black">Canada</span>

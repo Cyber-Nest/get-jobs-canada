@@ -30,11 +30,11 @@ export const metadata: Metadata = {
     "Canada job board",
     "Canadian careers",
     "remote jobs Canada",
-    "inclusive employers",
-    "First Nations jobs",
-    "Métis jobs",
-    "Inuit careers",
-    "Indigenous employment",
+    "verified Canadian employers",
+    "Ontario jobs",
+    "BC jobs",
+    "Alberta careers",
+    "Quebec employment",
   ],
 
   authors: [{ name: "GetJobsCanada" }],
@@ -42,7 +42,9 @@ export const metadata: Metadata = {
   publisher: "GetJobsCanada",
 
   icons: {
-    icon: "/logo.svg",
+    icon: [
+      { url: "/logo.svg", type: "image/svg+xml" },
+    ],
     shortcut: "/logo.svg",
     apple: "/logo.svg",
   },

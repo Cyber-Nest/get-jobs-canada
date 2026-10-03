@@ -114,8 +114,13 @@ export default function Header() {
             {/* Logo */}
             <Link
               href="/"
-              className="flex items-center gap-1 group flex-shrink-0"
+              className="flex items-center gap-2.5 group flex-shrink-0"
             >
+              {/* <img
+                src="/logo.svg"
+                alt="GetJobsCanada Logo"
+                className="w-8 h-8 rounded-xl shadow-xs group-hover:scale-105 transition-transform duration-200"
+              /> */}
               <span className="font-extrabold text-2xl tracking-tight text-slate-900 group-hover:text-[#059669] transition-colors duration-200">
                 GetJobs<span className="text-[#059669] font-black">Canada</span>
               </span>
