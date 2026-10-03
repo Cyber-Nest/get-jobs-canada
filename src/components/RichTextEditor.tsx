@@ -198,7 +198,8 @@ export default function RichTextEditor({
         }
         
         .custom-quill-editor .ql-container:focus-within {
-          box-shadow: 0 0 0 2px rgba(200, 120, 42, 0.2);
+          box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
+          border-color: #059669 !important;
         }
       `}</style>
 
@@ -221,7 +222,7 @@ export default function RichTextEditor({
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mt-3 px-1">
-        <div className="text-xs text-[#6B3A2A]/50">
+        <div className="text-xs text-slate-500">
           {required && !value && (
             <span className="required-indicator text-red-500">
               <svg className="w-3 h-3 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -232,18 +233,13 @@ export default function RichTextEditor({
               Required field
             </span>
           )}
-          {/* {!required && (
-            <span className="text-[#6B3A2A]/40">
-              {isMobile ? '💡' : 'Tip:'} Use formatting tools to style your text
-            </span>
-          )} */}
         </div>
 
-        <div className={`char-counter text-xs px-2 py-1 mr-2 rounded-full ${isLimitReached
+        <div className={`char-counter text-xs px-2.5 py-1 mr-2 rounded-full ${isLimitReached
             ? 'bg-red-50 text-red-600 font-semibold'
             : charCount > maxLength * 0.9
               ? 'bg-yellow-50 text-yellow-700'
-              : 'bg-gray-50 text-[#6B3A2A]/60'
+              : 'bg-slate-100 text-slate-600 font-medium'
           }`}>
           <span className="inline-flex items-center gap-1.5">
             <span className="hidden xs:inline">📄</span>

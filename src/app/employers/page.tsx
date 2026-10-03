@@ -1,63 +1,126 @@
 "use client";
 
-import Link from 'next/link';
-import { motion } from 'motion/react';
-import { Building2, Users, Star, BarChart3, CheckCircle, ArrowRight, Briefcase, Globe, HeartHandshake } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import Link from "next/link";
+import { motion } from "motion/react";
+import {
+  Building2,
+  Users,
+  Star,
+  BarChart3,
+  CheckCircle,
+  ArrowRight,
+  Briefcase,
+  Globe,
+  HeartHandshake,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } };
 
-function OrganicShape({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
-      <circle cx="200" cy="200" r="180" stroke="currentColor" strokeWidth="1" opacity="0.15" />
-      <circle cx="200" cy="200" r="130" stroke="currentColor" strokeWidth="1" opacity="0.12" />
-      <circle cx="200" cy="200" r="80" stroke="currentColor" strokeWidth="1.5" opacity="0.1" />
-      <circle cx="200" cy="200" r="30" fill="currentColor" opacity="0.08" />
-    </svg>
-  );
-}
-
 const features = [
-  { icon: Briefcase, title: 'Post Job Listings', desc: 'Reach thousands of qualified Indigenous job seekers across Canada with targeted, effective job postings.' },
-  { icon: Users, title: 'Manage Applicants', desc: 'Review, organize, and communicate with applicants through your dedicated employer dashboard.' },
-  { icon: Star, title: 'Featured Listings', desc: 'Boost your visibility with featured placements that appear at the top of search results.' },
-  { icon: Building2, title: 'Company Profile', desc: 'Showcase your organization\'s commitment to Indigenous hiring with a dedicated company profile page.' },
-  { icon: HeartHandshake, title: 'Hiring Support', desc: 'Access resources, guidance, and best practices for respectful and effective Indigenous recruitment.' },
-  { icon: BarChart3, title: 'Performance Insights', desc: 'Track your listing views, applications received, and hiring outcomes with clear reporting tools.' },
+  {
+    icon: Briefcase,
+    title: "Post Job Listings",
+    desc: "Reach thousands of qualified job seekers across Canada with targeted, effective job postings.",
+  },
+  {
+    icon: Users,
+    title: "Manage Applicants",
+    desc: "Review, organize, and communicate with applicants through your dedicated employer dashboard.",
+  },
+  {
+    icon: Star,
+    title: "Featured Listings",
+    desc: "Boost your visibility with featured placements that appear at the top of search results.",
+  },
+  {
+    icon: Building2,
+    title: "Company Profile",
+    desc: "Showcase your organization's brand and career culture with a dedicated employer dashboard.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Verified Hiring",
+    desc: "Access verified Canadian candidate pools with direct application management.",
+  },
+  {
+    icon: BarChart3,
+    title: "Performance Insights",
+    desc: "Track your listing views, applications received, and hiring outcomes with clear reporting tools.",
+  },
 ];
 
 export default function EmployersPage() {
   return (
-    <>
-      {/* Hero */}
-      <section className="bg-[#6B3A2A] py-20 lg:py-28 relative overflow-hidden">
-        <OrganicShape className="absolute -right-24 top-1/2 -translate-y-1/2 w-[480px] h-[480px] text-[#C8782A] pointer-events-none" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:h-[60vh]">
-          <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-2xl">
-            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 bg-white/15 rounded-full px-4 py-1.5 mb-6">
-              <Building2 size={14} className="text-[#C8782A]" />
-              <span className="text-[#FAF5EE] text-xs font-semibold uppercase tracking-wider">For Employers</span>
+    <div className="bg-slate-50/50 min-h-screen font-sans text-slate-900 pb-20">
+      
+      {/* ── 1. HERO SECTION ───────────────────────────────────────────────── */}
+      <section className="relative bg-[#0F172A] text-white border-b border-slate-800 py-16 sm:py-20 lg:py-28 overflow-hidden text-left">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#059669]/15 rounded-full blur-[130px] pointer-events-none" />
+
+        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+            className="max-w-3xl"
+          >
+            {/* Dual-Pill Badge */}
+            <motion.div
+              variants={fadeUp}
+              className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-slate-900 border border-slate-800 shadow-xs mb-6"
+            >
+              <span className="bg-[#059669] text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider leading-none">
+                FOR EMPLOYERS
+              </span>
+              <span className="text-xs font-semibold text-slate-300 leading-none">
+                Nationwide Hiring & Recruitment Solutions
+              </span>
             </motion.div>
-            <motion.h1 variants={fadeUp} className="text-5xl lg:text-6xl font-bold text-[#FAF5EE] mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Hire Indigenous Talent <span className="text-[#C8782A]">Across Canada</span>
+
+            {/* Headline */}
+            <motion.h1
+              variants={fadeUp}
+              className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08] mb-6"
+            >
+              Hire Qualified Talent <span className="text-[#059669]">Across Canada</span>
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-[#FAF5EE]/75 text-lg leading-relaxed mb-8">
-              GetJobsCanada connects your organization with skilled First Nations, Métis, and Inuit professionals. Build a workforce that reflects the richness and diversity of Canada.
+
+            {/* Subtitle */}
+            <motion.p
+              variants={fadeUp}
+              className="text-slate-300 text-base sm:text-lg lg:text-xl leading-relaxed mb-8 max-w-2xl font-medium"
+            >
+              GetJobsCanada connects your business with qualified professionals nationwide across all 10 provinces & territories. Post jobs with zero expiration dates on credits.
             </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
+
+            {/* Buttons */}
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
               <Link href="/post-a-job">
-                <Button size="lg" className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold px-8">
-                  Post a Job <ArrowRight size={16} className="ml-2" />
+                <Button
+                  size="lg"
+                  className="bg-[#059669] hover:bg-[#047857] text-white font-extrabold px-8 h-12 rounded-2xl shadow-lg shadow-emerald-950/50"
+                >
+                  Post a Job Now <ArrowRight size={16} className="ml-2" />
                 </Button>
               </Link>
               <Link href="/pricing">
-                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-[#6B3A2A] font-semibold px-8">
-                  View Packages
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-slate-700 bg-slate-900 text-white hover:bg-slate-800 font-extrabold px-8 h-12 rounded-2xl"
+                >
+                  View Credit Packages
                 </Button>
               </Link>
             </motion.div>
@@ -65,73 +128,140 @@ export default function EmployersPage() {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="bg-[#FAF5EE] py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-12">
-            <motion.p variants={fadeUp} className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-3">Employer Tools</motion.p>
-            <motion.h2 variants={fadeUp} className="text-4xl lg:text-5xl font-bold text-[#1C1C1C]" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Everything You Need to Hire Well
-            </motion.h2>
+      {/* ── 2. FEATURES GRID ──────────────────────────────────────────────── */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-16 lg:py-24">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="text-left mb-12 max-w-3xl"
+        >
+          <motion.div
+            variants={fadeUp}
+            className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-emerald-50 border border-emerald-200/80 shadow-xs mb-3"
+          >
+            <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+              EMPLOYER SUITE
+            </span>
+            <span className="text-xs font-semibold text-slate-700 leading-none">
+              Modern Recruitment Tools
+            </span>
           </motion.div>
-          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((f) => (
-              <motion.div key={f.title} variants={fadeUp} whileHover={{ y: -4 }} className="bg-white rounded-2xl p-7 border border-[#C8782A]/10 transition-shadow duration-200 hover:shadow-lg">
-                <div className="w-11 h-11 rounded-xl bg-[#C8782A]/10 flex items-center justify-center mb-5">
-                  <f.icon size={20} className="text-[#C8782A]" />
+
+          <motion.h2
+            variants={fadeUp}
+            className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight"
+          >
+            Everything You Need to Hire Top Talent
+          </motion.h2>
+        </motion.div>
+
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left"
+        >
+          {features.map((f) => (
+            <motion.div
+              key={f.title}
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              className="bg-white rounded-3xl p-7 border border-slate-200/80 hover:border-emerald-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+            >
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center font-bold mb-5">
+                  <f.icon size={22} />
                 </div>
-                <h3 className="font-bold text-[#1C1C1C] text-lg mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>{f.title}</h3>
-                <p className="text-[#6B3A2A]/70 text-sm leading-relaxed">{f.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+                <h3 className="font-extrabold text-slate-900 text-lg mb-2">
+                  {f.title}
+                </h3>
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-medium">
+                  {f.desc}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </section>
 
-      {/* Why Indigenous Hiring */}
-      <section className="bg-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <p className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-3">Indigenous Hiring Support</p>
-              <h2 className="text-4xl font-bold text-[#1C1C1C] mb-5" style={{ fontFamily: "'Playfair Display', serif" }}>
-                Committed to Reconciliation Through Employment
+      {/* ── 3. NATIONWIDE ADVANTAGE SHOWCASE ─────────────────────────────── */}
+      <section className="bg-white py-16 lg:py-24 border-y border-slate-200/70">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-left">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="bg-[#059669] text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">
+                CANADA-WIDE IMPACT
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-5">
+                Streamlined Recruitment Engineered for Canada
               </h2>
-              <p className="text-[#6B3A2A]/75 leading-relaxed mb-6">
-                Hiring Indigenous talent is not just good business — it's a meaningful step toward reconciliation. GetJobsCanada supports your organization with the tools, resources, and connections to make inclusive hiring a reality.
+              <p className="text-slate-600 leading-relaxed mb-6 font-medium text-sm sm:text-base">
+                Finding qualified candidates in Canada shouldn&apos;t require navigating outdated, noisy job boards filled with spam. GetJobsCanada delivers a clean, modern hiring experience with direct candidate messaging and non-expiring posting credits.
               </p>
-              <ul className="flex flex-col gap-3 mb-8">
+
+              <div className="space-y-3 mb-8">
                 {[
-                  'Access to a dedicated pool of Indigenous job seekers',
-                  'Guidance on respectful and inclusive job postings',
-                  'Resources for Indigenous workplace inclusion',
-                  'Support for Truth and Reconciliation commitments',
-                  'Connection to Indigenous communities and organizations',
+                  "Access to qualified professionals across all 10 provinces & territories",
+                  "Non-expiring job posting credits for flexible hiring schedules",
+                  "Transparent salary ranges, employment types, and NOC classifications",
+                  "Direct applications without recruiter middleman delays",
+                  "Full control over job status (Active, Closed, Expired) from dashboard",
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-[#1C1C1C]/75">
-                    <CheckCircle size={16} className="text-[#7A9E7E] flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
+                  <div key={item} className="flex items-start gap-3 text-xs sm:text-sm text-slate-800 font-bold">
+                    <CheckCircle size={18} className="text-[#059669] flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
+
               <Link href="/contact">
-                <Button className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold">
-                  Contact GetJobsCanada <ArrowRight size={16} className="ml-2" />
+                <Button className="bg-[#059669] hover:bg-[#047857] text-white font-extrabold text-sm px-7 py-3.5 rounded-2xl shadow-md flex items-center gap-2">
+                  <span>Contact Employer Support</span>
+                  <ArrowRight size={16} />
                 </Button>
               </Link>
             </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <div className="bg-[#6B3A2A] rounded-3xl p-10 text-[#FAF5EE] relative overflow-hidden">
-                <OrganicShape className="absolute -right-16 -bottom-16 w-64 h-64 text-[#C8782A] pointer-events-none" />
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="bg-slate-900 rounded-3xl p-8 sm:p-10 text-white relative overflow-hidden border border-slate-800 shadow-2xl">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#059669]/15 rounded-full blur-3xl pointer-events-none" />
+
                 <div className="relative z-10">
-                  <Globe size={32} className="text-[#C8782A] mb-5" />
-                  <h3 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Canada-Wide Reach</h3>
-                  <p className="text-[#FAF5EE]/70 leading-relaxed mb-6">Your job postings reach Indigenous job seekers in every province and territory — from major urban centres to remote and northern communities.</p>
+                  <Globe size={36} className="text-[#059669] mb-5" />
+                  <h3 className="text-2xl font-black mb-3 text-white">
+                    Nationwide Coverage
+                  </h3>
+                  <p className="text-slate-300 leading-relaxed mb-8 text-sm font-medium">
+                    Your job postings reach candidates from Toronto to Vancouver, Calgary to Halifax, and across all northern territories.
+                  </p>
+
                   <div className="grid grid-cols-2 gap-4">
-                    {[{ v: '15,000+', l: 'Active Job Seekers' }, { v: '850+', l: 'Employers' }, { v: '13', l: 'Provinces & Territories' }, { v: '2,400+', l: 'Jobs Posted' }].map((s) => (
-                      <div key={s.l}>
-                        <p className="text-2xl font-bold text-[#C8782A]" style={{ fontFamily: "'Playfair Display', serif" }}>{s.v}</p>
-                        <p className="text-[#FAF5EE]/60 text-xs mt-0.5">{s.l}</p>
+                    {[
+                      { v: "50,000+", l: "Active Job Seekers" },
+                      { v: "1,200+", l: "Verified Employers" },
+                      { v: "13", l: "Provinces & Territories" },
+                      { v: "100%", l: "Non-Expiring Credits" },
+                    ].map((s) => (
+                      <div key={s.l} className="bg-slate-950 border border-slate-800 rounded-2xl p-4">
+                        <p className="text-2xl font-extrabold text-[#059669]">
+                          {s.v}
+                        </p>
+                        <p className="text-slate-400 text-xs mt-0.5 font-medium">
+                          {s.l}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -142,20 +272,37 @@ export default function EmployersPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#C8782A] py-16 relative overflow-hidden">
-        <OrganicShape className="absolute -right-20 top-1/2 -translate-y-1/2 w-80 h-80 text-white pointer-events-none" />
-        <div className="relative max-w-4xl mx-auto px-4 text-center">
-          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <motion.h2 variants={fadeUp} className="text-4xl font-bold text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Ready to Find Your Next Great Hire?</motion.h2>
-            <motion.p variants={fadeUp} className="text-white/80 mb-8 text-lg">Post your first job today and connect with Indigenous talent across Canada.</motion.p>
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center">
-              <Link href="/post-a-job"><Button size="lg" className="bg-white text-[#C8782A] hover:bg-[#FAF5EE] font-semibold px-10">Post a Job</Button></Link>
-              <Link href="/pricing"><Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-[#C8782A] font-semibold px-10">View Packages</Button></Link>
-            </motion.div>
-          </motion.div>
+      {/* ── 4. CTA BANNER ─────────────────────────────────────────────────── */}
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 mt-16">
+        <div className="bg-slate-900 text-white rounded-3xl p-10 sm:p-14 text-center border border-slate-800 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-1/3 w-80 h-80 bg-[#059669]/20 rounded-full blur-3xl pointer-events-none" />
+
+          <span className="bg-[#059669] text-white text-[10px] font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">
+            START HIRING TODAY
+          </span>
+
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4 max-w-3xl mx-auto">
+            Ready to Find Your Next Great Canadian Hire?
+          </h2>
+          <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 font-medium">
+            Post your first job listing today and connect with qualified talent across Canada.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/post-a-job">
+              <Button className="w-full sm:w-auto bg-[#059669] hover:bg-[#047857] text-white font-extrabold text-sm px-8 py-4 rounded-2xl shadow-xl">
+                Post a Job Now
+              </Button>
+            </Link>
+            <Link href="/pricing">
+              <Button className="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-extrabold text-sm px-8 py-4 rounded-2xl">
+                View Pricing & Packages
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
-    </>
+
+    </div>
   );
 }

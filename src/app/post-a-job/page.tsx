@@ -6,7 +6,6 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import {
   CheckCircle,
-  ChevronRight,
   Info,
   AlertCircle,
   XCircle,
@@ -158,58 +157,58 @@ const validatePhone = (phone: string): boolean => {
 /* ── Post Job Skeleton ──────────────────────────────────────────────── */
 function PostJobSkeleton() {
   return (
-    <section className="bg-[#FAF5EE] min-h-[85vh] py-12 lg:py-20 relative overflow-hidden">
+    <section className="bg-slate-50 min-h-[85vh] py-12 lg:py-20 relative overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="animate-pulse">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 mb-4">
-            <div className="h-4 w-20 bg-[#C8782A]/10 rounded" />
-            <div className="h-3 w-3 bg-[#C8782A]/10 rounded-full" />
-            <div className="h-4 w-24 bg-[#C8782A]/20 rounded" />
+            <div className="h-4 w-20 bg-slate-200 rounded" />
+            <div className="h-3 w-3 bg-slate-200 rounded-full" />
+            <div className="h-4 w-24 bg-slate-300 rounded" />
           </div>
 
-          <div className="h-4 w-28 bg-[#C8782A]/15 rounded mb-3" />
-          <div className="h-10 w-64 bg-[#C8782A]/15 rounded mb-8 sm:mb-10" />
+          <div className="h-4 w-28 bg-emerald-200 rounded mb-3" />
+          <div className="h-10 w-64 bg-slate-300 rounded mb-8 sm:mb-10" />
 
           <div className="flex flex-col xl:flex-row gap-8 lg:gap-12">
-            <div className="flex-1 max-w-4xl bg-white rounded-3xl p-6 sm:p-10 border border-[#C8782A]/10 shadow-sm">
+            <div className="flex-1 max-w-4xl bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-xs">
               {[1, 2, 3].map((section) => (
                 <div key={section} className="mb-10">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-7 h-7 rounded-full bg-[#C8782A]/20" />
-                    <div className="h-6 w-48 bg-neutral-200 rounded" />
+                    <div className="w-7 h-7 rounded-full bg-emerald-200" />
+                    <div className="h-6 w-48 bg-slate-200 rounded" />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <div className="h-4 w-24 bg-neutral-200 rounded" />
-                      <div className="h-11 w-full bg-neutral-100 rounded-xl" />
+                      <div className="h-4 w-24 bg-slate-200 rounded" />
+                      <div className="h-11 w-full bg-slate-100 rounded-xl" />
                     </div>
                     <div className="space-y-2">
-                      <div className="h-4 w-32 bg-neutral-200 rounded" />
-                      <div className="h-11 w-full bg-neutral-100 rounded-xl" />
+                      <div className="h-4 w-32 bg-slate-200 rounded" />
+                      <div className="h-11 w-full bg-slate-100 rounded-xl" />
                     </div>
                     {section === 2 && (
                       <div className="space-y-2 md:col-span-2 mt-4">
-                        <div className="h-4 w-32 bg-neutral-200 rounded" />
-                        <div className="h-32 w-full bg-neutral-100 rounded-xl" />
+                        <div className="h-4 w-32 bg-slate-200 rounded" />
+                        <div className="h-32 w-full bg-slate-100 rounded-xl" />
                       </div>
                     )}
                   </div>
                 </div>
               ))}
-              <div className="flex gap-4 pt-4 border-t border-[#C8782A]/10">
-                <div className="h-11 w-32 bg-[#C8782A]/20 rounded-xl" />
-                <div className="h-11 w-24 bg-neutral-200 rounded-xl" />
+              <div className="flex gap-4 pt-4 border-t border-slate-200">
+                <div className="h-11 w-32 bg-emerald-600/20 rounded-xl" />
+                <div className="h-11 w-24 bg-slate-200 rounded-xl" />
               </div>
             </div>
 
             <div className="xl:w-[380px] flex-shrink-0 space-y-5 hidden xl:block">
-              <div className="bg-white rounded-2xl p-6 border border-[#C8782A]/10 h-[400px]">
-                <div className="h-6 w-32 bg-neutral-200 rounded mb-6" />
+              <div className="bg-white rounded-2xl p-6 border border-slate-200 h-[400px]">
+                <div className="h-6 w-32 bg-slate-200 rounded mb-6" />
                 <div className="space-y-4">
-                  <div className="h-4 w-full bg-neutral-100 rounded" />
-                  <div className="h-4 w-5/6 bg-neutral-100 rounded" />
-                  <div className="h-4 w-4/6 bg-neutral-100 rounded" />
+                  <div className="h-4 w-full bg-slate-100 rounded" />
+                  <div className="h-4 w-5/6 bg-slate-100 rounded" />
+                  <div className="h-4 w-4/6 bg-slate-100 rounded" />
                 </div>
               </div>
             </div>
@@ -223,9 +222,9 @@ function PostJobSkeleton() {
 /* ── Tip box ────────────────────────────────────────────────────────── */
 function Tip({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex gap-2.5 bg-[#1a64c4]/6 border border-[#1a64c4]/15 rounded-xl px-4 py-3">
-      <Info size={14} className="text-[#1a64c4] flex-shrink-0 mt-0.5" />
-      <p className="text-xs text-[#1a64c4]/80 leading-relaxed">{children}</p>
+    <div className="flex gap-2.5 bg-emerald-50/80 border border-emerald-200/80 rounded-xl px-4 py-3">
+      <Info size={16} className="text-[#059669] flex-shrink-0 mt-0.5" />
+      <p className="text-xs text-slate-700 leading-relaxed font-medium">{children}</p>
     </div>
   );
 }
@@ -234,13 +233,10 @@ function Tip({ children }: { children: React.ReactNode }) {
 function SectionHeading({ step, title }: { step: number; title: string }) {
   return (
     <div className="flex items-center gap-3 mb-6">
-      <div className="w-7 h-7 rounded-full bg-[#C8782A] flex items-center justify-center flex-shrink-0">
-        <span className="text-white text-xs font-bold">{step}</span>
+      <div className="w-8 h-8 rounded-full bg-[#059669] flex items-center justify-center flex-shrink-0 shadow-xs">
+        <span className="text-white text-xs font-black">{step}</span>
       </div>
-      <h2
-        className="text-xl font-bold text-[#1C1C1C]"
-        style={{ fontFamily: "'Playfair Display', serif" }}
-      >
+      <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">
         {title}
       </h2>
     </div>
@@ -266,13 +262,13 @@ function ApplyMethodCard({
   const getIcon = () => {
     switch (method) {
       case "email":
-        return <Mail size={16} className="text-[#C8782A]" />;
+        return <Mail size={16} className="text-[#059669]" />;
       case "phone":
-        return <Phone size={16} className="text-[#C8782A]" />;
+        return <Phone size={16} className="text-[#059669]" />;
       case "mail":
-        return <MapPin size={16} className="text-[#C8782A]" />;
+        return <MapPin size={16} className="text-[#059669]" />;
       case "inPerson":
-        return <Building2 size={16} className="text-[#C8782A]" />;
+        return <Building2 size={16} className="text-[#059669]" />;
       default:
         return null;
     }
@@ -294,19 +290,19 @@ function ApplyMethodCard({
   };
 
   return (
-    <div className="bg-[#FAF5EE] rounded-xl p-4 border border-[#C8782A]/15 relative">
+    <div className="bg-slate-50/80 rounded-2xl p-4.5 border border-slate-200/80 relative">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           {getIcon()}
-          <h3 className="font-semibold text-sm text-[#1C1C1C]">{getTitle()}</h3>
+          <h3 className="font-extrabold text-sm text-slate-900">{getTitle()}</h3>
         </div>
         {isRemovable && onRemove && (
           <button
             type="button"
             onClick={onRemove}
-            className="text-red-500 hover:text-red-700"
+            className="text-rose-500 hover:text-rose-700 transition-colors p-1"
           >
-            <Trash2 size={14} />
+            <Trash2 size={15} />
           </button>
         )}
       </div>
@@ -314,53 +310,53 @@ function ApplyMethodCard({
       <div className="space-y-3">
         {method === "email" && (
           <div>
-            <Label className="text-xs text-[#6B3A2A] font-medium">
-              Email Address *
+            <Label className="text-xs text-slate-900 font-extrabold mb-1 block">
+              Email Address <span className="text-rose-500 font-bold">*</span>
             </Label>
             <Input
               type="email"
               value={data.email || ""}
               onChange={(e) => onChange("email", e.target.value)}
               placeholder="jobs@company.com"
-              className="mt-1 border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30"
+              className="mt-1 border-slate-200 placeholder:text-slate-400 text-slate-900 font-medium focus-visible:border-[#059669] focus-visible:ring-[#059669]/20"
             />
             {errors?.email && (
-              <p className="text-xs text-red-500 mt-1">{errors.email}</p>
+              <p className="text-xs text-rose-500 font-medium mt-1">{errors.email}</p>
             )}
           </div>
         )}
 
         {method === "phone" && (
           <div>
-            <Label className="text-xs text-[#6B3A2A] font-medium">
-              Phone Number *
+            <Label className="text-xs text-slate-900 font-extrabold mb-1 block">
+              Phone Number <span className="text-rose-500 font-bold">*</span>
             </Label>
             <Input
               type="tel"
               value={data.phone || ""}
               onChange={(e) => onChange("phone", e.target.value)}
               placeholder="+1 (555) 123-4567"
-              className="mt-1 border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30"
+              className="mt-1 border-slate-200 placeholder:text-slate-400 text-slate-900 font-medium focus-visible:border-[#059669] focus-visible:ring-[#059669]/20"
             />
             {errors?.phone && (
-              <p className="text-xs text-red-500 mt-1">{errors.phone}</p>
+              <p className="text-xs text-rose-500 font-medium mt-1">{errors.phone}</p>
             )}
           </div>
         )}
 
         {method === "mail" && (
           <div>
-            <Label className="text-xs text-[#6B3A2A] font-medium">
-              Mailing Address *
+            <Label className="text-xs text-slate-900 font-extrabold mb-1 block">
+              Mailing Address <span className="text-rose-500 font-bold">*</span>
             </Label>
             <Input
               value={data.mailAddress || ""}
               onChange={(e) => onChange("mailAddress", e.target.value)}
               placeholder="123 Street Name, City, Province, Postal Code"
-              className="mt-1 border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30"
+              className="mt-1 border-slate-200 placeholder:text-slate-400 text-slate-900 font-medium focus-visible:border-[#059669] focus-visible:ring-[#059669]/20"
             />
             {errors?.mailAddress && (
-              <p className="text-xs text-red-500 mt-1">{errors.mailAddress}</p>
+              <p className="text-xs text-rose-500 font-medium mt-1">{errors.mailAddress}</p>
             )}
           </div>
         )}
@@ -368,33 +364,33 @@ function ApplyMethodCard({
         {method === "inPerson" && (
           <>
             <div>
-              <Label className="text-xs text-[#6B3A2A] font-medium">
-                Office Address *
+              <Label className="text-xs text-slate-900 font-extrabold mb-1 block">
+                Office Address <span className="text-rose-500 font-bold">*</span>
               </Label>
               <Input
                 value={data.inPersonAddress || ""}
                 onChange={(e) => onChange("inPersonAddress", e.target.value)}
                 placeholder="123 Business Ave, Suite 100, City, Province"
-                className="mt-1 border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30"
+                className="mt-1 border-slate-200 placeholder:text-slate-400 text-slate-900 font-medium focus-visible:border-[#059669] focus-visible:ring-[#059669]/20"
               />
               {errors?.inPersonAddress && (
-                <p className="text-xs text-red-500 mt-1">
+                <p className="text-xs text-rose-500 font-medium mt-1">
                   {errors.inPersonAddress}
                 </p>
               )}
             </div>
             <div>
-              <Label className="text-xs text-[#6B3A2A] font-medium">
-                Available Hours / Time Slots *
+              <Label className="text-xs text-slate-900 font-extrabold mb-1 block">
+                Available Hours / Time Slots <span className="text-rose-500 font-bold">*</span>
               </Label>
               <Input
                 value={data.inPersonTiming || ""}
                 onChange={(e) => onChange("inPersonTiming", e.target.value)}
                 placeholder="Monday-Friday, 9AM to 5PM"
-                className="mt-1 border-[#C8782A]/20 placeholder:text-[#1C1C1C]/30"
+                className="mt-1 border-slate-200 placeholder:text-slate-400 text-slate-900 font-medium focus-visible:border-[#059669] focus-visible:ring-[#059669]/20"
               />
               {errors?.inPersonTiming && (
-                <p className="text-xs text-red-500 mt-1">
+                <p className="text-xs text-rose-500 font-medium mt-1">
                   {errors.inPersonTiming}
                 </p>
               )}
@@ -903,51 +899,39 @@ function PostAJobContent() {
 
   return (
     <>
-      <section className="bg-[#FAF5EE] py-12 lg:py-20 relative overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-b from-emerald-50/60 via-white to-slate-50/50 border-b border-slate-200/60 py-10 lg:py-16 relative overflow-hidden">
+        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
           <motion.div variants={stagger} initial="hidden" animate="visible">
-            <motion.div
-              variants={fadeUp}
-              className="flex items-center gap-2 text-sm text-[#6B3A2A]/60 mb-4 flex-wrap"
-            >
-              <Link
-                href="/employers/dashboard"
-                className="hover:text-[#C8782A] transition-colors"
-              >
-                Dashboard
-              </Link>
-              <ChevronRight size={14} />
-              <span className="text-[#C8782A] font-medium">
-                {isEditMode ? "Edit Job" : "Post a Job"}
-              </span>
+            <motion.div variants={fadeUp} className="mb-4 inline-flex">
+              <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-emerald-50/80 border border-emerald-200/80 shadow-2xs">
+                <span className="bg-[#059669] text-white text-[10px] font-black tracking-widest uppercase px-2.5 py-0.5 rounded-full">
+                  EMPLOYERS HUB
+                </span>
+                <span className="text-xs font-bold text-slate-700 pr-1">
+                  Canada Nationwide Hiring Portal
+                </span>
+              </div>
             </motion.div>
-            <motion.p
-              variants={fadeUp}
-              className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-3"
-            >
-              Employers
-            </motion.p>
             <motion.h1
               variants={fadeUp}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1C1C1C] mb-4 leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="text-4xl sm:text-5xl font-black text-slate-900 mb-3 leading-tight tracking-tight"
             >
-              {isEditMode ? "Edit Job Posting" : "Post a Job"}
+              {isEditMode ? "Edit Job Posting" : "Post a Job Opening"}
             </motion.h1>
             <motion.p
               variants={fadeUp}
-              className="text-[#6B3A2A]/70 text-base sm:text-lg max-w-xl leading-relaxed"
+              className="text-slate-600 text-base sm:text-lg max-w-xl leading-relaxed font-medium"
             >
               {isEditMode
-                ? "Update your job posting to attract the right candidates."
-                : "Reach thousands of qualified Indigenous job seekers across Canada."}
+                ? "Update your job posting details to attract the right candidates."
+                : "Reach thousands of qualified job seekers across Canada."}
             </motion.p>
           </motion.div>
         </div>
       </section>
 
-      <section className="bg-white py-10 lg:py-14 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-slate-50/50 py-10 lg:py-14 pb-20">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col xl:flex-row gap-8">
             <motion.form
               initial={{ opacity: 0, y: 24 }}
@@ -958,29 +942,29 @@ function PostAJobContent() {
               noValidate
             >
               {/* Job Details */}
-              <div className="bg-white rounded-3xl p-5 sm:p-7 lg:p-9 border border-[#C8782A]/10">
+              <div className="bg-white rounded-3xl p-5 sm:p-7 lg:p-9 border border-slate-200/80 shadow-xs">
                 <SectionHeading step={1} title="Job Details" />
                 <div className="flex flex-col gap-5">
                   {/* Job ID - Display only in edit mode */}
                   {isEditMode && displayJobId && (
-                    <div className="bg-[#FAF5EE] p-4 rounded-xl border border-[#C8782A]/15 mb-2">
-                      <Label className="text-[#6B3A2A] font-medium text-sm flex items-center gap-2">
-                        <Info size={14} className="text-[#C8782A]" />
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-2">
+                      <Label className="text-slate-900 font-extrabold text-sm flex items-center gap-2">
+                        <Info size={15} className="text-[#059669]" />
                         Job ID
                       </Label>
-                      <p className="font-mono text-base font-semibold text-[#1C1C1C] mt-1">
+                      <p className="font-mono text-base font-bold text-slate-900 mt-1">
                         {displayJobId}
                       </p>
-                      <p className="text-xs text-[#6B3A2A]/50 mt-1">
+                      <p className="text-xs text-slate-500 mt-1">
                         This ID is auto-generated and cannot be changed
                       </p>
                     </div>
                   )}
 
                   {/* Job Title */}
-                  <div className="flex flex-col gap-2">
-                    <Label className="text-[#6B3A2A] font-medium text-sm">
-                      Job Title <span className="text-[#C8782A]">*</span>
+                  <div className="flex flex-col gap-1.5">
+                    <Label className="text-slate-900 font-extrabold text-sm">
+                      Job Title <span className="text-rose-500 font-bold">*</span>
                     </Label>
                     <Input
                       value={title}
@@ -1010,10 +994,10 @@ function PostAJobContent() {
                       }}
                       onBlur={() => markTouched("title")}
                       placeholder="e.g. Community Health Worker"
-                      className="placeholder:text-[#1C1C1C]/30"
+                      className="border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 font-medium text-slate-900 placeholder:text-slate-400"
                     />
                     {errors.title && touched.title && (
-                      <p className="text-xs text-red-500 flex items-center gap-1">
+                      <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                         <XCircle size={12} /> {errors.title}
                       </p>
                     )}
@@ -1021,10 +1005,10 @@ function PostAJobContent() {
 
                   {/* Company + Website */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
                         Company / Organization{" "}
-                        <span className="text-[#C8782A]">*</span>
+                        <span className="text-rose-500 font-bold">*</span>
                       </Label>
                       <Input
                         value={company}
@@ -1049,16 +1033,16 @@ function PostAJobContent() {
                         }}
                         onBlur={() => markTouched("company")}
                         placeholder="Your organization name"
-                        className="placeholder:text-[#1C1C1C]/30"
+                        className="border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 font-medium text-slate-900 placeholder:text-slate-400"
                       />
                       {errors.company && touched.company && (
-                        <p className="text-xs text-red-500 flex items-center gap-1">
+                        <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                           <XCircle size={12} /> {errors.company}
                         </p>
                       )}
                     </div>
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
                         Website (optional)
                       </Label>
                       <Input
@@ -1080,10 +1064,10 @@ function PostAJobContent() {
                         }}
                         onBlur={() => markTouched("website")}
                         placeholder="https://yourorganization.ca"
-                        className="placeholder:text-[#1C1C1C]/30"
+                        className="border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 font-medium text-slate-900 placeholder:text-slate-400"
                       />
                       {errors.website && touched.website && (
-                        <p className="text-xs text-red-500 flex items-center gap-1">
+                        <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                           <XCircle size={12} /> {errors.website}
                         </p>
                       )}
@@ -1092,10 +1076,10 @@ function PostAJobContent() {
 
                   {/* Location */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
                         City / Community{" "}
-                        <span className="text-[#C8782A]">*</span>
+                        <span className="text-rose-500 font-bold">*</span>
                       </Label>
                       <Input
                         value={city}
@@ -1119,18 +1103,18 @@ function PostAJobContent() {
                         }}
                         onBlur={() => markTouched("city")}
                         placeholder="e.g. Edmonton"
-                        className="placeholder:text-[#1C1C1C]/30"
+                        className="border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 font-medium text-slate-900 placeholder:text-slate-400"
                       />
                       {errors.city && touched.city && (
-                        <p className="text-xs text-red-500 flex items-center gap-1">
+                        <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                           <XCircle size={12} /> {errors.city}
                         </p>
                       )}
                     </div>
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
                         Province / Territory{" "}
-                        <span className="text-[#C8782A]">*</span>
+                        <span className="text-rose-500 font-bold">*</span>
                       </Label>
                       <select
                         value={province}
@@ -1140,7 +1124,7 @@ function PostAJobContent() {
                             setErrors((prev) => ({ ...prev, province: "" }));
                         }}
                         onBlur={() => markTouched("province")}
-                        className="w-full rounded-md border border-[#C8782A]/20 bg-white px-3 py-2.5"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 transition-all"
                       >
                         <option value="">Select province</option>
                         {provinces.map((p) => (
@@ -1148,7 +1132,7 @@ function PostAJobContent() {
                         ))}
                       </select>
                       {errors.province && touched.province && (
-                        <p className="text-xs text-red-500 flex items-center gap-1">
+                        <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                           <XCircle size={12} /> {errors.province}
                         </p>
                       )}
@@ -1157,10 +1141,10 @@ function PostAJobContent() {
 
                   {/* Type + Salary */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
                         Employment Type{" "}
-                        <span className="text-[#C8782A]">*</span>
+                        <span className="text-rose-500 font-bold">*</span>
                       </Label>
                       <select
                         value={employmentType}
@@ -1173,7 +1157,7 @@ function PostAJobContent() {
                             }));
                         }}
                         onBlur={() => markTouched("employmentType")}
-                        className="w-full rounded-md border border-[#C8782A]/20 bg-white px-3 py-2.5"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 transition-all"
                       >
                         <option value="">Select type</option>
                         {employmentTypes.map((t) => (
@@ -1181,14 +1165,14 @@ function PostAJobContent() {
                         ))}
                       </select>
                       {errors.employmentType && touched.employmentType && (
-                        <p className="text-xs text-red-500 flex items-center gap-1">
+                        <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                           <XCircle size={12} /> {errors.employmentType}
                         </p>
                       )}
                     </div>
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
-                        Salary (CAD){" "}
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
+                        Salary (CAD)
                       </Label>
                       <div className="flex gap-2">
                         <Input
@@ -1210,12 +1194,12 @@ function PostAJobContent() {
                           }}
                           onBlur={() => markTouched("salary")}
                           placeholder="e.g. 20 - 35"
-                          className="flex-1 placeholder:text-[#1C1C1C]/30"
+                          className="flex-1 border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 font-medium text-slate-900 placeholder:text-slate-400"
                         />
                         <select
                           value={salaryType}
                           onChange={(e) => setSalaryType(e.target.value)}
-                          className="rounded-md border border-[#C8782A]/20 bg-white px-3"
+                          className="rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 transition-all"
                         >
                           <option value="hour">Per Hour</option>
                           <option value="week">Per Week</option>
@@ -1224,7 +1208,7 @@ function PostAJobContent() {
                         </select>
                       </div>
                       {errors.salary && touched.salary && (
-                        <p className="text-xs text-red-500 flex items-center gap-1">
+                        <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                           <XCircle size={12} /> {errors.salary}
                         </p>
                       )}
@@ -1233,9 +1217,9 @@ function PostAJobContent() {
 
                   {/* NOC Code + Run Days */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
-                        NOC Code <span className="text-[#C8782A]">*</span>
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
+                        NOC Code <span className="text-rose-500 font-bold">*</span>
                       </Label>
                       <Input
                         value={nocCode}
@@ -1259,22 +1243,22 @@ function PostAJobContent() {
                         onBlur={() => markTouched("nocCode")}
                         placeholder="e.g. 21231"
                         maxLength={5}
-                        className="placeholder:text-[#1C1C1C]/30"
+                        className="border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 font-medium text-slate-900 placeholder:text-slate-400"
                       />
                       {errors.nocCode && touched.nocCode && (
-                        <p className="text-xs text-red-500 flex items-center gap-1">
+                        <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                           <XCircle size={12} /> {errors.nocCode}
                         </p>
                       )}
                     </div>
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
                         Run Ad For
                       </Label>
                       <select
                         value={runDays}
                         onChange={(e) => setRunDays(e.target.value)}
-                        className="w-full rounded-md border border-[#C8782A]/20 bg-white px-3 py-2.5"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 transition-all"
                       >
                         <option value="30">30 Days</option>
                         <option value="60">60 Days</option>
@@ -1287,25 +1271,25 @@ function PostAJobContent() {
 
                   {/* Experience + Start Date */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
                         Experience Required
                       </Label>
                       <Input
                         value={experience}
                         onChange={(e) => setExperience(e.target.value)}
                         placeholder="e.g. 2+ years"
-                        className="placeholder:text-[#1C1C1C]/30"
+                        className="border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 font-medium text-slate-900 placeholder:text-slate-400"
                       />
                     </div>
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
                         Expected Start Date
                       </Label>
                       <select
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
-                        className="w-full rounded-md border border-[#C8782A]/20 bg-white px-3 py-2.5"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 transition-all"
                       >
                         <option value="">Select start date</option>
                         <option value="asap">As Soon As Possible</option>
@@ -1317,10 +1301,10 @@ function PostAJobContent() {
                     </div>
                   </div>
 
-                  <div>
-                    <Label className="text-[#6B3A2A] font-medium text-sm">
+                  <div className="flex flex-col gap-1.5">
+                    <Label className="text-slate-900 font-extrabold text-sm">
                       Vacancies Available{" "}
-                      <span className="text-[#C8782A]">*</span>
+                      <span className="text-rose-500 font-bold">*</span>
                     </Label>
 
                     <Input
@@ -1338,19 +1322,20 @@ function PostAJobContent() {
                         }
                       }}
                       placeholder="e.g. 5"
-                      className="placeholder:text-[#1C1C1C]/30"
+                      className="border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 font-medium text-slate-900 placeholder:text-slate-400"
                     />
 
                     {errors.vacancies && (
-                      <p className="text-xs text-red-500 flex items-center gap-1 mt-1">
+                      <p className="text-xs text-rose-500 font-medium flex items-center gap-1 mt-1">
                         <XCircle size={12} /> {errors.vacancies}
                       </p>
                     )}
                   </div>
+
                   {/* Category */}
-                  <div>
-                    <Label className="text-[#6B3A2A] font-medium text-sm">
-                      Job Category <span className="text-[#C8782A]">*</span>
+                  <div className="flex flex-col gap-1.5">
+                    <Label className="text-slate-900 font-extrabold text-sm">
+                      Job Category <span className="text-rose-500 font-bold">*</span>
                     </Label>
                     <select
                       value={category}
@@ -1360,7 +1345,7 @@ function PostAJobContent() {
                           setErrors((prev) => ({ ...prev, category: "" }));
                       }}
                       onBlur={() => markTouched("category")}
-                      className="w-full rounded-md border border-[#C8782A]/20 bg-white px-3 py-2.5"
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 transition-all"
                     >
                       <option value="">Select a category</option>
                       {jobCategories.map((c) => (
@@ -1368,16 +1353,17 @@ function PostAJobContent() {
                       ))}
                     </select>
                     {errors.category && touched.category && (
-                      <p className="text-xs text-red-500 flex items-center gap-1">
+                      <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                         <XCircle size={12} /> {errors.category}
                       </p>
                     )}
                   </div>
+
                   {/* Employer Contact Name */}
-                  <div className="flex flex-col gap-2">
-                    <Label className="text-[#6B3A2A] font-medium text-sm">
+                  <div className="flex flex-col gap-1.5">
+                    <Label className="text-slate-900 font-extrabold text-sm">
                       Employer Contact Name{" "}
-                      <span className="text-[#C8782A]">*</span>
+                      <span className="text-rose-500 font-bold">*</span>
                     </Label>
                     <Input
                       value={contactName}
@@ -1406,10 +1392,10 @@ function PostAJobContent() {
                       }}
                       onBlur={() => markTouched("contactName")}
                       placeholder="e.g. Sarah Johnson"
-                      className="placeholder:text-[#1C1C1C]/30"
+                      className="border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 font-medium text-slate-900 placeholder:text-slate-400"
                     />
                     {errors.contactName && touched.contactName && (
-                      <p className="text-xs text-red-500 flex items-center gap-1">
+                      <p className="text-xs text-rose-500 font-medium flex items-center gap-1">
                         <XCircle size={12} /> {errors.contactName}
                       </p>
                     )}
@@ -1417,14 +1403,14 @@ function PostAJobContent() {
 
                   {/* Post Date - Only in Edit Mode */}
                   {isEditMode && (
-                    <div>
-                      <Label className="text-[#6B3A2A] font-medium text-sm">
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-slate-900 font-extrabold text-sm">
                         Post Date (Display Date)
                       </Label>
                       <div className="relative">
                         <Calendar
                           size={16}
-                          className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B3A2A]/40"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
                         />
                         <Input
                           type="date"
@@ -1432,24 +1418,24 @@ function PostAJobContent() {
                           onChange={(e) => setPostDate(e.target.value)}
                           min={new Date().toISOString().split("T")[0]}
                           max={new Date().toISOString().split("T")[0]}
-                          className="pl-9 border-[#C8782A]/20 focus-visible:ring-[#C8782A]/30"
+                          className="pl-9 border-slate-200 focus-visible:border-[#059669] focus-visible:ring-[#059669]/20 text-slate-900 font-medium"
                         />
                       </div>
-                      <p className="text-xs text-[#6B3A2A]/50 mt-1">
+                      <p className="text-xs text-slate-500">
                         Only today&apos;s date can be selected.
                       </p>
                     </div>
                   )}
 
                   {/* Toggles */}
-                  <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col sm:flex-row gap-5 pt-2">
                     <label className="flex items-center gap-3 cursor-pointer">
                       <Switch
                         checked={remote}
                         onCheckedChange={setRemote}
-                        className="data-[state=checked]:bg-[#C8782A]"
+                        className="data-[state=checked]:bg-[#059669]"
                       />
-                      <span className="text-sm text-[#6B3A2A] font-medium">
+                      <span className="text-sm text-slate-800 font-extrabold">
                         Remote / Hybrid available
                       </span>
                     </label>
@@ -1457,9 +1443,9 @@ function PostAJobContent() {
                       <Switch
                         checked={indigenous}
                         onCheckedChange={setIndigenous}
-                        className="data-[state=checked]:bg-[#7A9E7E]"
+                        className="data-[state=checked]:bg-[#059669]"
                       />
-                      <span className="text-sm text-[#6B3A2A] font-medium">
+                      <span className="text-sm text-slate-800 font-extrabold">
                         Indigenous-owned organization
                       </span>
                     </label>
@@ -1468,16 +1454,16 @@ function PostAJobContent() {
               </div>
 
               {/* Job Description */}
-              <div className="bg-white rounded-3xl p-5 sm:p-7 lg:p-9 border border-[#C8782A]/10">
+              <div className="bg-white rounded-3xl p-5 sm:p-7 lg:p-9 border border-slate-200/80 shadow-xs">
                 <SectionHeading step={2} title="Job Description" />
                 <div className="flex flex-col gap-5">
                   <Tip>
                     Use plain, welcoming language.{" "}
                     <strong>Maximum 5000 characters per field.</strong>
                   </Tip>
-                  <div>
-                    <Label className="text-[#6B3A2A] font-medium text-sm">
-                      About the Role <span className="text-[#C8782A]">*</span>
+                  <div className="flex flex-col gap-1.5">
+                    <Label className="text-slate-900 font-extrabold text-sm">
+                      About the Role <span className="text-rose-500 font-bold">*</span>
                     </Label>
                     <RichTextEditor
                       value={descHtml}
@@ -1490,15 +1476,15 @@ function PostAJobContent() {
                       maxLength={5000}
                     />
                     {errors.description && (
-                      <p className="text-xs text-red-500 flex items-center gap-1 mt-1">
+                      <p className="text-xs text-rose-500 font-medium flex items-center gap-1 mt-1">
                         <XCircle size={12} /> {errors.description}
                       </p>
                     )}
                   </div>
-                  <div>
-                    <Label className="text-[#6B3A2A] font-medium text-sm">
+                  <div className="flex flex-col gap-1.5">
+                    <Label className="text-slate-900 font-extrabold text-sm">
                       Qualifications & Requirements{" "}
-                      <span className="text-[#C8782A]">*</span>
+                      <span className="text-rose-500 font-bold">*</span>
                     </Label>
                     <RichTextEditor
                       value={reqHtml}
@@ -1511,7 +1497,7 @@ function PostAJobContent() {
                       maxLength={4000}
                     />
                     {errors.requirements && (
-                      <p className="text-xs text-red-500 flex items-center gap-1 mt-1">
+                      <p className="text-xs text-rose-500 font-medium flex items-center gap-1 mt-1">
                         <XCircle size={12} /> {errors.requirements}
                       </p>
                     )}
@@ -1520,7 +1506,7 @@ function PostAJobContent() {
               </div>
 
               {/* How to Apply */}
-              <div className="bg-white rounded-3xl p-5 sm:p-7 lg:p-9 border border-[#C8782A]/10">
+              <div className="bg-white rounded-3xl p-5 sm:p-7 lg:p-9 border border-slate-200/80 shadow-xs">
                 <SectionHeading step={3} title="How to Apply" />
                 <div className="flex flex-col gap-5">
                   <Tip>
@@ -1529,13 +1515,13 @@ function PostAJobContent() {
 
                   <div className="flex flex-col sm:flex-row gap-3 items-end">
                     <div className="flex-1">
-                      <Label className="text-xs text-[#6B3A2A] font-medium">
+                      <Label className="text-xs text-slate-900 font-extrabold mb-1 block">
                         Add Application Method
                       </Label>
                       <select
                         value={selectedMethodToAdd}
                         onChange={(e) => setSelectedMethodToAdd(e.target.value)}
-                        className="w-full rounded-md border border-[#C8782A]/20 bg-white px-3 py-2.5 mt-1"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium text-sm focus:outline-none focus:border-[#059669] focus:ring-2 focus:ring-[#059669]/20 transition-all"
                       >
                         <option value="">Select a method</option>
                         <option value="email">Apply by Email</option>
@@ -1548,7 +1534,7 @@ function PostAJobContent() {
                       type="button"
                       onClick={addApplyMethod}
                       disabled={!selectedMethodToAdd}
-                      className="bg-[#C8782A] hover:bg-[#B06820] text-white"
+                      className="bg-[#059669] hover:bg-[#047857] text-white font-extrabold shadow-sm rounded-xl h-10 px-5"
                     >
                       <Plus size={16} className="mr-1" /> Add
                     </Button>
@@ -1591,7 +1577,7 @@ function PostAJobContent() {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold px-10"
+                    className="bg-[#059669] hover:bg-[#047857] text-white font-extrabold px-10 h-12 rounded-2xl shadow-lg shadow-emerald-950/40"
                   >
                     {loading ? (
                       <span className="flex items-center gap-2">
@@ -1601,14 +1587,14 @@ function PostAJobContent() {
                     ) : isEditMode ? (
                       "Update Job"
                     ) : (
-                      "Post Job"
+                      "Post Job Now"
                     )}
                   </Button>
                   <Link href="/employers/dashboard">
                     <Button
                       type="button"
                       variant="outline"
-                      className="border-[#C8782A]/25"
+                      className="border-slate-200 text-slate-700 font-bold h-12 rounded-2xl"
                     >
                       Cancel
                     </Button>
@@ -1621,27 +1607,24 @@ function PostAJobContent() {
             <div className="xl:w-[380px] flex-shrink-0">
               <div className="flex flex-col gap-5 xl:sticky xl:top-24">
                 <JobPostingPreview data={previewData} />
-                <div className="bg-[#FAF5EE] rounded-2xl p-6 border border-[#C8782A]/10">
-                  <h4
-                    className="font-bold text-[#1C1C1C] mb-4"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
+                <div className="bg-gradient-to-br from-emerald-50/80 via-white to-slate-50 rounded-3xl p-6 border border-emerald-200/80 shadow-xs text-left">
+                  <h4 className="font-extrabold text-slate-900 text-lg mb-4">
                     Why Post with Us?
                   </h4>
                   <ul className="flex flex-col gap-3">
                     {[
-                      "15,000+ active Indigenous job seekers",
-                      "Canada-wide reach",
-                      "Culturally respectful platform",
-                      "Dedicated employer support",
+                      "50,000+ active job seekers nationwide",
+                      "Coast-to-coast Canadian reach",
+                      "Direct candidate applications & messaging",
+                      "Dedicated employer support team",
                     ].map((item) => (
                       <li
                         key={item}
-                        className="flex items-start gap-2.5 text-sm text-[#6B3A2A]/75"
+                        className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-bold"
                       >
                         <CheckCircle
-                          size={14}
-                          className="text-[#7A9E7E] flex-shrink-0 mt-0.5"
+                          size={16}
+                          className="text-[#059669] flex-shrink-0 mt-0.5"
                         />{" "}
                         {item}
                       </li>

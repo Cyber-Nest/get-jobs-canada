@@ -88,13 +88,13 @@ function ApplyMethodPreview({ method }: { method: ApplyMethod }) {
   const getMethodIcon = () => {
     switch (method.method) {
       case "email":
-        return <Mail size={14} className="text-[#C8782A]" />;
+        return <Mail size={14} className="text-[#059669]" />;
       case "phone":
-        return <Phone size={14} className="text-[#C8782A]" />;
+        return <Phone size={14} className="text-[#059669]" />;
       case "mail":
-        return <MapPin size={14} className="text-[#C8782A]" />;
+        return <MapPin size={14} className="text-[#059669]" />;
       case "inPerson":
-        return <Building2 size={14} className="text-[#C8782A]" />;
+        return <Building2 size={14} className="text-[#059669]" />;
       default:
         return null;
     }
@@ -126,9 +126,9 @@ function ApplyMethodPreview({ method }: { method: ApplyMethod }) {
       case "inPerson":
         return (
           <div className="space-y-1">
-            <p className="text-xs">{method.inPersonAddress}</p>
+            <p className="text-xs font-semibold text-slate-800">{method.inPersonAddress}</p>
             {method.inPersonTiming && (
-              <p className="text-xs text-[#6B3A2A]/60 flex items-center gap-1">
+              <p className="text-xs text-slate-500 flex items-center gap-1 font-medium">
                 <Clock size={10} /> {method.inPersonTiming}
               </p>
             )}
@@ -140,14 +140,14 @@ function ApplyMethodPreview({ method }: { method: ApplyMethod }) {
   };
 
   return (
-    <div className="bg-[#FAF5EE] rounded-lg p-3">
-      <div className="flex items-center gap-2 mb-2">
+    <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/80">
+      <div className="flex items-center gap-2 mb-1.5">
         {getMethodIcon()}
-        <h6 className="font-semibold text-xs text-[#1C1C1C]">
+        <h6 className="font-extrabold text-xs text-slate-900">
           {getMethodTitle()}
         </h6>
       </div>
-      <div className="text-sm text-[#6B3A2A]/75 break-words">
+      <div className="text-xs font-semibold text-slate-700 break-words">
         {getMethodDetails()}
       </div>
     </div>
@@ -159,18 +159,18 @@ export default function JobPostingPreview({ data }: JobPostingPreviewProps) {
 
   if (!hasContent) {
     return (
-      <div className="bg-white rounded-2xl border border-[#C8782A]/15 overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-[#C8782A] to-[#B06820] px-4 sm:px-5 py-3">
-          <h3 className="text-white font-semibold text-sm flex items-center gap-2">
-            <Briefcase size={16} />
+      <div className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-xs">
+        <div className="bg-slate-900 px-5 py-3.5 border-b border-slate-800">
+          <h3 className="text-white font-extrabold text-sm flex items-center gap-2">
+            <Briefcase size={16} className="text-[#059669]" />
             Live Preview
           </h3>
         </div>
-        <div className="p-4 sm:p-6 text-center">
-          <div className="w-14 h-14 sm:w-16 sm:h-16 bg-[#FAF5EE] rounded-full flex items-center justify-center mx-auto mb-3">
-            <Briefcase size={24} className="text-[#C8782A]/40" />
+        <div className="p-6 text-center">
+          <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-3">
+            <Briefcase size={24} className="text-[#059669]" />
           </div>
-          <p className="text-[#6B3A2A]/50 text-xs sm:text-sm">
+          <p className="text-slate-500 text-xs sm:text-sm font-medium">
             Start filling the form to see your job posting preview
           </p>
         </div>
@@ -179,36 +179,33 @@ export default function JobPostingPreview({ data }: JobPostingPreviewProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-[#C8782A]/15 overflow-hidden shadow-sm">
-      <div className="bg-gradient-to-r from-[#C8782A] to-[#B06820] px-4 sm:px-5 py-3 flex justify-between items-center">
-        <h3 className="text-white font-semibold text-sm flex items-center gap-2">
-          <Briefcase size={16} />
+    <div className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-xs">
+      <div className="bg-slate-900 px-5 py-3.5 flex justify-between items-center border-b border-slate-800">
+        <h3 className="text-white font-extrabold text-sm flex items-center gap-2">
+          <Briefcase size={16} className="text-[#059669]" />
           Live Preview
         </h3>
         {data.featured && (
-          <span className="bg-white/20 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
+          <span className="bg-[#059669] text-white text-[10px] px-2.5 py-0.5 rounded-full font-extrabold uppercase tracking-wider">
             Featured
           </span>
         )}
       </div>
 
-      <div className="p-4 sm:p-5">
+      <div className="p-5 sm:p-6">
         {/* Header */}
-        <div className="border-b border-[#C8782A]/10 pb-3 sm:pb-4 mb-3 sm:mb-4">
-          <h4
-            className="text-lg sm:text-xl font-bold text-[#1C1C1C] mb-2 line-clamp-2"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
+        <div className="border-b border-slate-100 pb-4 mb-4">
+          <h4 className="text-xl font-extrabold text-slate-900 mb-2 line-clamp-2">
             {data.title || "Job Title"}
           </h4>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm text-[#6B3A2A]/70">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 text-xs font-semibold text-slate-600">
             <span className="flex items-center gap-1.5">
-              <Building2 size={14} className="flex-shrink-0" />
+              <Building2 size={14} className="text-[#059669] flex-shrink-0" />
               <span className="truncate">{data.company || "Company Name"}</span>
             </span>
             {data.location && (
               <span className="flex items-center gap-1.5">
-                <MapPin size={14} className="flex-shrink-0" />
+                <MapPin size={14} className="text-[#059669] flex-shrink-0" />
                 <span className="truncate">
                   {getLocationDisplay(data.location)}
                 </span>
@@ -220,25 +217,19 @@ export default function JobPostingPreview({ data }: JobPostingPreviewProps) {
         {/* Badges */}
         <div className="flex flex-wrap gap-2 mb-4">
           {data.remote && (
-            <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-50 text-[#059669] border border-emerald-200/80 uppercase tracking-wider">
               <Globe size={11} className="flex-shrink-0" />
               Remote / Hybrid
             </span>
           )}
-          {data.indigenous && (
-            <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-[#7A9E7E]/10 text-[#7A9E7E] border border-[#7A9E7E]/20">
-              <BadgeCheck size={11} className="flex-shrink-0" />
-              Indigenous-owned
-            </span>
-          )}
           {data.category && (
-            <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
               <Tag size={11} className="flex-shrink-0" />
               <span className="truncate">{data.category}</span>
             </span>
           )}
           {data.nocCode && (
-            <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700 border border-purple-200">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono bg-slate-100 text-slate-700 border border-slate-200">
               <Code2 size={11} className="flex-shrink-0" />
               NOC: {data.nocCode}
             </span>
@@ -247,61 +238,61 @@ export default function JobPostingPreview({ data }: JobPostingPreviewProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
           {data.employmentType && (
-            <div className="bg-[#FAF5EE] rounded-lg p-2.5">
-              <div className="flex items-center gap-1.5 text-[#C8782A] mb-1">
+            <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/60">
+              <div className="flex items-center gap-1.5 text-[#059669] mb-1">
                 <Clock size={12} className="flex-shrink-0" />
-                <span className="text-xs font-medium">Employment Type</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Employment Type</span>
               </div>
-              <p className="text-sm font-semibold text-[#1C1C1C] break-words">
+              <p className="text-xs sm:text-sm font-extrabold text-slate-900 break-words">
                 {data.employmentType}
               </p>
             </div>
           )}
 
           {data.salary && (
-            <div className="bg-[#FAF5EE] rounded-lg p-2.5">
-              <div className="flex items-center gap-1.5 text-[#C8782A] mb-1">
+            <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/60">
+              <div className="flex items-center gap-1.5 text-[#059669] mb-1">
                 <DollarSign size={12} className="flex-shrink-0" />
-                <span className="text-xs font-medium">Salary</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Salary</span>
               </div>
-              <p className="text-sm font-semibold text-[#1C1C1C] break-words">
+              <p className="text-xs sm:text-sm font-extrabold text-slate-900 break-words">
                 {getSalaryDisplay(data.salary, data.salaryType)}
               </p>
             </div>
           )}
 
           {data.vacancies && (
-            <div className="bg-[#FAF5EE] rounded-lg p-2.5">
-              <div className="flex items-center gap-1.5 text-[#C8782A] mb-1">
+            <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/60">
+              <div className="flex items-center gap-1.5 text-[#059669] mb-1">
                 <Briefcase size={12} className="flex-shrink-0" />
-                <span className="text-xs font-medium">Vacancies</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Vacancies</span>
               </div>
-
-              <p className="text-sm font-semibold text-[#1C1C1C]">
+              <p className="text-xs sm:text-sm font-extrabold text-slate-900">
                 {data.vacancies}{" "}
                 {data.vacancies > 1 ? "Open Positions" : "Open Position"}
               </p>
             </div>
           )}
+
           {data.runDays && (
-            <div className="bg-[#FAF5EE] rounded-lg p-2.5">
-              <div className="flex items-center gap-1.5 text-[#C8782A] mb-1">
+            <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/60">
+              <div className="flex items-center gap-1.5 text-[#059669] mb-1">
                 <CalendarDays size={12} className="flex-shrink-0" />
-                <span className="text-xs font-medium">Posted for</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Posted for</span>
               </div>
-              <p className="text-sm font-semibold text-[#1C1C1C]">
+              <p className="text-xs sm:text-sm font-extrabold text-slate-900">
                 {data.runDays} days
               </p>
             </div>
           )}
 
           {data.experience && (
-            <div className="bg-[#FAF5EE] rounded-lg p-2.5">
-              <div className="flex items-center gap-1.5 text-[#C8782A] mb-1">
+            <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/60">
+              <div className="flex items-center gap-1.5 text-[#059669] mb-1">
                 <GraduationCap size={12} className="flex-shrink-0" />
-                <span className="text-xs font-medium">Experience</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Experience</span>
               </div>
-              <p className="text-sm font-semibold text-[#1C1C1C]">
+              <p className="text-xs sm:text-sm font-extrabold text-slate-900">
                 {data.experience}{" "}
                 {parseInt(data.experience) > 1 ? "years" : "year"}
               </p>
@@ -309,12 +300,12 @@ export default function JobPostingPreview({ data }: JobPostingPreviewProps) {
           )}
 
           {data.startDate && (
-            <div className="bg-[#FAF5EE] rounded-lg p-2.5">
-              <div className="flex items-center gap-1.5 text-[#C8782A] mb-1">
+            <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200/60">
+              <div className="flex items-center gap-1.5 text-[#059669] mb-1">
                 <Calendar size={12} className="flex-shrink-0" />
-                <span className="text-xs font-medium">Start Date</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Start Date</span>
               </div>
-              <p className="text-sm font-semibold text-[#1C1C1C]">
+              <p className="text-xs sm:text-sm font-extrabold text-slate-900">
                 {getStartDateDisplay(data.startDate)}
               </p>
             </div>
@@ -324,46 +315,36 @@ export default function JobPostingPreview({ data }: JobPostingPreviewProps) {
         {/* Description */}
         {data.descriptionHtml && (
           <div className="mb-4">
-            <h5 className="font-semibold text-[#1C1C1C] text-sm mb-2 flex items-center gap-2">
-              <Briefcase size={14} className="text-[#C8782A] flex-shrink-0" />
+            <h5 className="font-extrabold text-slate-900 text-sm mb-2 flex items-center gap-2">
+              <Briefcase size={14} className="text-[#059669] flex-shrink-0" />
               About the Role
             </h5>
             <div
-              className="text-sm text-[#6B3A2A]/80 prose prose-sm max-w-none line-clamp-6 break-words"
+              className="text-xs sm:text-sm text-slate-600 prose prose-slate max-w-none line-clamp-6 break-words font-medium"
               dangerouslySetInnerHTML={{ __html: data.descriptionHtml }}
             />
-            {data.descriptionHtml.length > 500 && (
-              <button className="text-xs text-[#C8782A] mt-2 hover:underline inline-flex items-center gap-1">
-                Read more <ChevronRight size={10} />
-              </button>
-            )}
           </div>
         )}
 
         {/* Requirements */}
         {data.requirementsHtml && (
           <div className="mb-4">
-            <h5 className="font-semibold text-[#1C1C1C] text-sm mb-2 flex items-center gap-2">
-              <BadgeCheck size={14} className="text-[#C8782A] flex-shrink-0" />
+            <h5 className="font-extrabold text-slate-900 text-sm mb-2 flex items-center gap-2">
+              <BadgeCheck size={14} className="text-[#059669] flex-shrink-0" />
               Qualifications & Requirements
             </h5>
             <div
-              className="text-sm text-[#6B3A2A]/80 prose prose-sm max-w-none line-clamp-4 break-words"
+              className="text-xs sm:text-sm text-slate-600 prose prose-slate max-w-none line-clamp-4 break-words font-medium"
               dangerouslySetInnerHTML={{ __html: data.requirementsHtml }}
             />
-            {data.requirementsHtml.length > 400 && (
-              <button className="text-xs text-[#C8782A] mt-2 hover:underline inline-flex items-center gap-1">
-                Read more <ChevronRight size={10} />
-              </button>
-            )}
           </div>
         )}
 
         {/* How to Apply Methods */}
         {data.applyMethods && data.applyMethods.length > 0 && (
           <div className="mb-4">
-            <h5 className="font-semibold text-[#1C1C1C] text-sm mb-2 flex items-center gap-2">
-              <Mail size={14} className="text-[#C8782A] flex-shrink-0" />
+            <h5 className="font-extrabold text-slate-900 text-sm mb-2 flex items-center gap-2">
+              <Mail size={14} className="text-[#059669] flex-shrink-0" />
               How to Apply
             </h5>
             <div className="space-y-2">
@@ -376,16 +357,16 @@ export default function JobPostingPreview({ data }: JobPostingPreviewProps) {
 
         {/* Website Link */}
         {data.website && (
-          <div className="mb-4 p-3 bg-[#FAF5EE] rounded-lg">
+          <div className="mb-4 p-3 bg-slate-50 border border-slate-200/60 rounded-2xl">
             <div className="flex items-center gap-2">
-              <Globe size={14} className="text-[#C8782A] flex-shrink-0" />
+              <Globe size={14} className="text-[#059669] flex-shrink-0" />
               <div>
-                <p className="text-xs text-[#6B3A2A]/50">Company Website</p>
+                <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Company Website</p>
                 <a
                   href={data.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-[#1a64c4] hover:underline break-all"
+                  className="text-xs font-bold text-[#059669] hover:underline break-all"
                 >
                   {data.website.replace(/^https?:\/\//, "")}
                 </a>
@@ -395,8 +376,8 @@ export default function JobPostingPreview({ data }: JobPostingPreviewProps) {
         )}
 
         {/* Footer */}
-        <div className="border-t border-[#C8782A]/10 pt-3 mt-3">
-          <p className="text-xs text-[#6B3A2A]/50 text-center">
+        <div className="border-t border-slate-100 pt-3 mt-3">
+          <p className="text-xs text-slate-400 font-medium text-center">
             {data.packageName || "Job Posting"} • Live on GetJobsCanada
           </p>
         </div>
