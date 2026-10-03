@@ -162,7 +162,7 @@ export async function GET(
       .font("Helvetica")
       .fontSize(8)
       .text(
-        "Connecting Indigenous Talent with Inclusive Employers",
+        "Connecting Top Talent with Verified Canadian Employers",
         margin,
         y,
         {

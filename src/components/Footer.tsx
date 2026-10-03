@@ -97,7 +97,7 @@ export default function Footer() {
 
       {/* Main Footer Links */}
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand & Info Column (Spans 2 cols) */}
           <div className="lg:col-span-2 flex flex-col justify-between">
             <div>
@@ -184,8 +184,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Locations */}
-          <div>
+          {/* Column 3: Locations (Top Hubs) - Commented Out */}
+          {/* <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-5 flex items-center gap-2">
               <MapPin size={16} className="text-[#059669]" />
               <span>Top Hubs</span>
@@ -202,7 +202,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           {/* Column 4: Company */}
           <div>

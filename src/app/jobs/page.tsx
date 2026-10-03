@@ -224,11 +224,6 @@ function JobCard({ job, viewMode = "grid" }: { job: Job; viewMode?: "grid" | "li
           job.featured ? "ring-1 ring-[#059669]/30 bg-gradient-to-br from-emerald-50/20 via-white to-white" : ""
         } ${isList ? "flex flex-col md:flex-row md:items-center justify-between gap-6" : "flex flex-col justify-between h-full"}`}
       >
-        {/* Top Accent Stripe for Featured Jobs */}
-        {job.featured && (
-          <div className="absolute top-0 left-0 right-0 h-1 bg-[#059669]" />
-        )}
-
         <div className="flex-1">
           {/* Top Bar: Company Logo Avatar & Badges */}
           <div className="flex items-start justify-between gap-3 mb-4">
@@ -540,14 +535,14 @@ export default function JobsPage() {
             className="bg-white p-3.5 rounded-3xl shadow-lg border border-slate-200/80 flex flex-col md:flex-row items-stretch gap-3 mt-8 max-w-5xl"
           >
             {/* Search Input */}
-            <div className="relative flex-1 flex items-center">
-              <Search size={18} className="absolute left-4 text-[#059669]" />
-              <Input
+            <div className="relative flex-1 flex items-center bg-slate-50/70 border border-slate-200/60 rounded-2xl px-4 py-1 focus-within:bg-white focus-within:border-[#059669] focus-within:ring-2 focus-within:ring-[#059669]/20 transition-all">
+              <Search size={18} className="text-[#059669] flex-shrink-0 mr-3" />
+              <input
                 type="text"
                 value={filters.query}
                 onChange={(e) => set("query", e.target.value)}
                 placeholder="Job title, keywords, or company..."
-                className="pl-11 pr-4 h-12 border-0 bg-slate-50/60 focus-visible:ring-2 focus-visible:ring-[#059669]/20 focus-visible:bg-white text-sm rounded-2xl font-medium placeholder:text-slate-400"
+                className="w-full h-11 bg-transparent border-none outline-none text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:ring-0"
               />
             </div>
 
