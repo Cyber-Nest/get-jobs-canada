@@ -6,7 +6,6 @@ const PaymentTransactionSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Employer",
       required: true,
-      index: true,
     },
 
     packageName: {

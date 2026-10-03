@@ -26,7 +26,6 @@ const VerificationSchema = new Schema(
     expiresAt: {
       type: Date,
       required: true,
-      index: true,
     },
     failedAttempts: {
       type: Number,

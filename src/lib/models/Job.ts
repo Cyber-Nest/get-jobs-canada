@@ -112,7 +112,6 @@ const JobSchema = new Schema(
       type: String,
       unique: true,
       trim: true,
-      index: true,
     },
 
     title: {

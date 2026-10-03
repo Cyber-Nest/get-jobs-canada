@@ -8,7 +8,6 @@ const PromoCodeSchema = new Schema(
       unique: true,
       uppercase: true,
       trim: true,
-      index: true,
     },
 
     packageName: {
