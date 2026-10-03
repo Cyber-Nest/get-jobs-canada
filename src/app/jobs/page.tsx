@@ -22,6 +22,14 @@ import {
   Code2,
   Hash,
   Users,
+  LayoutGrid,
+  List,
+  Sparkles,
+  ArrowRight,
+  Filter,
+  CheckCircle2,
+  RotateCcw,
+  Compass,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,7 +37,6 @@ import { Input } from "@/components/ui/input";
 /* ── Constants ──────────────────────────────────────────────────────── */
 const PAGE_SIZE = 8;
 
-// Categories from your job posting form
 const ALL_CATEGORIES = [
   "Administration & Office",
   "Arts, Culture & Heritage",
@@ -128,10 +135,10 @@ export interface JobFilters {
 function formatSalary(salary: string, salaryType?: string): string {
   if (!salary) return "";
   const typeMap: Record<string, string> = {
-    hour: "/hour",
-    week: "/week",
-    month: "/month",
-    year: "/year",
+    hour: "/hr",
+    week: "/wk",
+    month: "/mo",
+    year: "/yr",
   };
   const suffix = salaryType && typeMap[salaryType] ? typeMap[salaryType] : "";
   return `${salary}${suffix}`;
@@ -141,9 +148,9 @@ function getStartDateLabel(startDate: string): string {
   const dateMap: Record<string, string> = {
     asap: "ASAP",
     immediate: "Immediate",
-    "1week": "Within 1 week",
-    "2weeks": "Within 2 weeks",
-    "1month": "Within 1 month",
+    "1week": "Within 1 wk",
+    "2weeks": "Within 2 wks",
+    "1month": "Within 1 mo",
   };
   return dateMap[startDate] || startDate;
 }
@@ -152,29 +159,24 @@ function getLocation(job: Job): string {
   const parts = [];
   if (job.city && job.city !== job.province) parts.push(job.city);
   if (job.province) parts.push(job.province);
-  return parts.join(", ") || job.location || "Location not specified";
+  return parts.join(", ") || job.location || "Location N/A";
 }
 
-// Filter jobs function
 function filterJobs(jobs: Job[], filters: JobFilters): Job[] {
   return jobs.filter((job) => {
-    // Search query
     if (filters.query) {
       const query = filters.query.toLowerCase();
       const matchesSearch =
         job.title.toLowerCase().includes(query) ||
         job.company.toLowerCase().includes(query) ||
+        job.category.toLowerCase().includes(query) ||
         job.descriptionHtml?.toLowerCase().includes(query);
       if (!matchesSearch) return false;
     }
 
-    // Province
     if (filters.province && job.province !== filters.province) return false;
-
-    // Category
     if (filters.category && job.category !== filters.category) return false;
 
-    // Employment type
     if (filters.type) {
       const typeMap: Record<string, string> = {
         "Full-time": "Full-time",
@@ -187,10 +189,7 @@ function filterJobs(jobs: Job[], filters: JobFilters): Job[] {
       if (jobType !== filters.type) return false;
     }
 
-    // Remote only
     if (filters.remote && !job.remote) return false;
-
-    // Indigenous employers only
     if (filters.indigenous && !job.indigenousOwned && !job.indigenousPreference)
       return false;
 
@@ -207,117 +206,135 @@ const fadeUp = {
     transition: { duration: 0.35, ease: "easeOut" as const },
   },
 };
+
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.06 } },
+  visible: { transition: { staggerChildren: 0.05 } },
 };
 
-/* ── Job card ───────────────────────────────────────────────────────── */
-function JobCard({ job }: { job: Job }) {
+/* ── Job Card Component (Matches App Emerald Brand Theme) ─────────────── */
+function JobCard({ job, viewMode = "grid" }: { job: Job; viewMode?: "grid" | "list" }) {
+  const isList = viewMode === "list";
+
   return (
-    <motion.div variants={fadeUp}>
+    <motion.div variants={fadeUp} className="w-full">
       <Link
         href={`/jobs/${job._id || job.id}`}
-        className="group block bg-white rounded-2xl border border-[#C8782A]/10 hover:border-[#C8782A]/35 hover:shadow-md transition-all duration-200 p-5"
+        className={`group relative block bg-white rounded-2xl border border-slate-200/80 hover:border-[#059669]/50 hover:shadow-md hover:shadow-emerald-950/5 transition-all duration-200 p-5 lg:p-6 overflow-hidden ${
+          job.featured ? "ring-1 ring-[#059669]/30 bg-gradient-to-br from-emerald-50/20 via-white to-white" : ""
+        } ${isList ? "flex flex-col md:flex-row md:items-center justify-between gap-6" : "flex flex-col justify-between h-full"}`}
       >
-        <div className="flex items-start justify-between gap-3 mb-3">
-          {/* Company icon */}
-          <div className="w-11 h-11 rounded-xl bg-[#FAF5EE] border border-[#C8782A]/10 flex items-center justify-center flex-shrink-0">
-            <Building2 size={18} className="text-[#C8782A]" />
-          </div>
-
-          {/* Badges */}
-          <div className="flex flex-wrap gap-1.5 justify-end">
-            {job.featured && (
-              <span className="text-xs bg-[#C8782A] text-white px-2.5 py-0.5 rounded-full font-semibold">
-                Featured
-              </span>
-            )}
-            {job.remote && (
-              <span className="inline-flex items-center gap-1 text-xs bg-[#1a64c4]/10 text-[#1a64c4] px-2.5 py-0.5 rounded-full font-medium">
-                <Wifi size={10} /> Remote
-              </span>
-            )}
-            {(job.indigenousOwned || job.indigenousPreference) && (
-              <span className="inline-flex items-center gap-1 text-xs bg-[#7A9E7E]/15 text-[#4a7a4e] px-2.5 py-0.5 rounded-full font-medium">
-                <Leaf size={10} /> Indigenous Employer
-              </span>
-            )}
-            {/* Job ID Badge */}
-            {job.jobId && (
-              <span className="inline-flex items-center gap-1 text-xs bg-neutral-100 text-neutral-600 border border-neutral-200 px-2.5 py-0.5 rounded-full font-mono">
-                <Hash size={10} /> {job.jobId}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Title + company */}
-        <h3 className="font-bold text-[#1C1C1C] text-base leading-snug mb-0.5 group-hover:text-[#C8782A] transition-colors duration-200 line-clamp-2">
-          {job.title}
-        </h3>
-        <p className="text-sm text-[#C8782A] font-semibold mb-3">
-          {job.company}
-        </p>
-
-        <div className="grid grid-cols-2 gap-x-3 gap-y-2 mb-4">
-          <span className="inline-flex items-center gap-1.5 text-xs text-[#6B3A2A]/65 min-w-0">
-            <MapPin size={11} className="text-[#C8782A] flex-shrink-0" />
-            <span className="truncate">{getLocation(job)}</span>
-          </span>
-          <span className="inline-flex items-center gap-1.5 text-xs text-[#6B3A2A]/65">
-            <Clock size={11} className="text-[#C8782A]" />
-            {job.employmentType}
-          </span>
-          {formatSalary(job.salary, job.salaryType) && (
-            <span className="inline-flex items-center gap-1.5 text-xs text-[#6B3A2A]/65">
-              <DollarSign size={11} className="text-[#C8782A]" />
-              {formatSalary(job.salary, job.salaryType)}
-            </span>
-          )}
-          {job.nocCode && (
-            <span className="inline-flex items-center gap-1.5 text-xs text-[#6B3A2A]/65">
-              <Code2 size={11} className="text-[#C8782A]" />
-              NOC: {job.nocCode}
-            </span>
-          )}
-        </div>
-
-        {/*  Experience, start date, and vacancies */}
-        {(job.experience || job.startDate || job.vacancies) && (
-          <div className="flex flex-wrap gap-2 mb-3">
-            {job.vacancies && (
-              <span className="inline-flex items-center gap-1 text-xs bg-[#FAF5EE] border border-[#C8782A]/10 text-[#6B3A2A]/70 px-2 py-0.5 rounded-full font-medium">
-                <Users size={10} className="text-[#C8782A]" /> {job.vacancies} {job.vacancies > 1 ? "Vacancies" : "Vacancy"}
-              </span>
-            )}
-            {job.experience && (
-              <span className="inline-flex items-center gap-1 text-xs bg-gray-50 text-gray-600 px-2 py-0.5 rounded-full">
-                <Briefcase size={10} /> {job.experience}{" "}
-                {parseInt(job.experience) > 1 ? "years" : "year"}
-              </span>
-            )}
-            {job.startDate && (
-              <span className="inline-flex items-center gap-1 text-xs bg-gray-50 text-gray-600 px-2 py-0.5 rounded-full">
-                <Calendar size={10} /> Start: {getStartDateLabel(job.startDate)}
-              </span>
-            )}
-          </div>
+        {/* Top Accent Stripe for Featured Jobs */}
+        {job.featured && (
+          <div className="absolute top-0 left-0 right-0 h-1 bg-[#059669]" />
         )}
 
-        {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-[#C8782A]/8">
-          <span className="text-xs text-[#6B3A2A]/45">
+        <div className="flex-1">
+          {/* Top Bar: Company Logo Avatar & Badges */}
+          <div className="flex items-start justify-between gap-3 mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-emerald-50 text-[#059669] border border-emerald-100 flex items-center justify-center font-extrabold text-lg flex-shrink-0 group-hover:bg-[#059669] group-hover:text-white transition-colors duration-200">
+                {job.company ? job.company.charAt(0).toUpperCase() : <Building2 size={20} />}
+              </div>
+              <div>
+                <span className="text-xs font-bold text-slate-800 group-hover:text-[#059669] transition-colors flex items-center gap-1">
+                  {job.company}
+                  <CheckCircle2 size={13} className="text-[#059669] fill-emerald-50" />
+                </span>
+                <span className="text-[11px] text-slate-400 block font-medium">
+                  {job.category || "General Role"}
+                </span>
+              </div>
+            </div>
+
+            {/* Badges */}
+            <div className="flex flex-wrap gap-1.5 justify-end">
+              {job.featured && (
+                <span className="inline-flex items-center gap-1 text-[11px] bg-[#059669] text-white px-2.5 py-0.5 rounded-full font-bold shadow-xs">
+                  <Sparkles size={10} /> Featured
+                </span>
+              )}
+              {job.remote && (
+                <span className="inline-flex items-center gap-1 text-[11px] bg-blue-50 text-blue-700 border border-blue-200/60 px-2.5 py-0.5 rounded-full font-medium">
+                  <Wifi size={10} /> Remote
+                </span>
+              )}
+              {(job.indigenousOwned || job.indigenousPreference || job.featured) && (
+                <span className="inline-flex items-center gap-1 text-[11px] bg-emerald-50 text-emerald-800 border border-emerald-200/80 px-2.5 py-0.5 rounded-full font-medium">
+                  <CheckCircle2 size={10} className="text-[#059669]" /> Verified Employer
+                </span>
+              )}
+              {job.jobId && (
+                <span className="hidden sm:inline-flex items-center gap-1 text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-mono border border-slate-200">
+                  <Hash size={9} /> {job.jobId}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Job Title */}
+          <h3 className="font-extrabold text-slate-900 text-base sm:text-lg group-hover:text-[#059669] transition-colors duration-200 mb-3 leading-snug line-clamp-2">
+            {job.title}
+          </h3>
+
+          {/* Meta Details Grid */}
+          <div className="flex flex-wrap items-center gap-y-2 gap-x-3 text-xs text-slate-600 mb-4">
+            <span className="inline-flex items-center gap-1.5 bg-slate-100/70 text-slate-700 px-2.5 py-1 rounded-lg font-medium">
+              <MapPin size={12} className="text-[#059669]" />
+              {getLocation(job)}
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-slate-100/70 text-slate-700 px-2.5 py-1 rounded-lg font-medium">
+              <Clock size={12} className="text-[#059669]" />
+              {job.employmentType}
+            </span>
+            {formatSalary(job.salary, job.salaryType) && (
+              <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-[#059669] border border-emerald-200/60 px-2.5 py-1 rounded-lg font-bold">
+                <DollarSign size={12} className="text-[#059669]" />
+                {formatSalary(job.salary, job.salaryType)}
+              </span>
+            )}
+            {job.nocCode && (
+              <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-600 px-2 py-1 rounded-lg font-mono text-[11px]">
+                <Code2 size={11} /> NOC {job.nocCode}
+              </span>
+            )}
+          </div>
+
+          {/* Secondary Details Row */}
+          {(job.vacancies || job.startDate || job.experience) && (
+            <div className="flex flex-wrap items-center gap-2 mb-4 pt-1 border-t border-slate-100 text-xs">
+              {job.vacancies && (
+                <span className="inline-flex items-center gap-1 text-[11px] text-slate-600 bg-slate-50 border border-slate-200/60 px-2.5 py-0.5 rounded-md font-medium">
+                  <Users size={11} className="text-[#059669]" /> {job.vacancies} {job.vacancies > 1 ? "Vacancies" : "Vacancy"}
+                </span>
+              )}
+              {job.startDate && (
+                <span className="inline-flex items-center gap-1 text-[11px] text-slate-600 bg-slate-50 border border-slate-200/60 px-2.5 py-0.5 rounded-md font-medium">
+                  <Calendar size={11} className="text-slate-400" /> Start: {getStartDateLabel(job.startDate)}
+                </span>
+              )}
+              {job.experience && (
+                <span className="inline-flex items-center gap-1 text-[11px] text-slate-600 bg-slate-50 border border-slate-200/60 px-2.5 py-0.5 rounded-md font-medium">
+                  <Briefcase size={11} className="text-slate-400" /> Exp: {job.experience} {parseInt(job.experience) > 1 ? "yrs" : "yr"}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Card Footer Action */}
+        <div className={`flex items-center justify-between pt-3 border-t border-slate-100 ${isList ? "md:border-t-0 md:pt-0 md:flex-col md:items-end md:gap-3" : ""}`}>
+          <span className="text-[11px] font-medium text-slate-400">
             {job?.postDate
               ? new Date(job.postDate as string).toLocaleDateString("en-US", {
                   day: "numeric",
-                  month: "long",
+                  month: "short",
                   year: "numeric",
                 })
-              : "N/A"}
+              : "Recently posted"}
           </span>
-          <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#C8782A] group-hover:gap-2 transition-all duration-200">
-            View Job <ChevronRight size={13} />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#059669] group-hover:bg-[#047857] px-3.5 py-2 rounded-xl transition-all duration-200 shadow-xs">
+            View Job <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
           </span>
         </div>
       </Link>
@@ -325,37 +342,15 @@ function JobCard({ job }: { job: Job }) {
   );
 }
 
-/* ── Filter pill ────────────────────────────────────────────────────── */
-function FilterPill({
-  label,
-  onRemove,
-}: {
-  label: string;
-  onRemove: () => void;
-}) {
-  return (
-    <span className="inline-flex items-center gap-1.5 text-xs bg-[#C8782A]/10 text-[#6B3A2A] border border-[#C8782A]/20 rounded-full px-3 py-1 font-medium">
-      {label}
-      <button
-        type="button"
-        onClick={onRemove}
-        className="text-[#C8782A] hover:text-[#B06820] transition-colors"
-        aria-label={`Remove ${label} filter`}
-      >
-        <X size={11} />
-      </button>
-    </span>
-  );
-}
-
-/* ── Select field ───────────────────────────────────────────────────── */
-function FilterSelect({
+/* ── Custom Filter Select Component ─────────────────────────────────── */
+function CustomFilterSelect({
   id,
   label,
   value,
   onChange,
   options,
   placeholder,
+  icon: Icon,
 }: {
   id: string;
   label: string;
@@ -363,13 +358,12 @@ function FilterSelect({
   onChange: (v: string) => void;
   options: string[];
   placeholder: string;
+  icon?: any;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-xs font-semibold text-[#6B3A2A]/60 uppercase tracking-wider"
-      >
+      <label htmlFor={id} className="text-[11px] font-extrabold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+        {Icon && <Icon size={12} className="text-[#059669]" />}
         {label}
       </label>
       <div className="relative">
@@ -377,23 +371,22 @@ function FilterSelect({
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none rounded-xl border border-[#C8782A]/20 bg-white px-3 py-2.5 text-sm text-[#1C1C1C] focus:outline-none focus:ring-2 focus:ring-[#C8782A]/30 pr-8"
+          className="w-full appearance-none rounded-2xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#059669] focus:outline-none focus:ring-2 focus:ring-[#059669]/20 pr-8 transition-all cursor-pointer"
         >
           <option value="">{placeholder}</option>
           {options.map((o) => (
-            <option key={o}>{o}</option>
+            <option key={o} value={o}>
+              {o}
+            </option>
           ))}
         </select>
-        <ChevronDown
-          size={14}
-          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#6B3A2A]/40 pointer-events-none"
-        />
+        <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
       </div>
     </div>
   );
 }
 
-/* ── Main page ──────────────────────────────────────────────────────── */
+/* ── Main Jobs Page Component ────────────────────────────────────────── */
 export default function JobsPage() {
   const [filters, setFilters] = useState<JobFilters>({
     query: "",
@@ -404,7 +397,8 @@ export default function JobsPage() {
     indigenous: false,
   });
   const [page, setPage] = useState(1);
-  const [showFilters, setShowFilters] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const { data: dbJobsResponse, isLoading } = useQuery({
     queryKey: ["jobs"],
@@ -472,14 +466,11 @@ export default function JobsPage() {
         indigenousPreference: job.indigenousPreference,
         postDate: job.postDate,
         vacancies: job.vacancies,
-      }),
+      })
     );
   }, [dbJobs]);
 
-  const filtered = useMemo(
-    () => filterJobs(allJobs, filters),
-    [allJobs, filters],
-  );
+  const filtered = useMemo(() => filterJobs(allJobs, filters), [allJobs, filters]);
   const featured = useMemo(() => allJobs.filter((j) => j.featured), [allJobs]);
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -492,100 +483,155 @@ export default function JobsPage() {
     filters.indigenous ? "indigenous" : "",
   ].filter(Boolean).length;
 
-  const hasActiveFilters = activeFilterCount > 0 || filters.query;
+  const hasActiveFilters = activeFilterCount > 0 || filters.query !== "";
 
   return (
-    <>
-      {/* Hero Section */}
-      <section className="bg-[#FAF5EE] py-14 lg:py-20 relative overflow-hidden">
-        <div
-          className="absolute -left-20 top-1/2 -translate-y-1/2 w-[380px] h-[380px] text-[#C8782A] pointer-events-none opacity-20"
-          aria-hidden="true"
-        >
-          <svg viewBox="0 0 400 400" fill="none">
-            <circle
-              cx="200"
-              cy="200"
-              r="180"
-              stroke="currentColor"
-              strokeWidth="1"
-            />
-            <circle
-              cx="200"
-              cy="200"
-              r="120"
-              stroke="currentColor"
-              strokeWidth="1"
-              opacity="0.6"
-            />
-            <circle
-              cx="200"
-              cy="200"
-              r="60"
-              fill="currentColor"
-              opacity="0.15"
-            />
-          </svg>
-        </div>
+    <div className="min-h-screen bg-slate-50/50 font-sans text-slate-900 pb-20">
+      
+      {/* ─── Fresh Light Theme Hero (Matches Contact Page Theme) ─────────────── */}
+      <section className="relative bg-gradient-to-b from-emerald-50/60 via-white to-slate-50/50 border-b border-slate-200/60 py-12 lg:py-16 overflow-hidden">
+        {/* Subtle Brand Accent Glow */}
+        <div className="absolute top-0 right-10 w-96 h-96 bg-[#059669]/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45 }}
-            className="max-w-2xl"
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+            className="max-w-3xl text-left"
           >
-            <p className="text-[#C8782A] font-semibold text-sm uppercase tracking-widest mb-3">
-              Job Board
-            </p>
-            <h1
-              className="text-5xl lg:text-6xl font-bold text-[#1C1C1C] mb-4 leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+            {/* Top Hero Pill Badge */}
+            <motion.div
+              variants={fadeUp}
+              className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-emerald-50/80 border border-emerald-200/80 shadow-xs mb-4"
             >
-              Find Your Next Opportunity
-            </h1>
-            <p className="text-[#6B3A2A]/70 text-lg leading-relaxed mb-8">
-              Explore jobs from Indigenous organizations and inclusive employers
-              committed to reconciliation — across every province and territory
-              in Canada.
-            </p>
+              <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none flex items-center gap-1">
+                <Compass size={11} /> Job Portal
+              </span>
+              <span className="text-xs font-semibold text-slate-700 leading-none">
+                Explore Verified Opportunities Across Canada
+              </span>
+            </motion.div>
 
-            {/* Search bar */}
-            <div className="flex gap-3 max-w-xl">
-              <div className="relative flex-1">
-                <Search
-                  size={16}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6B3A2A]/40"
-                />
-                <Input
-                  type="search"
-                  value={filters.query}
-                  onChange={(e) => set("query", e.target.value)}
-                  placeholder="Job title, company, or keyword…"
-                  className="pl-10 border-[#C8782A]/20 focus-visible:ring-[#C8782A]/30 bg-white h-12 text-sm"
-                />
-              </div>
-              <Button
-                type="button"
-                className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold h-12 px-6 shadow-sm"
-              >
-                Search
-              </Button>
-            </div>
+            {/* Headline */}
+            <motion.h1
+              variants={fadeUp}
+              className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3"
+            >
+              Find Your Next Opportunity with{" "}
+              <span className="text-[#059669]">GetJobsCanada</span>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              variants={fadeUp}
+              className="text-slate-600 text-base sm:text-lg leading-relaxed"
+            >
+              Explore top jobs and career opportunities from verified employers
+              and leading companies across every province and territory in Canada.
+            </motion.p>
           </motion.div>
 
-          {/* Stats bar */}
+          {/* ── Unified Clean Light Search Command Hub ──────────────────────────── */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.15 }}
-            className="flex flex-wrap gap-6 mt-10"
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="bg-white p-3.5 rounded-3xl shadow-lg border border-slate-200/80 flex flex-col md:flex-row items-stretch gap-3 mt-8 max-w-5xl"
+          >
+            {/* Search Input */}
+            <div className="relative flex-1 flex items-center">
+              <Search size={18} className="absolute left-4 text-[#059669]" />
+              <Input
+                type="text"
+                value={filters.query}
+                onChange={(e) => set("query", e.target.value)}
+                placeholder="Job title, keywords, or company..."
+                className="pl-11 pr-4 h-12 border-0 bg-slate-50/60 focus-visible:ring-2 focus-visible:ring-[#059669]/20 focus-visible:bg-white text-sm rounded-2xl font-medium placeholder:text-slate-400"
+              />
+            </div>
+
+            {/* Province Select */}
+            <div className="relative md:w-56 flex items-center">
+              <MapPin size={18} className="absolute left-3.5 text-[#059669]" />
+              <select
+                value={filters.province}
+                onChange={(e) => set("province", e.target.value)}
+                className="w-full h-12 pl-10 pr-8 bg-slate-50/60 border-0 text-xs font-semibold text-slate-800 rounded-2xl outline-none appearance-none focus:bg-white cursor-pointer"
+              >
+                <option value="">All Provinces</option>
+                {ALL_PROVINCES.map((p) => (
+                  <option key={p} value={p}>{p}</option>
+                ))}
+              </select>
+              <ChevronDown size={14} className="absolute right-3 text-slate-400 pointer-events-none" />
+            </div>
+
+            {/* Category Select */}
+            <div className="relative md:w-60 flex items-center">
+              <Briefcase size={18} className="absolute left-3.5 text-[#059669]" />
+              <select
+                value={filters.category}
+                onChange={(e) => set("category", e.target.value)}
+                className="w-full h-12 pl-10 pr-8 bg-slate-50/60 border-0 text-xs font-semibold text-slate-800 rounded-2xl outline-none appearance-none focus:bg-white cursor-pointer"
+              >
+                <option value="">All Categories</option>
+                {ALL_CATEGORIES.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              <ChevronDown size={14} className="absolute right-3 text-slate-400 pointer-events-none" />
+            </div>
+
+            {/* Submit Button */}
+            <Button
+              type="button"
+              className="h-12 px-7 bg-[#059669] hover:bg-[#047857] text-white font-bold rounded-2xl text-sm transition-all shadow-md shadow-emerald-900/10 flex items-center justify-center gap-2"
+            >
+              Search <ArrowRight size={16} />
+            </Button>
+          </motion.div>
+
+          {/* Quick Filter Tag Buttons */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.25 }}
+            className="flex flex-wrap items-center gap-2 mt-5 text-xs"
+          >
+            <span className="font-bold text-slate-500 uppercase tracking-wider text-[11px] mr-1">Trending:</span>
+            {[
+              { label: "Remote / Hybrid", action: () => set("remote", !filters.remote), active: filters.remote },
+              { label: "Verified Employers", action: () => set("indigenous", !filters.indigenous), active: filters.indigenous },
+              { label: "Full-Time", action: () => set("type", filters.type === "Full-time" ? "" : "Full-time"), active: filters.type === "Full-time" },
+            ].map((tag) => (
+              <button
+                key={tag.label}
+                type="button"
+                onClick={tag.action}
+                className={`px-3.5 py-1.5 rounded-full border text-xs font-semibold transition-all ${
+                  tag.active
+                    ? "bg-[#059669] border-[#059669] text-white shadow-xs"
+                    : "bg-white border-slate-200 text-slate-700 hover:bg-emerald-50/60 hover:border-emerald-200"
+                }`}
+              >
+                {tag.label}
+              </button>
+            ))}
+          </motion.div>
+
+          {/* Stats Summary Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="flex flex-wrap gap-8 mt-8 pt-6 border-t border-slate-200/60 text-left"
           >
             {[
               { value: `${allJobs.length}`, label: "Active Listings" },
               {
-                value: `${allJobs.filter((j) => j.indigenousOwned).length}`,
-                label: "Indigenous Employers",
+                value: `${allJobs.filter((j) => j.featured || j.indigenousOwned).length || allJobs.length}`,
+                label: "Verified Employers",
               },
               {
                 value: `${allJobs.filter((j) => j.remote).length}`,
@@ -597,422 +643,434 @@ export default function JobsPage() {
               },
             ].map(({ value, label }) => (
               <div key={label} className="flex items-baseline gap-2">
-                <span
-                  className="text-2xl font-bold text-[#C8782A]"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
+                <span className="text-2xl font-black text-[#059669]">
                   {value}
                 </span>
-                <span className="text-sm text-[#6B3A2A]/60">{label}</span>
+                <span className="text-xs font-semibold text-slate-600">{label}</span>
               </div>
             ))}
           </motion.div>
+
         </div>
       </section>
 
-      {/* Main content */}
-      <section className="bg-white py-10 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 items-start">
-            {/* Sidebar filters (desktop) */}
-            <aside className="hidden lg:flex flex-col gap-5 sticky top-24">
-              <div className="bg-[#FAF5EE] rounded-2xl p-5 border border-[#C8782A]/10">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-bold text-[#1C1C1C] text-sm">
-                    Filter Jobs
-                  </h2>
-                  {hasActiveFilters && (
-                    <button
-                      type="button"
-                      onClick={clearAll}
-                      className="text-xs text-[#C8782A] hover:underline font-medium"
-                    >
-                      Clear all
-                    </button>
-                  )}
-                </div>
+      {/* ─── Main Content Body ────────────────────────────────────────────────── */}
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 mt-8">
+        
+        {/* Top Control Bar */}
+        <div className="bg-white rounded-3xl border border-slate-200/80 p-4 mb-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+          
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-bold text-slate-800">
+              <span className="text-[#059669] font-black text-base">{filtered.length}</span> Opportunities Found
+            </span>
+            {hasActiveFilters && (
+              <span className="text-xs bg-emerald-50 text-[#059669] px-3 py-1 rounded-full font-bold border border-emerald-200/60">
+                {activeFilterCount} Active Filters
+              </span>
+            )}
+          </div>
 
-                <div className="flex flex-col gap-4">
-                  <FilterSelect
-                    id="filter-province"
-                    label="Province / Territory"
-                    value={filters.province}
-                    onChange={(v) => set("province", v)}
-                    options={ALL_PROVINCES}
-                    placeholder="All provinces"
-                  />
-                  <FilterSelect
-                    id="filter-category"
-                    label="Category"
-                    value={filters.category}
-                    onChange={(v) => set("category", v)}
-                    options={ALL_CATEGORIES}
-                    placeholder="All categories"
-                  />
-                  <FilterSelect
-                    id="filter-type"
-                    label="Employment Type"
-                    value={filters.type}
-                    onChange={(v) => set("type", v)}
-                    options={ALL_TYPES}
-                    placeholder="All types"
-                  />
+          <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+            
+            {/* Reset All */}
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={clearAll}
+                className="text-xs text-rose-600 hover:text-rose-700 font-bold flex items-center gap-1 hover:underline"
+              >
+                <RotateCcw size={13} /> Reset All
+              </button>
+            )}
 
-                  <div className="flex flex-col gap-2.5 pt-1">
-                    <label className="flex items-center gap-2.5 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={filters.remote}
-                        onChange={(e) => set("remote", e.target.checked)}
-                        className="w-4 h-4 accent-[#C8782A]"
-                      />
-                      <span className="text-sm text-[#6B3A2A]/75 font-medium">
-                        Remote / Hybrid only
-                      </span>
-                    </label>
-                    <label className="flex items-center gap-2.5 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={filters.indigenous}
-                        onChange={(e) => set("indigenous", e.target.checked)}
-                        className="w-4 h-4 accent-[#7A9E7E]"
-                      />
-                      <span className="text-sm text-[#6B3A2A]/75 font-medium">
-                        Indigenous employers only
-                      </span>
-                    </label>
-                  </div>
-                </div>
+            {/* Mobile Filter Button */}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setShowMobileFilters(!showMobileFilters)}
+              className="lg:hidden border-slate-200 text-slate-700 text-xs font-bold gap-1.5 rounded-2xl"
+            >
+              <Filter size={14} /> Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
+            </Button>
+
+            {/* View Mode Switcher */}
+            <div className="flex items-center bg-slate-100/80 p-1 rounded-2xl border border-slate-200/60">
+              <button
+                type="button"
+                onClick={() => setViewMode("grid")}
+                className={`p-1.5 rounded-xl text-xs font-bold transition-all ${
+                  viewMode === "grid" ? "bg-white text-[#059669] shadow-xs" : "text-slate-500 hover:text-slate-900"
+                }`}
+                title="Grid View"
+              >
+                <LayoutGrid size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("list")}
+                className={`p-1.5 rounded-xl text-xs font-bold transition-all ${
+                  viewMode === "list" ? "bg-white text-[#059669] shadow-xs" : "text-slate-500 hover:text-slate-900"
+                }`}
+                title="List View"
+              >
+                <List size={16} />
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        {/* ── Active Filter Pills Bar ────────────────────────────────────────── */}
+        {hasActiveFilters && (
+          <div className="flex flex-wrap items-center gap-2 mb-6">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Active:</span>
+            {filters.query && (
+              <span className="inline-flex items-center gap-1.5 text-xs bg-slate-900 text-white rounded-full px-3 py-1 font-medium shadow-xs">
+                "{filters.query}"
+                <button type="button" onClick={() => set("query", "")} className="hover:text-emerald-300"><X size={12} /></button>
+              </span>
+            )}
+            {filters.province && (
+              <span className="inline-flex items-center gap-1.5 text-xs bg-white text-slate-800 border border-slate-200 rounded-full px-3 py-1 font-medium shadow-xs">
+                📍 {filters.province}
+                <button type="button" onClick={() => set("province", "")} className="text-slate-400 hover:text-slate-700"><X size={12} /></button>
+              </span>
+            )}
+            {filters.category && (
+              <span className="inline-flex items-center gap-1.5 text-xs bg-white text-slate-800 border border-slate-200 rounded-full px-3 py-1 font-medium shadow-xs">
+                💼 {filters.category}
+                <button type="button" onClick={() => set("category", "")} className="text-slate-400 hover:text-slate-700"><X size={12} /></button>
+              </span>
+            )}
+            {filters.type && (
+              <span className="inline-flex items-center gap-1.5 text-xs bg-white text-slate-800 border border-slate-200 rounded-full px-3 py-1 font-medium shadow-xs">
+                ⏱️ {filters.type}
+                <button type="button" onClick={() => set("type", "")} className="text-slate-400 hover:text-slate-700"><X size={12} /></button>
+              </span>
+            )}
+            {filters.remote && (
+              <span className="inline-flex items-center gap-1.5 text-xs bg-blue-50 text-blue-700 border border-blue-200 rounded-full px-3 py-1 font-semibold shadow-xs">
+                🌐 Remote
+                <button type="button" onClick={() => set("remote", false)} className="hover:text-blue-900"><X size={12} /></button>
+              </span>
+            )}
+            {filters.indigenous && (
+              <span className="inline-flex items-center gap-1.5 text-xs bg-emerald-50 text-[#059669] border border-emerald-200 rounded-full px-3 py-1 font-semibold shadow-xs">
+                ✅ Verified Employers
+                <button type="button" onClick={() => set("indigenous", false)} className="hover:text-emerald-900"><X size={12} /></button>
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Main Grid: Sidebar + Job Listings */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          
+          {/* ── Sidebar Filters (Desktop 4 Cols) ─────────────────────────────── */}
+          <aside className="hidden lg:flex lg:col-span-4 flex-col gap-6 sticky top-24">
+            
+            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-5">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h2 className="font-extrabold text-slate-900 text-sm tracking-wide flex items-center gap-2">
+                  <SlidersHorizontal size={16} className="text-[#059669]" /> Refine Search
+                </h2>
+                {hasActiveFilters && (
+                  <button type="button" onClick={clearAll} className="text-xs text-[#059669] font-bold hover:underline">
+                    Reset
+                  </button>
+                )}
               </div>
 
-              {/* Post a job CTA */}
-              <div className="bg-[#6B3A2A] rounded-2xl p-5 text-[#FAF5EE]">
-                <h3
-                  className="font-bold mb-2"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
-                  Hiring Indigenous Talent?
+              {/* Province */}
+              <CustomFilterSelect
+                id="d-province"
+                label="Province / Territory"
+                value={filters.province}
+                onChange={(v) => set("province", v)}
+                options={ALL_PROVINCES}
+                placeholder="All Provinces"
+                icon={MapPin}
+              />
+
+              {/* Category */}
+              <CustomFilterSelect
+                id="d-category"
+                label="Job Category"
+                value={filters.category}
+                onChange={(v) => set("category", v)}
+                options={ALL_CATEGORIES}
+                placeholder="All Categories"
+                icon={Briefcase}
+              />
+
+              {/* Type */}
+              <CustomFilterSelect
+                id="d-type"
+                label="Employment Type"
+                value={filters.type}
+                onChange={(v) => set("type", v)}
+                options={ALL_TYPES}
+                placeholder="All Types"
+                icon={Clock}
+              />
+
+              {/* Checkbox Toggles */}
+              <div className="space-y-3 pt-3 border-t border-slate-100">
+                <label className="flex items-center justify-between cursor-pointer p-2 rounded-2xl hover:bg-slate-50 transition-colors">
+                  <span className="text-xs font-semibold text-slate-700 flex items-center gap-2">
+                    <Wifi size={14} className="text-blue-600" /> Remote / Hybrid Only
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={filters.remote}
+                    onChange={(e) => set("remote", e.target.checked)}
+                    className="w-4 h-4 rounded accent-[#059669] cursor-pointer"
+                  />
+                </label>
+
+                {/* <label className="flex items-center justify-between cursor-pointer p-2 rounded-2xl hover:bg-slate-50 transition-colors">
+                  <span className="text-xs font-semibold text-slate-700 flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-[#059669]" /> Verified Employers Only
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={filters.indigenous}
+                    onChange={(e) => set("indigenous", e.target.checked)}
+                    className="w-4 h-4 rounded accent-[#059669] cursor-pointer"
+                  />
+                </label> */}
+              </div>
+            </div>
+
+            {/* Post a Job CTA Card */}
+            <div className="bg-[#059669] text-white rounded-3xl p-6 lg:p-7 shadow-lg relative overflow-hidden flex flex-col justify-between">
+              <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+              
+              <div>
+                <div className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-white/15 border border-white/20 shadow-xs mb-4 text-white">
+                  <span className="bg-emerald-300 text-emerald-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
+                    Employers
+                  </span>
+                  <span className="text-xs font-semibold text-white leading-none">
+                    Reach Canadian Talent
+                  </span>
+                </div>
+
+                <h3 className="font-extrabold text-xl text-white mb-2 leading-tight">
+                  Hiring Top Canadian Talent?
                 </h3>
-                <p className="text-[#FAF5EE]/70 text-xs leading-relaxed mb-4">
-                  Post your job and reach thousands of qualified Indigenous job
-                  seekers across Canada.
+                <p className="text-emerald-50 text-xs leading-relaxed mb-6">
+                  Post your job today to connect with thousands of qualified job seekers across Canada.
                 </p>
-                <Link href="/post-a-job">
-                  <Button
-                    variant="outline"
-                    className="border-white text-white hover:bg-white hover:text-[#6B3A2A] w-full text-sm font-semibold"
-                  >
-                    Post a Job
-                  </Button>
-                </Link>
               </div>
-            </aside>
 
-            {/* Job listings */}
-            <div>
-              {/* Mobile filter toggle */}
-              <div className="flex items-center justify-between mb-5 lg:hidden">
-                <p className="text-sm text-[#6B3A2A]/60">
-                  <span className="font-bold text-[#1C1C1C]">
-                    {filtered.length}
-                  </span>{" "}
-                  jobs found
+              <Link href="/post-a-job" className="block">
+                <Button className="w-full bg-white text-[#059669] hover:bg-emerald-50 font-bold text-xs py-3 rounded-2xl transition-all shadow-md">
+                  Post a Job Now
+                </Button>
+              </Link>
+            </div>
+
+          </aside>
+
+          {/* ── Mobile Filter Modal Drawer ───────────────────────────────────── */}
+          <AnimatePresence>
+            {showMobileFilters && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="lg:hidden bg-white rounded-3xl p-5 border border-slate-200 mb-6 shadow-lg space-y-4"
+              >
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h3 className="font-bold text-slate-900 text-sm">Filter Jobs</h3>
+                  <button type="button" onClick={() => setShowMobileFilters(false)} className="text-slate-400 hover:text-slate-700">
+                    <X size={18} />
+                  </button>
+                </div>
+                <CustomFilterSelect
+                  id="m-province"
+                  label="Province / Territory"
+                  value={filters.province}
+                  onChange={(v) => set("province", v)}
+                  options={ALL_PROVINCES}
+                  placeholder="All Provinces"
+                />
+                <CustomFilterSelect
+                  id="m-category"
+                  label="Job Category"
+                  value={filters.category}
+                  onChange={(v) => set("category", v)}
+                  options={ALL_CATEGORIES}
+                  placeholder="All Categories"
+                />
+                <CustomFilterSelect
+                  id="m-type"
+                  label="Employment Type"
+                  value={filters.type}
+                  onChange={(v) => set("type", v)}
+                  options={ALL_TYPES}
+                  placeholder="All Types"
+                />
+                <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
+                  <label className="flex items-center justify-between cursor-pointer py-1.5">
+                    <span className="text-xs font-semibold text-slate-700">Remote Only</span>
+                    <input type="checkbox" checked={filters.remote} onChange={(e) => set("remote", e.target.checked)} className="w-4 h-4 accent-[#059669]" />
+                  </label>
+                  <label className="flex items-center justify-between cursor-pointer py-1.5">
+                    <span className="text-xs font-semibold text-slate-700">Verified Employers</span>
+                    <input type="checkbox" checked={filters.indigenous} onChange={(e) => set("indigenous", e.target.checked)} className="w-4 h-4 accent-[#059669]" />
+                  </label>
+                </div>
+                <Button type="button" onClick={() => setShowMobileFilters(false)} className="w-full bg-[#059669] text-white font-bold text-xs py-2.5 rounded-2xl">
+                  Apply Filters
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* ── Job Listings Stream (8 Cols) ─────────────────────────────────── */}
+          <div className="lg:col-span-8">
+            
+            {/* Featured Section (If page 1 and no active filters) */}
+            {page === 1 && !hasActiveFilters && featured.length > 0 && (
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                    <Sparkles size={15} className="text-[#059669]" /> Featured Employers
+                  </h2>
+                </div>
+                <motion.div
+                  variants={stagger}
+                  initial="hidden"
+                  animate="visible"
+                  className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 gap-5" : "flex flex-col gap-4"}
+                >
+                  {featured.slice(0, 4).map((job) => (
+                    <JobCard key={job._id} job={job} viewMode={viewMode} />
+                  ))}
+                </motion.div>
+                <div className="my-8 border-t border-slate-200/80" />
+              </div>
+            )}
+
+            {/* Main Job Cards Feed */}
+            {isLoading ? (
+              <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 gap-5" : "flex flex-col gap-4"}>
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="bg-white rounded-2xl border border-slate-200 p-6 animate-pulse space-y-4">
+                    <div className="flex justify-between items-center">
+                      <div className="w-11 h-11 rounded-xl bg-slate-100" />
+                      <div className="w-20 h-5 rounded-full bg-slate-100" />
+                    </div>
+                    <div className="h-5 bg-slate-100 rounded w-3/4" />
+                    <div className="h-4 bg-slate-100 rounded w-1/2" />
+                    <div className="h-10 bg-slate-100 rounded-xl" />
+                  </div>
+                ))}
+              </div>
+            ) : paginated.length > 0 ? (
+              <motion.div
+                key={`${page}-${JSON.stringify(filters)}-${viewMode}`}
+                variants={stagger}
+                initial="hidden"
+                animate="visible"
+                className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 gap-5" : "flex flex-col gap-4"}
+              >
+                {paginated.map((job) => (
+                  <JobCard key={job._id} job={job} viewMode={viewMode} />
+                ))}
+              </motion.div>
+            ) : (
+              /* Empty State */
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-white rounded-3xl border border-slate-200/80 p-12 text-center max-w-md mx-auto my-8 shadow-xs"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center mx-auto mb-4">
+                  <Search size={26} />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">No jobs matched your criteria</h3>
+                <p className="text-slate-500 text-xs leading-relaxed mb-6">
+                  Try broadening your search term or clearing some filters to see more results.
                 </p>
+                <Button
+                  type="button"
+                  onClick={clearAll}
+                  className="bg-[#059669] hover:bg-[#047857] text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-xs"
+                >
+                  Clear All Filters
+                </Button>
+              </motion.div>
+            )}
+
+            {/* ── Pagination ─────────────────────────────────────────────────────── */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-12">
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={() => setShowFilters((v) => !v)}
-                  className="border-[#C8782A]/25 text-[#6B3A2A] hover:bg-[#C8782A]/5 hover:text-black gap-2"
+                  disabled={page === 1}
+                  onClick={() => {
+                    setPage((p) => p - 1);
+                    window.scrollTo({ top: 250, behavior: "smooth" });
+                  }}
+                  className="border-slate-200 text-slate-700 hover:bg-slate-100 disabled:opacity-40 rounded-xl"
                 >
-                  <SlidersHorizontal size={14} />
-                  Filters
-                  {activeFilterCount > 0 && (
-                    <span className="bg-[#C8782A] text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-bold">
-                      {activeFilterCount}
-                    </span>
-                  )}
+                  <ChevronLeft size={16} />
+                </Button>
+
+                {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
+                  let pageNum = i + 1;
+                  if (totalPages > 5 && page > 3) {
+                    pageNum = page - 2 + i;
+                    if (pageNum > totalPages) return null;
+                  }
+                  return (
+                    <button
+                      key={pageNum}
+                      type="button"
+                      onClick={() => {
+                        setPage(pageNum);
+                        window.scrollTo({ top: 250, behavior: "smooth" });
+                      }}
+                      className={`w-10 h-10 rounded-xl text-xs font-bold transition-all ${
+                        page === pageNum
+                          ? "bg-[#059669] text-white shadow-xs"
+                          : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-100"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  disabled={page === totalPages}
+                  onClick={() => {
+                    setPage((p) => p + 1);
+                    window.scrollTo({ top: 250, behavior: "smooth" });
+                  }}
+                  className="border-slate-200 text-slate-700 hover:bg-slate-100 disabled:opacity-40 rounded-xl"
+                >
+                  <ChevronRight size={16} />
                 </Button>
               </div>
+            )}
 
-              {/* Mobile filter panel */}
-              <AnimatePresence>
-                {showFilters && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="overflow-hidden mb-5 lg:hidden"
-                  >
-                    <div className="bg-[#FAF5EE] rounded-2xl p-5 border border-[#C8782A]/10 flex flex-col gap-4">
-                      <FilterSelect
-                        id="m-filter-province"
-                        label="Province / Territory"
-                        value={filters.province}
-                        onChange={(v) => set("province", v)}
-                        options={ALL_PROVINCES}
-                        placeholder="All provinces"
-                      />
-                      <FilterSelect
-                        id="m-filter-category"
-                        label="Category"
-                        value={filters.category}
-                        onChange={(v) => set("category", v)}
-                        options={ALL_CATEGORIES}
-                        placeholder="All categories"
-                      />
-                      <FilterSelect
-                        id="m-filter-type"
-                        label="Employment Type"
-                        value={filters.type}
-                        onChange={(v) => set("type", v)}
-                        options={ALL_TYPES}
-                        placeholder="All types"
-                      />
-                      <div className="flex flex-col gap-2.5">
-                        <label className="flex items-center gap-2.5 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={filters.remote}
-                            onChange={(e) => set("remote", e.target.checked)}
-                            className="w-4 h-4 accent-[#C8782A]"
-                          />
-                          <span className="text-sm text-[#6B3A2A]/75 font-medium">
-                            Remote / Hybrid only
-                          </span>
-                        </label>
-                        <label className="flex items-center gap-2.5 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={filters.indigenous}
-                            onChange={(e) =>
-                              set("indigenous", e.target.checked)
-                            }
-                            className="w-4 h-4 accent-[#7A9E7E]"
-                          />
-                          <span className="text-sm text-[#6B3A2A]/75 font-medium">
-                            Indigenous employers only
-                          </span>
-                        </label>
-                      </div>
-                      {hasActiveFilters && (
-                        <button
-                          type="button"
-                          onClick={clearAll}
-                          className="text-xs text-[#C8782A] hover:underline font-medium text-left"
-                        >
-                          Clear all filters
-                        </button>
-                      )}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Results header + active filter pills */}
-              <div className="flex flex-wrap items-center gap-3 mb-5">
-                <p className="hidden lg:block text-sm text-[#6B3A2A]/60">
-                  <span className="font-bold text-[#1C1C1C]">
-                    {filtered.length}
-                  </span>{" "}
-                  job{filtered.length !== 1 ? "s" : ""} found
-                </p>
-                {filters.province && (
-                  <FilterPill
-                    label={filters.province}
-                    onRemove={() => set("province", "")}
-                  />
-                )}
-                {filters.category && (
-                  <FilterPill
-                    label={filters.category}
-                    onRemove={() => set("category", "")}
-                  />
-                )}
-                {filters.type && (
-                  <FilterPill
-                    label={filters.type}
-                    onRemove={() => set("type", "")}
-                  />
-                )}
-                {filters.remote && (
-                  <FilterPill
-                    label="Remote"
-                    onRemove={() => set("remote", false)}
-                  />
-                )}
-                {filters.indigenous && (
-                  <FilterPill
-                    label="Indigenous Employers"
-                    onRemove={() => set("indigenous", false)}
-                  />
-                )}
-              </div>
-
-              {/* Featured strip */}
-              {page === 1 && !hasActiveFilters && featured.length > 0 && (
-                <div className="mb-8">
-                  <p className="text-xs font-semibold text-[#6B3A2A]/50 uppercase tracking-wider mb-3">
-                    Featured Listings
-                  </p>
-                  <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate="visible"
-                    className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
-                  >
-                    {featured.slice(0, 3).map((job) => (
-                      <JobCard key={job._id} job={job} />
-                    ))}
-                  </motion.div>
-                  <div className="my-8 border-t border-[#C8782A]/10" />
-                  <p className="text-xs font-semibold text-[#6B3A2A]/50 uppercase tracking-wider mb-3">
-                    All Listings
-                  </p>
-                </div>
-              )}
-
-              {/* Job grid */}
-              {isLoading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[1, 2, 3, 4, 5, 6].map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-2xl border border-[#C8782A]/10 bg-white p-5 animate-pulse"
-                    >
-                      {/* Top section */}
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="w-11 h-11 rounded-xl bg-[#FAF5EE]" />
-                        <div className="flex gap-1.5">
-                          <div className="h-5 w-16 rounded-full bg-[#FAF5EE]" />
-                          <div className="h-5 w-16 rounded-full bg-[#FAF5EE]" />
-                          <div className="h-5 w-20 rounded-full bg-[#FAF5EE]" />
-                        </div>
-                      </div>
-
-                      {/* Title & company */}
-                      <div className="h-5 w-3/4 rounded bg-[#FAF5EE] mb-2" />
-                      <div className="h-4 w-1/3 rounded bg-[#FAF5EE] mb-3" />
-
-                      {/* Info grid */}
-                      <div className="grid grid-cols-2 gap-3 mb-4">
-                        <div className="h-4 w-full rounded bg-[#FAF5EE]" />
-                        <div className="h-4 w-full rounded bg-[#FAF5EE]" />
-                        <div className="h-4 w-full rounded bg-[#FAF5EE]" />
-                        <div className="h-4 w-full rounded bg-[#FAF5EE]" />
-                      </div>
-
-                      {/* Footer */}
-                      <div className="flex justify-between pt-3 border-t border-[#C8782A]/8">
-                        <div className="h-4 w-20 rounded bg-[#FAF5EE]" />
-                        <div className="h-4 w-16 rounded bg-[#FAF5EE]" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : paginated.length > 0 ? (
-                <motion.div
-                  key={`${page}-${JSON.stringify(filters)}`}
-                  variants={stagger}
-                  initial="hidden"
-                  animate="visible"
-                  className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-                >
-                  {paginated.map((job) => (
-                    <JobCard key={job._id} job={job} />
-                  ))}
-                </motion.div>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="flex flex-col items-center justify-center py-20 text-center"
-                >
-                  <div className="w-16 h-16 rounded-full bg-[#C8782A]/10 flex items-center justify-center mb-4">
-                    <Search size={24} className="text-[#C8782A]/50" />
-                  </div>
-                  <h3
-                    className="text-xl font-bold text-[#1C1C1C] mb-2"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
-                    No jobs found
-                  </h3>
-                  <p className="text-[#6B3A2A]/60 text-sm mb-5 max-w-xs">
-                    Try adjusting your search terms or removing some filters.
-                  </p>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={clearAll}
-                    className="border-[#C8782A]/30 text-[#6B3A2A] hover:bg-[#C8782A]/5 hover:text-black"
-                  >
-                    Clear all filters
-                  </Button>
-                </motion.div>
-              )}
-
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-10">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    disabled={page === 1}
-                    onClick={() => {
-                      setPage((p) => p - 1);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className="border-[#C8782A]/25 text-[#6B3A2A] hover:bg-[#C8782A]/5 hover:text-black disabled:opacity-40"
-                  >
-                    <ChevronLeft size={15} />
-                  </Button>
-                  {Array.from({ length: Math.min(totalPages, 5) }).map(
-                    (_, i) => {
-                      let pageNum = i + 1;
-                      if (totalPages > 5 && page > 3) {
-                        pageNum = page - 2 + i;
-                        if (pageNum > totalPages) return null;
-                      }
-                      return (
-                        <button
-                          key={pageNum}
-                          type="button"
-                          onClick={() => {
-                            setPage(pageNum);
-                            window.scrollTo({ top: 0, behavior: "smooth" });
-                          }}
-                          className={`w-9 h-9 rounded-lg text-sm font-semibold transition-all duration-200 ${
-                            page === pageNum
-                              ? "bg-[#C8782A] text-white shadow-sm"
-                              : "text-[#6B3A2A]/70 hover:bg-[#C8782A]/10"
-                          }`}
-                        >
-                          {pageNum}
-                        </button>
-                      );
-                    },
-                  )}
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    disabled={page === totalPages}
-                    onClick={() => {
-                      setPage((p) => p + 1);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className="border-[#C8782A]/25 text-[#6B3A2A] hover:bg-[#C8782A]/5 hover:text-black disabled:opacity-40"
-                  >
-                    <ChevronRight size={15} />
-                  </Button>
-                </div>
-              )}
-            </div>
           </div>
+
         </div>
-      </section>
-    </>
+
+      </div>
+
+    </div>
   );
 }

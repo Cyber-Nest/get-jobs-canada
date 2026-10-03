@@ -14,9 +14,8 @@ import {
   Mail,
   ChevronRight,
   Wifi,
-  Leaf,
   Calendar,
-  CheckCircle,
+  CheckCircle2,
   ArrowLeft,
   Share2,
   X,
@@ -32,6 +31,13 @@ import {
   Hash,
   User,
   Users,
+  Sparkles,
+  ExternalLink,
+  ShieldCheck,
+  FileText,
+  ArrowRight,
+  Bookmark,
+  Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -80,6 +86,8 @@ interface JobDetail {
   postDate?: string | Date;
 }
 
+/* ── Apply Modal Component ──────────────────────────────────────────── */
+
 interface ApplyModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -95,7 +103,6 @@ function ApplyModal({
   company,
   applyMethods,
 }: ApplyModalProps) {
-  //Background Scroll Prevention
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -110,30 +117,30 @@ function ApplyModal({
   const getMethodIcon = (method: string) => {
     switch (method) {
       case "email":
-        return <Mail size={20} className="text-[#C8782A]" />;
+        return <Mail size={18} className="text-[#059669]" />;
       case "phone":
-        return <Phone size={20} className="text-[#C8782A]" />;
+        return <Phone size={18} className="text-[#059669]" />;
       case "mail":
-        return <MapPin size={20} className="text-[#C8782A]" />;
+        return <MapPin size={18} className="text-[#059669]" />;
       case "inPerson":
-        return <Building2 size={20} className="text-[#C8782A]" />;
+        return <Building2 size={18} className="text-[#059669]" />;
       default:
-        return <MessageCircle size={20} className="text-[#C8782A]" />;
+        return <MessageCircle size={18} className="text-[#059669]" />;
     }
   };
 
   const getMethodTitle = (method: string) => {
     switch (method) {
       case "email":
-        return "Apply by Email";
+        return "Apply via Email";
       case "phone":
-        return "Apply by Phone";
+        return "Apply via Phone";
       case "mail":
-        return "Apply by Mail";
+        return "Apply via Postal Mail";
       case "inPerson":
         return "Apply in Person";
       default:
-        return "Apply Now";
+        return "Direct Application";
     }
   };
 
@@ -147,60 +154,56 @@ function ApplyModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50"
           />
 
-          {/* Modal Container */}
+          {/* Modal Content */}
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto pointer-events-none">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.94, y: 24 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ ease: "easeOut", duration: 0.2 }}
-              className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-w-lg w-full pointer-events-auto"
+              exit={{ opacity: 0, scale: 0.94, y: 24 }}
+              transition={{ ease: "easeOut", duration: 0.25 }}
+              className="relative bg-white rounded-3xl shadow-2xl overflow-hidden max-w-lg w-full border border-slate-200/80 pointer-events-auto"
             >
-              {/* Header */}
-              <div className="bg-gradient-to-r from-[#C8782A] to-[#B06820] px-6 py-5 flex justify-between items-center">
-                <div>
-                  <h3
-                    className="text-white font-bold text-xl tracking-wide"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
+              {/* Emerald Top Accent Banner */}
+              <div className="bg-gradient-to-r from-[#059669] via-emerald-600 to-teal-700 px-6 py-6 flex justify-between items-start text-white relative">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[11px] font-bold text-white uppercase tracking-wider">
+                    <Send size={11} /> Application Hub
+                  </div>
+                  <h3 className="font-extrabold text-xl sm:text-2xl text-white tracking-tight">
                     How to Apply
                   </h3>
-                  <p className="text-white/80 text-sm mt-1">
-                    {jobTitle} •{" "}
-                    <span className="font-medium text-white">{company}</span>
+                  <p className="text-emerald-100 text-xs sm:text-sm font-medium line-clamp-1">
+                    {jobTitle} • <span className="text-white font-bold">{company}</span>
                   </p>
                 </div>
                 <button
                   onClick={onClose}
-                  className="text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-200"
+                  className="text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-2 rounded-2xl transition-all"
                   aria-label="Close modal"
                 >
                   <X size={18} />
                 </button>
               </div>
 
-              {/* Content */}
-              <div className="p-6 max-h-[70vh] overflow-y-auto">
+              {/* Methods List */}
+              <div className="p-6 max-h-[70vh] overflow-y-auto space-y-4">
                 {applyMethods.length === 0 ? (
-                  <div className="text-center py-10 px-4">
-                    <AlertCircle
-                      size={44}
-                      className="text-[#C8782A]/50 mx-auto mb-3"
-                    />
-                    <p className="text-[#1C1C1C] font-medium text-base">
-                      No application methods specified
+                  <div className="text-center py-10 px-4 bg-slate-50/80 rounded-2xl border border-slate-200/60">
+                    <AlertCircle size={40} className="text-[#059669]/60 mx-auto mb-3" />
+                    <p className="text-slate-800 font-bold text-base">
+                      No direct contact instructions provided
                     </p>
-                    <p className="text-sm text-[#6B3A2A]/60 mt-1">
-                      Please check back later or contact the employer directly.
+                    <p className="text-xs text-slate-500 mt-1">
+                      Please check the employer website or company profile for application instructions.
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-4">
-                    <p className="text-sm text-[#6B3A2A]/80 font-medium">
-                      Choose your preferred method to apply for this position:
+                  <>
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      Follow the employer's instructions below:
                     </p>
 
                     <div className="space-y-3">
@@ -216,35 +219,35 @@ function ApplyModal({
 
                         if (isEmail && method.email) {
                           displayValue = method.email;
-                          actionLink = `mailto:${method.email}`;
-                          subtitle = "Send your resume and cover letter";
+                          actionLink = `mailto:${method.email}?subject=${encodeURIComponent(`Application for ${jobTitle} - GetJobsCanada`)}`;
+                          subtitle = "Send your resume and cover letter directly to:";
                         } else if (isPhone && method.phone) {
                           displayValue = method.phone;
                           actionLink = `tel:${method.phone}`;
-                          subtitle = "Call during business hours";
+                          subtitle = "Call hiring team during business hours:";
                         } else if (isMail && method.mailAddress) {
                           displayValue = method.mailAddress;
-                          subtitle = "Send your application by mail";
+                          subtitle = "Mail your printed application package to:";
                         } else if (isInPerson && method.inPersonAddress) {
                           displayValue = method.inPersonAddress;
-                          subtitle = "Drop off your application in person";
+                          subtitle = "Submit your resume in person at:";
                         }
 
                         return (
                           <div
                             key={idx}
-                            className="border border-[#C8782A]/15 rounded-xl p-4 bg-[#FAF5EE]/30 hover:bg-[#FAF5EE]/60 hover:border-[#C8782A]/40 transition-all duration-200 group"
+                            className="bg-slate-50/70 border border-slate-200/80 hover:border-[#059669]/50 hover:bg-emerald-50/30 rounded-2xl p-4 transition-all duration-200 group"
                           >
-                            <div className="flex items-start gap-4">
-                              <div className="w-10 h-10 rounded-xl bg-[#FAF5EE] border border-[#C8782A]/10 flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-200">
+                            <div className="flex items-start gap-3.5">
+                              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] border border-emerald-100 flex items-center justify-center flex-shrink-0 group-hover:bg-[#059669] group-hover:text-white transition-colors">
                                 {getMethodIcon(method.method)}
                               </div>
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-bold text-[#1C1C1C] text-base">
+                                <h4 className="font-extrabold text-slate-900 text-sm">
                                   {getMethodTitle(method.method)}
                                 </h4>
                                 {subtitle && (
-                                  <p className="text-xs text-[#6B3A2A]/60 mt-0.5 mb-2 font-medium">
+                                  <p className="text-xs text-slate-500 mt-0.5 mb-1.5 font-medium">
                                     {subtitle}
                                   </p>
                                 )}
@@ -252,29 +255,21 @@ function ApplyModal({
                                 {actionLink ? (
                                   <a
                                     href={actionLink}
-                                    className="text-sm text-[#1a64c4] hover:text-[#114b94] font-medium break-all inline-flex items-center gap-1 hover:underline"
+                                    className="text-xs font-bold text-[#059669] hover:text-[#047857] underline-offset-2 hover:underline inline-flex items-center gap-1.5 break-all"
                                   >
                                     {displayValue}
-                                    <ChevronRight
-                                      size={14}
-                                      className="group-hover:translate-x-0.5 transition-transform duration-200"
-                                    />
+                                    <ExternalLink size={12} className="flex-shrink-0" />
                                   </a>
                                 ) : (
-                                  <p className="text-sm text-[#1C1C1C] font-medium break-words leading-relaxed">
+                                  <p className="text-xs font-semibold text-slate-800 break-words leading-relaxed">
                                     {displayValue}
                                   </p>
                                 )}
 
                                 {isInPerson && method.inPersonTiming && (
-                                  <div className="mt-3 flex items-center gap-2 text-xs font-medium text-[#C8782A] bg-[#FAF5EE] border border-[#C8782A]/10 rounded-lg px-3 py-2 w-max max-w-full">
-                                    <Clock
-                                      size={13}
-                                      className="flex-shrink-0"
-                                    />
-                                    <span className="truncate">
-                                      {method.inPersonTiming}
-                                    </span>
+                                  <div className="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-800 bg-emerald-100/60 border border-emerald-200/80 rounded-lg px-2.5 py-1">
+                                    <Clock size={12} className="text-[#059669]" />
+                                    <span>{method.inPersonTiming}</span>
                                   </div>
                                 )}
                               </div>
@@ -284,30 +279,21 @@ function ApplyModal({
                       })}
                     </div>
 
-                    {/* Notice Banner */}
-                    <div className="mt-5 p-4 bg-[#7A9E7E]/10 rounded-xl border border-[#7A9E7E]/20">
-                      <div className="flex items-start gap-2.5 text-xs text-[#2A442E]">
-                        <CheckCircle
-                          size={16}
-                          className="text-[#558259] flex-shrink-0 mt-0.5"
-                        />
-                        <p className="leading-normal">
-                          Please mention{" "}
-                          <strong className="text-[#1C1C1C] font-bold">
-                            &quot;{jobTitle} - GetJobsCanada&quot;
-                          </strong>{" "}
-                          in your application.
-                        </p>
-                      </div>
+                    {/* Notice Callout */}
+                    <div className="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200/70 flex items-start gap-3">
+                      <ShieldCheck size={18} className="text-[#059669] flex-shrink-0 mt-0.5" />
+                      <p className="text-xs text-emerald-950 font-medium leading-relaxed">
+                        Tip: Always mention <strong className="font-extrabold text-[#059669]">&quot;Application for {jobTitle} via GetJobsCanada&quot;</strong> in your subject line or introduction.
+                      </p>
                     </div>
-                  </div>
+                  </>
                 )}
 
                 <button
                   onClick={onClose}
-                  className="w-full mt-5 py-3 px-4 border border-[#C8782A]/30 text-[#6B3A2A] font-semibold rounded-xl hover:bg-[#C8782A]/5 hover:text-black transition-colors duration-200 active:bg-[#C8782A]/10 text-center text-sm cursor-pointer"
+                  className="w-full mt-2 py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl transition-colors text-xs text-center cursor-pointer"
                 >
-                  Close
+                  Close Window
                 </button>
               </div>
             </motion.div>
@@ -318,63 +304,8 @@ function ApplyModal({
   );
 }
 
-/* ── Helper functions ───────────────────────────────────────────────── */
-function formatSalary(salary: string, salaryType?: string): string {
-  if (!salary) return "Salary not specified";
-  const typeMap: Record<string, string> = {
-    hour: "/hour",
-    week: "/week",
-    month: "/month",
-    year: "/year",
-  };
-  const suffix = salaryType && typeMap[salaryType] ? typeMap[salaryType] : "";
-  return `${salary} CAD${suffix}`;
-}
-
-function getStartDateLabel(startDate: string): string {
-  const dateMap: Record<string, string> = {
-    asap: "As Soon As Possible",
-    immediate: "Immediate Joining",
-    "1week": "Within 1 Week",
-    "2weeks": "Within 2 Weeks",
-    "1month": "Within 1 Month",
-  };
-  return dateMap[startDate] || startDate;
-}
-
-function getLocation(job: JobDetail): string {
-  const parts = [];
-  if (job.city && job.city !== job.province) parts.push(job.city);
-  if (job.province) parts.push(job.province);
-  return parts.join(", ") || job.location || "Location not specified";
-}
-
-function formatClosingDate(expiresAt?: string | Date): string {
-  if (!expiresAt) return "Not specified";
-  const date = new Date(expiresAt);
-  return date.toLocaleDateString("en-CA", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-function calculateClosingDate(
-  postDate?: string | Date,
-  runDays?: string,
-): string {
-  if (!postDate || !runDays) return "Not specified";
-
-  const closingDate = new Date(postDate);
-  closingDate.setDate(closingDate.getDate() + Number(runDays));
-
-  return closingDate.toLocaleDateString("en-CA", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
 /* ── Share Modal Component ──────────────────────────────────────────── */
+
 function ShareModal({
   isOpen,
   onClose,
@@ -402,20 +333,20 @@ function ShareModal({
   const shareOptions = [
     {
       name: "WhatsApp",
-      icon: <MessageCircle size={20} />,
-      color: "bg-[#25D366] hover:bg-[#20BD5A]",
+      icon: <MessageCircle size={18} />,
+      color: "bg-[#25D366] hover:bg-[#1EBE55]",
       href: `https://wa.me/?text=${encodeURIComponent(`${title} - ${url}`)}`,
     },
     {
       name: "LinkedIn",
-      icon: <Linkedin size={20} />,
-      color: "bg-[#0077B5] hover:bg-[#006399]",
+      icon: <Linkedin size={18} />,
+      color: "bg-[#0A66C2] hover:bg-[#08539E]",
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
     },
     {
-      name: "Twitter",
-      icon: <Twitter size={20} />,
-      color: "bg-[#1DA1F2] hover:bg-[#1A91DA]",
+      name: "X (Twitter)",
+      icon: <Twitter size={18} />,
+      color: "bg-slate-900 hover:bg-slate-800",
       href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
     },
   ];
@@ -435,22 +366,19 @@ function ShareModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50"
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.94, y: 24 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ ease: "easeOut", duration: 0.2 }}
-              className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full pointer-events-auto"
+              exit={{ opacity: 0, scale: 0.94, y: 24 }}
+              transition={{ ease: "easeOut", duration: 0.25 }}
+              className="relative bg-white rounded-3xl shadow-2xl overflow-hidden max-w-sm w-full border border-slate-200/80 pointer-events-auto"
             >
-              <div className="bg-gradient-to-r from-[#C8782A] to-[#B06820] px-5 py-4 flex justify-between items-center">
-                <h3
-                  className="text-white font-bold text-lg"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
-                  Share this job
+              <div className="bg-gradient-to-r from-[#059669] to-teal-700 px-5 py-4 flex justify-between items-center text-white">
+                <h3 className="font-extrabold text-base flex items-center gap-2">
+                  <Share2 size={16} /> Share Opportunity
                 </h3>
                 <button
                   onClick={onClose}
@@ -459,8 +387,8 @@ function ShareModal({
                   <X size={16} />
                 </button>
               </div>
-              <div className="p-5">
-                <div className="grid grid-cols-3 gap-3 mb-5">
+              <div className="p-5 space-y-4">
+                <div className="grid grid-cols-3 gap-2.5">
                   {shareOptions.map((option) => (
                     <a
                       key={option.name}
@@ -468,26 +396,24 @@ function ShareModal({
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={onClose}
-                      className={`${option.color} text-white rounded-xl p-3 flex flex-col items-center gap-1.5 transition-all hover:scale-105`}
+                      className={`${option.color} text-white rounded-2xl p-3 flex flex-col items-center gap-1.5 transition-all hover:scale-105 shadow-xs`}
                     >
                       {option.icon}
-                      <span className="text-[10px] font-semibold">
-                        {option.name}
-                      </span>
+                      <span className="text-[10px] font-bold">{option.name}</span>
                     </a>
                   ))}
                 </div>
-                <div className="flex gap-2">
-                  <div className="flex-1 bg-[#FAF5EE] rounded-xl px-3 py-2 text-xs text-[#6B3A2A]/70 truncate border border-[#C8782A]/10">
+                <div className="flex gap-2 pt-2 border-t border-slate-100">
+                  <div className="flex-1 bg-slate-50 border border-slate-200 rounded-2xl px-3 py-2 text-xs text-slate-600 truncate font-mono">
                     {url}
                   </div>
-                  <button
+                  <Button
                     onClick={handleCopyLink}
-                    className="bg-[#C8782A] hover:bg-[#B06820] text-white rounded-xl px-4 flex items-center gap-1.5 transition-all text-sm font-medium"
+                    className="bg-[#059669] hover:bg-[#047857] text-white rounded-2xl px-4 text-xs font-bold flex items-center gap-1.5 shadow-xs"
                   >
-                    {copied ? <Check size={16} /> : <Copy size={16} />}
-                    {copied ? "Copied" : "Copy"}
-                  </button>
+                    {copied ? <Check size={14} /> : <Copy size={14} />}
+                    {copied ? "Copied!" : "Copy"}
+                  </Button>
                 </div>
               </div>
             </motion.div>
@@ -498,41 +424,56 @@ function ShareModal({
   );
 }
 
-/* ── Related job card ───────────────────────────────────────────────── */
-function RelatedCard({ job }: { job: JobDetail }) {
-  return (
-    <Link
-      href={`/jobs/${job._id || job.id}`}
-      className="group flex gap-3 p-3 sm:p-4 rounded-xl border border-[#C8782A]/10 hover:border-[#C8782A]/30 hover:bg-[#FAF5EE]/50 transition-all duration-200"
-    >
-      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#FAF5EE] border border-[#C8782A]/10 flex items-center justify-center flex-shrink-0">
-        <Building2 size={14} className="text-[#C8782A]" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <p className="font-semibold text-xs sm:text-sm text-[#1C1C1C] group-hover:text-[#C8782A] transition-colors leading-snug line-clamp-2">
-          {job.title}
-        </p>
-        <p className="text-xs text-[#C8782A] font-medium truncate">
-          {job.company}
-        </p>
-        <p className="text-xs text-[#6B3A2A]/50 mt-0.5 truncate">
-          {getLocation(job)}
-        </p>
-      </div>
-      <ChevronRight
-        size={14}
-        className="text-[#C8782A]/40 flex-shrink-0 self-center ml-auto group-hover:translate-x-0.5 transition-transform"
-      />
-    </Link>
-  );
+/* ── Helper Functions ───────────────────────────────────────────────── */
+
+function formatSalary(salary: string, salaryType?: string): string {
+  if (!salary) return "Salary Undisclosed";
+  const typeMap: Record<string, string> = {
+    hour: "/hr",
+    week: "/wk",
+    month: "/mo",
+    year: "/yr",
+  };
+  const suffix = salaryType && typeMap[salaryType] ? typeMap[salaryType] : "";
+  return `${salary} CAD${suffix}`;
 }
 
-/* ── Main page ──────────────────────────────────────────────────────── */
+function getStartDateLabel(startDate: string): string {
+  const dateMap: Record<string, string> = {
+    asap: "Immediate / ASAP",
+    immediate: "Immediate Joining",
+    "1week": "Within 1 Week",
+    "2weeks": "Within 2 Weeks",
+    "1month": "Within 1 Month",
+  };
+  return dateMap[startDate] || startDate;
+}
+
+function getLocation(job: JobDetail): string {
+  const parts = [];
+  if (job.city && job.city !== job.province) parts.push(job.city);
+  if (job.province) parts.push(job.province);
+  return parts.join(", ") || job.location || "Canada";
+}
+
+function calculateClosingDate(postDate?: string | Date, runDays?: string): string {
+  if (!postDate || !runDays) return "Open until filled";
+  const closingDate = new Date(postDate);
+  closingDate.setDate(closingDate.getDate() + Number(runDays));
+  return closingDate.toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+/* ── Main Job Detail Page Component ──────────────────────────────────── */
+
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const { data: dbJobResponse, isLoading } = useQuery({
     queryKey: ["job", id],
@@ -550,13 +491,13 @@ export default function JobDetailPage() {
 
   const job = dbJobResponse?.data;
 
-  // Fetch related jobs
+  // Fetch similar jobs
   const { data: relatedJobsResponse } = useQuery({
     queryKey: ["related-jobs", job?.category, job?._id],
     queryFn: async () => {
       if (!job?.category) return { data: [] };
       const res = await fetch(
-        `/api/jobs?category=${encodeURIComponent(job.category)}&limit=4`,
+        `/api/jobs?category=${encodeURIComponent(job.category)}&limit=4`
       );
       if (!res.ok) return { data: [] };
       return res.json() as Promise<{ success: boolean; data: JobDetail[] }>;
@@ -567,213 +508,46 @@ export default function JobDetailPage() {
   const related =
     relatedJobsResponse?.data
       ?.filter((rj) => rj._id !== job?._id)
-      .slice(0, 4) || [];
+      .slice(0, 3) || [];
 
-  // Skeleton Loader
+  /* ── Skeleton Loading View ────────────────────────────────────────── */
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#FAF5EE] animate-pulse">
-        {/* Breadcrumb */}
-        <div className="border-b border-[#C8782A]/10 bg-[#FAF5EE]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex items-center gap-2">
-              <div className="h-3 w-12 rounded bg-[#E8D9C7]" />
-              <div className="h-3 w-3 rounded bg-[#E8D9C7]" />
-              <div className="h-3 w-16 rounded bg-[#E8D9C7]" />
-              <div className="h-3 w-3 rounded bg-[#E8D9C7]" />
-              <div className="h-3 w-32 rounded bg-[#E8D9C7]" />
-            </div>
+      <div className="min-h-screen bg-slate-50/50 py-12 font-sans">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 space-y-8 animate-pulse">
+          <div className="h-8 w-48 bg-slate-200 rounded-full" />
+          <div className="h-12 w-3/4 bg-slate-200 rounded-2xl" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="h-36 bg-white rounded-3xl border border-slate-200" />
+            <div className="h-36 bg-white rounded-3xl border border-slate-200" />
+            <div className="h-36 bg-white rounded-3xl border border-slate-200" />
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6">
+            <div className="lg:col-span-4 h-96 bg-white rounded-3xl border border-slate-200" />
+            <div className="lg:col-span-8 h-[600px] bg-white rounded-3xl border border-slate-200" />
           </div>
         </div>
-
-        {/* Hero Section */}
-        <section className="bg-[#FAF5EE] py-8 sm:py-10 lg:py-14">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-white rounded-3xl border border-[#C8782A]/10 shadow-sm p-5 sm:p-6 lg:p-10">
-              {/* Back Button */}
-              <div className="h-4 w-32 rounded bg-[#F3E7D8] mb-6" />
-
-              <div className="flex flex-col lg:flex-row justify-between gap-8">
-                {/* Left */}
-                <div className="flex-1">
-                  {/* Badges */}
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    <div className="h-6 w-20 rounded-full bg-[#F3E7D8]" />
-                    <div className="h-6 w-28 rounded-full bg-[#F3E7D8]" />
-                    <div className="h-6 w-16 rounded-full bg-[#F3E7D8]" />
-                    <div className="h-6 w-24 rounded-full bg-[#F3E7D8]" />
-                  </div>
-
-                  {/* Title */}
-                  <div className="space-y-3 mb-4">
-                    <div className="h-10 w-full max-w-2xl rounded bg-[#F3E7D8]" />
-                    <div className="h-10 w-3/4 rounded bg-[#F3E7D8]" />
-                  </div>
-
-                  {/* Company */}
-                  <div className="h-5 w-48 rounded bg-[#F3E7D8] mb-6" />
-
-                  {/* Chips */}
-                  <div className="flex flex-wrap gap-3">
-                    <div className="h-10 w-44 rounded-full bg-[#F7EFE5]" />
-                    <div className="h-10 w-32 rounded-full bg-[#F7EFE5]" />
-                    <div className="h-10 w-52 rounded-full bg-[#F7EFE5]" />
-                    <div className="h-10 w-36 rounded-full bg-[#F7EFE5]" />
-                  </div>
-                </div>
-
-                {/* Right CTA */}
-                <div className="hidden lg:flex flex-col gap-3 w-52">
-                  <div className="h-11 rounded-xl bg-[#E8D9C7]" />
-                  <div className="h-11 rounded-xl bg-[#F3E7D8]" />
-                  <div className="h-4 w-32 mx-auto rounded bg-[#F3E7D8]" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Main Body */}
-        <section className="bg-white py-10 pb-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
-              {/* LEFT CONTENT */}
-              <div className="flex-1">
-                {/* About Role */}
-                <div className="mb-10">
-                  <div className="h-8 w-52 rounded bg-[#F3E7D8] mb-5" />
-
-                  <div className="space-y-3">
-                    <div className="h-4 w-full rounded bg-[#F8F1E8]" />
-                    <div className="h-4 w-full rounded bg-[#F8F1E8]" />
-                    <div className="h-4 w-5/6 rounded bg-[#F8F1E8]" />
-                    <div className="h-4 w-full rounded bg-[#F8F1E8]" />
-                    <div className="h-4 w-4/6 rounded bg-[#F8F1E8]" />
-                  </div>
-                </div>
-
-                {/* Requirements */}
-                <div className="mb-10">
-                  <div className="h-8 w-72 rounded bg-[#F3E7D8] mb-5" />
-
-                  <div className="space-y-3">
-                    <div className="h-4 w-full rounded bg-[#F8F1E8]" />
-                    <div className="h-4 w-11/12 rounded bg-[#F8F1E8]" />
-                    <div className="h-4 w-3/4 rounded bg-[#F8F1E8]" />
-                    <div className="h-4 w-full rounded bg-[#F8F1E8]" />
-                  </div>
-                </div>
-
-                {/* Additional Details Card */}
-                <div className="bg-[#FAF5EE] border border-[#C8782A]/10 rounded-2xl p-6 mb-8">
-                  <div className="h-7 w-44 rounded bg-[#E8D9C7] mb-6" />
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    {Array.from({ length: 4 }).map((_, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-[#F3E7D8]" />
-                        <div className="flex-1">
-                          <div className="h-3 w-24 rounded bg-[#F3E7D8] mb-2" />
-                          <div className="h-4 w-36 rounded bg-[#E8D9C7]" />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Mobile CTA */}
-                <div className="lg:hidden bg-white border border-[#C8782A]/10 rounded-2xl p-4 shadow-lg flex flex-col gap-3 sticky bottom-4">
-                  <div className="h-11 rounded-xl bg-[#E8D9C7]" />
-                  <div className="h-11 rounded-xl bg-[#F3E7D8]" />
-                </div>
-              </div>
-
-              {/* RIGHT SIDEBAR */}
-              <div className="lg:w-[320px] flex-shrink-0">
-                <div className="flex flex-col gap-5">
-                  {/* Apply Card */}
-                  <div className="bg-[#FAF5EE] border border-[#C8782A]/10 rounded-2xl p-6">
-                    <div className="h-11 rounded-xl bg-[#E8D9C7] mb-5" />
-
-                    <div className="space-y-4">
-                      <div className="h-4 w-full rounded bg-[#F3E7D8]" />
-                      <div className="h-4 w-5/6 rounded bg-[#F3E7D8]" />
-                      <div className="h-4 w-4/6 rounded bg-[#F3E7D8]" />
-                    </div>
-                  </div>
-
-                  {/* Employer Card */}
-                  <div className="bg-white border border-[#C8782A]/10 rounded-2xl p-6">
-                    <div className="h-7 w-44 rounded bg-[#F3E7D8] mb-5" />
-
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className="w-12 h-12 rounded-xl bg-[#F3E7D8]" />
-
-                      <div className="flex-1">
-                        <div className="h-4 w-36 rounded bg-[#E8D9C7] mb-2" />
-                        <div className="h-3 w-28 rounded bg-[#F3E7D8]" />
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <div className="h-10 rounded-xl bg-[#FAF5EE]" />
-                      <div className="h-10 rounded-xl bg-[#FAF5EE]" />
-                    </div>
-                  </div>
-
-                  {/* Similar Jobs */}
-                  <div className="bg-white border border-[#C8782A]/10 rounded-2xl p-6">
-                    <div className="h-7 w-36 rounded bg-[#F3E7D8] mb-5" />
-
-                    <div className="space-y-3">
-                      {Array.from({ length: 4 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="border border-[#C8782A]/10 rounded-xl p-4"
-                        >
-                          <div className="flex gap-3">
-                            <div className="w-10 h-10 rounded-lg bg-[#F3E7D8]" />
-
-                            <div className="flex-1">
-                              <div className="h-4 w-full rounded bg-[#E8D9C7] mb-2" />
-                              <div className="h-3 w-28 rounded bg-[#F3E7D8] mb-2" />
-                              <div className="h-3 w-20 rounded bg-[#F8F1E8]" />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="h-4 w-32 rounded bg-[#F3E7D8] mt-5" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
     );
   }
+
+  /* ── 404 Not Found View ───────────────────────────────────────────── */
   if (!job) {
     return (
-      <section className="bg-[#FAF5EE] min-h-[85vh] flex items-center justify-center py-20 px-4">
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 rounded-full bg-[#C8782A]/10 flex items-center justify-center mx-auto mb-5">
-            <AlertCircle size={28} className="text-[#C8782A]" />
+      <section className="bg-slate-50/50 min-h-[80vh] flex items-center justify-center py-20 px-4 font-sans">
+        <div className="text-center max-w-md bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-md">
+          <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto mb-5 text-[#059669]">
+            <AlertCircle size={32} />
           </div>
-          <h1
-            className="text-3xl font-bold text-[#1C1C1C] mb-3"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            Job Not Found
+          <h1 className="text-2xl font-extrabold text-slate-900 mb-2">
+            Job Listing Not Found
           </h1>
-          <p className="text-[#6B3A2A]/65 mb-7">
-            This listing may have expired or been removed. Browse our current
-            openings below.
+          <p className="text-sm text-slate-600 mb-6 leading-relaxed">
+            This position may have expired or been filled. Explore open opportunities across Canada on our main job portal.
           </p>
           <Link href="/jobs">
-            <Button className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold px-8">
-              Browse All Jobs
+            <Button className="bg-[#059669] hover:bg-[#047857] text-white font-bold px-7 py-3 rounded-2xl text-sm shadow-md flex items-center justify-center gap-2 mx-auto">
+              Browse All Opportunities <ArrowRight size={16} />
             </Button>
           </Link>
         </div>
@@ -785,8 +559,8 @@ export default function JobDetailPage() {
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
   return (
-    <>
-      {/* Apply Modal */}
+    <div className="min-h-screen bg-slate-50/50 font-sans text-slate-900 pb-24">
+      {/* Modals */}
       <ApplyModal
         isOpen={isApplyModalOpen}
         onClose={() => setIsApplyModalOpen(false)}
@@ -794,8 +568,6 @@ export default function JobDetailPage() {
         company={job.company}
         applyMethods={applyMethods}
       />
-
-      {/* Share Modal */}
       <ShareModal
         isOpen={isShareModalOpen}
         onClose={() => setIsShareModalOpen(false)}
@@ -803,439 +575,374 @@ export default function JobDetailPage() {
         title={job.title}
       />
 
-      {/* Breadcrumb */}
-      <div className="bg-[#FAF5EE] border-b border-[#C8782A]/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <nav className="flex items-center gap-1.5 text-xs text-[#6B3A2A]/55 overflow-x-auto whitespace-nowrap">
-            <Link href="/" className="hover:text-[#C8782A] transition-colors">
-              Home
-            </Link>
-            <ChevronRight size={12} />
-            <Link
-              href="/jobs"
-              className="hover:text-[#C8782A] transition-colors"
-            >
-              Jobs
-            </Link>
-            <ChevronRight size={12} />
-            <span className="text-[#C8782A] font-medium truncate max-w-[150px] sm:max-w-[200px]">
-              {job.title}
-            </span>
-          </nav>
-        </div>
-      </div>
+      {/* ── Section 1: Hero Header (Matches Contact Page Theme & Open Layout) ── */}
+      <section className="relative bg-gradient-to-b from-emerald-50/60 via-white to-slate-50/50 border-b border-slate-200/60 py-10 lg:py-14 overflow-hidden">
+        {/* Subtle Ambient Emerald Accent Glow */}
+        <div className="absolute top-0 right-10 w-96 h-96 bg-[#059669]/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Hero Banner */}
-      <section className="bg-[#FAF5EE] py-8 sm:py-10 lg:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
+          
+          {/* Top Pill Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 p-1 pr-4 rounded-full bg-emerald-50/80 border border-emerald-200/80 shadow-xs mb-4"
+          >
+            <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none flex items-center gap-1">
+              <Building2 size={11} /> {job.company}
+            </span>
+            <span className="text-xs font-semibold text-slate-700 leading-none">
+              Verified Canadian Listing
+            </span>
+          </motion.div>
+
+          {/* Main Title & Subtitle */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="max-w-4xl"
+          >
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+              {job.title}
+            </h1>
+            <p className="text-slate-600 text-base sm:text-lg leading-relaxed flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span className="font-bold text-slate-900">{job.company}</span>
+              <span className="text-slate-300">•</span>
+              <span className="inline-flex items-center gap-1 text-slate-700 font-medium">
+                <MapPin size={15} className="text-[#059669]" /> {getLocation(job)}
+              </span>
+              <span className="text-slate-300">•</span>
+              <span className="inline-flex items-center gap-1 text-slate-700 font-medium">
+                <Clock size={15} className="text-[#059669]" /> {job.employmentType}
+              </span>
+            </p>
+          </motion.div>
+
+          {/* 3 Floating Top Stat Cards (Matching Contact Page 3-Card Grid Layout) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-10 border border-[#C8782A]/10 shadow-sm"
+            transition={{ delay: 0.15 }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 mt-8"
           >
-            {/* Back button */}
-            <div className="mb-4 sm:mb-6">
-              <Link
-                href="/jobs"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#C8782A] hover:underline"
-              >
-                <ArrowLeft size={14} /> Back to Jobs
-              </Link>
+            {/* Card 1: Pay */}
+            <div className="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-6 shadow-xs hover:border-emerald-200 transition-all">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center mb-3">
+                <DollarSign size={20} />
+              </div>
+              <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider block">
+                Pay / Compensation
+              </span>
+              <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5 truncate">
+                {formatSalary(job.salary, job.salaryType)}
+              </span>
+              <span className="text-xs text-slate-500 font-medium block mt-1">
+                Competitive Compensation
+              </span>
             </div>
 
-            <div className="flex flex-col lg:flex-row justify-between gap-6 lg:gap-8 items-start">
-              {/* Main info */}
-              <div className="flex-1 min-w-0">
-                {/* Badges */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {job.remote && (
-                    <span className="inline-flex items-center gap-1.5 text-xs bg-[#1a64c4]/10 text-[#1a64c4] px-2.5 py-1 rounded-full font-medium">
-                      <Wifi size={11} /> Remote
-                    </span>
-                  )}
-                  {(job.indigenousOwned || job.indigenousPreference) && (
-                    <span className="inline-flex items-center gap-1.5 text-xs bg-[#7A9E7E]/15 text-[#4a7a4e] px-2.5 py-1 rounded-full font-medium">
-                      <Leaf size={11} /> Indigenous Employer
-                    </span>
-                  )}
-                  <span className="text-xs bg-white border border-[#C8782A]/15 text-[#6B3A2A]/60 px-2.5 py-1 rounded-full">
-                    {job.category}
-                  </span>
-                  {job.nocCode && (
-                    <span className="text-xs bg-white border border-[#C8782A]/15 text-[#6B3A2A]/60 px-2.5 py-1 rounded-full">
-                      NOC: {job.nocCode}
-                    </span>
-                  )}
-                  {/* Job ID Badge */}
-                  {job.jobId && (
-                    <span className="inline-flex items-center gap-1.5 text-xs bg-neutral-100 text-neutral-600 border border-neutral-200 px-2.5 py-1 rounded-full font-mono">
-                      <Hash size={11} /> {job.jobId}
-                    </span>
-                  )}
-                </div>
-
-                {/* Title */}
-                <h1
-                  className="text-2xl sm:text-3xl lg:text-5xl font-bold text-[#1C1C1C] leading-tight mb-2 break-words"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
-                  {job.title}
-                </h1>
-
-                {/* Company */}
-                <p className="text-[#C8782A] font-bold text-base sm:text-lg mb-4 sm:mb-5">
-                  {job.company}
-                </p>
-
-                {/* Meta chips */}
-                <div className="flex flex-wrap gap-2 sm:gap-3">
-                  <span className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-[#6B3A2A]/70 bg-white border border-[#C8782A]/12 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-                    <MapPin size={12} className="text-[#C8782A]" />
-                    <span className="truncate max-w-[150px] sm:max-w-none">
-                      {getLocation(job)}
-                    </span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-[#6B3A2A]/70 bg-white border border-[#C8782A]/12 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-                    <Clock size={12} className="text-[#C8782A]" />
-                    {job.employmentType}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-[#6B3A2A]/70 bg-white border border-[#C8782A]/12 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-                    <DollarSign size={12} className="text-[#C8782A]" />
-                    {formatSalary(job.salary, job.salaryType)}
-                  </span>
-                  {job.vacancies && (
-                    <span className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-[#6B3A2A]/70 bg-white border border-[#C8782A]/12 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-                      <Users size={12} className="text-[#C8782A]" />
-                      {job.vacancies} Vacancies
-                    </span>
-                  )}
-                  {job.experience && (
-                    <span className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-[#6B3A2A]/70 bg-white border border-[#C8782A]/12 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-                      <Briefcase size={12} className="text-[#C8782A]" />
-                      {job.experience}{" "}
-                      {parseInt(job.experience) > 1 ? "years" : "year"}
-                    </span>
-                  )}
-                  {job.startDate && (
-                    <span className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-[#6B3A2A]/70 bg-white border border-[#C8782A]/12 rounded-full px-3 sm:px-4 py-1 sm:py-1.5">
-                      <Calendar size={12} className="text-[#C8782A]" />
-                      Start: {getStartDateLabel(job.startDate)}
-                    </span>
-                  )}
-                </div>
+            {/* Card 2: Employment Type */}
+            <div className="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-6 shadow-xs hover:border-emerald-200 transition-all">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center mb-3">
+                <Clock size={20} />
               </div>
+              <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider block">
+                Employment Type
+              </span>
+              <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5 truncate">
+                {job.employmentType || "Full-time"}
+              </span>
+              <span className="text-xs text-slate-500 font-medium block mt-1">
+                {job.remote ? "Remote Work Available" : getLocation(job)}
+              </span>
+            </div>
 
-              {/* Desktop CTA */}
-              <div className="hidden lg:flex flex-col gap-3 flex-shrink-0 w-48">
-                <Button
-                  onClick={() => setIsApplyModalOpen(true)}
-                  className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold w-full shadow-md"
-                >
-                  How to Apply
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setIsShareModalOpen(true)}
-                  className="w-full border-[#C8782A]/25 text-[#6B3A2A] hover:bg-[#C8782A]/5 hover:text-black"
-                >
-                  <Share2 size={14} className="mr-1" />
-                  Share
-                </Button>
-                <p className="text-xs text-[#6B3A2A]/45 text-center">
-                  Posted on{" "}
-                  {job.postDate
-                    ? new Date(job.postDate).toLocaleDateString("en-US", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })
-                    : "Recently"}
-                </p>
+            {/* Card 3: Target Start Date */}
+            <div className="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-6 shadow-xs hover:border-emerald-200 transition-all">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center mb-3">
+                <Calendar size={20} />
               </div>
+              <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider block">
+                Target Start Date
+              </span>
+              <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5 truncate">
+                {job.startDate ? getStartDateLabel(job.startDate) : "Immediate / ASAP"}
+              </span>
+              <span className="text-xs text-slate-500 font-medium block mt-1">
+                {job.vacancies ? `${job.vacancies} Vacancy Available` : `NOC: ${job.nocCode || "N/A"}`}
+              </span>
             </div>
           </motion.div>
+
         </div>
       </section>
 
-      {/* Body */}
-      <section className="bg-white py-10 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
-            {/* Left Column - Job Content */}
-            <div className="flex-1 min-w-0">
-              {/* About the Role */}
-              {job.descriptionHtml && (
-                <div className="mb-8">
-                  <h2
-                    className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-4"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
-                    About the Role
-                  </h2>
-                  <div
-                    className="text-[#1C1C1C]/75 leading-relaxed prose prose-sm sm:prose-base max-w-none break-words
-                      [&>p]:mb-3 [&>p]:break-words 
-                      [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:mb-3 
-                      [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:mb-3
-                      [&>h3]:text-lg [&>h3]:font-semibold [&>h3]:mt-4 [&>h3]:mb-2
-                      [&_li]:break-words"
-                    dangerouslySetInnerHTML={{ __html: job.descriptionHtml }}
-                  />
-                </div>
-              )}
+      {/* ── Section 2: Main 2-Column Section (Matches Contact Page Grid Architecture) ── */}
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 mt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* ── Left Column (4 Cols): Solid Emerald CTA Banner & Employer Card ── */}
+          <aside className="lg:col-span-4 flex flex-col gap-6 lg:sticky lg:top-24">
+            
+            {/* Solid Emerald Feature Banner (Identical to Contact Page Left Banner) */}
+            <div className="bg-[#059669] text-white rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden space-y-6">
+              {/* Subtle background glow circle */}
+              <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
 
-              {/* Qualifications & Requirements */}
-              {job.requirementsHtml && (
-                <div className="mb-8">
-                  <h2
-                    className="text-xl sm:text-2xl font-bold text-[#1C1C1C] mb-4"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
-                    Qualifications & Requirements
-                  </h2>
-                  <div
-                    className="text-[#1C1C1C]/75 leading-relaxed prose prose-sm sm:prose-base max-w-none break-words
-                      [&>p]:mb-3 [&>p]:break-words 
-                      [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:mb-3 
-                      [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:mb-3
-                      [&>h3]:text-lg [&>h3]:font-semibold [&>h3]:mt-4 [&>h3]:mb-2
-                      [&_li]:break-words"
-                    dangerouslySetInnerHTML={{ __html: job.requirementsHtml }}
-                  />
-                </div>
-              )}
+              {/* Badge */}
+              <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">
+                <Send size={12} /> Apply Direct
+              </div>
 
-              {/* Additional Details Card */}
-              {(job.nocCode ||
-                job.runDays ||
-                job.experience ||
-                job.startDate) && (
-                <div className="bg-[#FAF5EE] rounded-2xl p-5 sm:p-6 border border-[#C8782A]/10 mb-8">
-                  <h3
-                    className="font-bold text-[#1C1C1C] mb-4 text-lg"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
-                    Additional Details
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {job.nocCode && (
-                      <div className="flex items-start gap-2.5">
-                        <Code2
-                          size={14}
-                          className="text-[#C8782A] flex-shrink-0 mt-0.5"
-                        />
-                        <div>
-                          <p className="text-xs text-[#6B3A2A]/50">NOC Code</p>
-                          <p className="text-sm font-semibold text-[#1C1C1C] break-words">
-                            {job.nocCode}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                    {job.runDays && (
-                      <div className="flex items-start gap-2.5">
-                        <Calendar
-                          size={14}
-                          className="text-[#C8782A] flex-shrink-0 mt-0.5"
-                        />
-                        <div>
-                          <p className="text-xs text-[#6B3A2A]/50">
-                            Posted for
-                          </p>
-                          <p className="text-sm font-semibold text-[#1C1C1C]">
-                            {job.runDays} days
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                    {job.experience && (
-                      <div className="flex items-start gap-2.5">
-                        <Briefcase
-                          size={14}
-                          className="text-[#C8782A] flex-shrink-0 mt-0.5"
-                        />
-                        <div>
-                          <p className="text-xs text-[#6B3A2A]/50">
-                            Experience Required
-                          </p>
-                          <p className="text-sm font-semibold text-[#1C1C1C]">
-                            {job.experience} years
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                    {job.startDate && (
-                      <div className="flex items-start gap-2.5">
-                        <Calendar
-                          size={14}
-                          className="text-[#C8782A] flex-shrink-0 mt-0.5"
-                        />
-                        <div>
-                          <p className="text-xs text-[#6B3A2A]/50">
-                            Expected Start Date
-                          </p>
-                          <p className="text-sm font-semibold text-[#1C1C1C]">
-                            {getStartDateLabel(job.startDate)}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
+              {/* Headline */}
+              <div>
+                <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-snug">
+                  Ready to Apply for this Position?
+                </h3>
+                <p className="text-emerald-100 text-xs sm:text-sm mt-2 leading-relaxed font-medium">
+                  Follow the employer's direct contact instructions to submit your resume and cover letter.
+                </p>
+              </div>
 
-              {/* Mobile CTA */}
-              <div className="flex flex-col gap-3 lg:hidden sticky bottom-4 bg-white p-4 rounded-xl shadow-lg border border-[#C8782A]/20 z-10">
+              {/* CTA Buttons */}
+              <div className="space-y-3 pt-2">
                 <Button
                   onClick={() => setIsApplyModalOpen(true)}
-                  className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold w-full"
+                  className="w-full h-12 bg-white text-[#059669] hover:bg-emerald-50 font-black text-sm rounded-2xl shadow-sm transition-all flex items-center justify-center gap-2 group"
                 >
-                  How to Apply
+                  How to Apply <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setIsShareModalOpen(true)}
-                  className="w-full border-[#C8782A]/25 text-[#6B3A2A]"
-                >
-                  <Share2 size={15} className="mr-2" />
-                  Share
-                </Button>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsShareModalOpen(true)}
+                    className="h-10 border border-white/30 text-white hover:bg-white/10 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all"
+                  >
+                    <Share2 size={13} /> Share
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSaved(!saved)}
+                    className="h-10 border border-white/30 text-white hover:bg-white/10 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all"
+                  >
+                    <Bookmark size={13} className={saved ? "fill-white" : ""} />
+                    {saved ? "Saved" : "Save"}
+                  </button>
+                </div>
+              </div>
+
+              {/* Closing Date Footer */}
+              <div className="pt-4 border-t border-white/20 text-[11px] text-emerald-100 font-medium flex items-center justify-between">
+                <span>Application Deadline:</span>
+                <span className="font-extrabold text-white">
+                  {calculateClosingDate(job.postDate, job.runDays)}
+                </span>
               </div>
             </div>
 
-            {/* Right Column - Sidebar */}
-            <div className="lg:w-[320px] flex-shrink-0">
-              <div className="flex flex-col gap-5 lg:sticky lg:top-24">
-                {/* Apply Card */}
-                <div className="bg-[#FAF5EE] rounded-2xl p-5 sm:p-6 border border-[#C8782A]/10">
-                  <Button
-                    onClick={() => setIsApplyModalOpen(true)}
-                    className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold w-full shadow-sm mb-4"
-                  >
-                    How to Apply
-                  </Button>
-                  <div className="flex flex-col gap-2.5 text-sm">
-                    <div className="flex items-center gap-2.5 text-[#6B3A2A]/65">
-                      <Clock
-                        size={14}
-                        className="text-[#C8782A] flex-shrink-0"
-                      />
-                      <span className="text-xs text-[#6B3A2A]/45">
-                        Posted on{" "}
-                        {job.postDate
-                          ? new Date(job.postDate).toLocaleDateString("en-US", {
-                              day: "numeric",
-                              month: "long",
-                              year: "numeric",
-                            })
-                          : "Recently"}
-                      </span>
-                    </div>
-                    {job.postDate && job.runDays && (
-                      <div className="flex items-center gap-2.5 text-[#6B3A2A]/65">
-                        <Calendar
-                          size={14}
-                          className="text-[#C8782A] flex-shrink-0"
-                        />
-                        <span>
-                          Closes{" "}
-                          <strong className="text-[#1C1C1C]">
-                            {calculateClosingDate(job.postDate, job.runDays)}
-                          </strong>
-                        </span>
-                      </div>
-                    )}
-                    {job.website && (
-                      <div className="flex items-center gap-2.5 text-[#6B3A2A]/65">
-                        <Globe
-                          size={14}
-                          className="text-[#C8782A] flex-shrink-0"
-                        />
-                        <a
-                          href={job.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#1a64c4] hover:underline truncate"
-                        >
-                          {job.website.replace(/^https?:\/\//, "")}
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
+            {/* Employer Profile Card */}
+            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+              <h3 className="font-extrabold text-slate-900 text-sm tracking-wide pb-3 border-b border-slate-100 flex items-center gap-2">
+                <Building2 size={16} className="text-[#059669]" /> Employer Profile
+              </h3>
 
-                {/* About Employer Card */}
-                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#C8782A]/10">
-                  <h3
-                    className="font-bold text-[#1C1C1C] mb-3 text-lg"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
-                  >
-                    About the Employer
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-[#059669] border border-emerald-100 flex items-center justify-center font-extrabold text-lg flex-shrink-0">
+                  {job.company ? job.company.charAt(0).toUpperCase() : <Building2 size={20} />}
+                </div>
+                <div className="min-w-0">
+                  <h4 className="font-bold text-slate-900 text-sm truncate flex items-center gap-1">
+                    {job.company}
+                    <CheckCircle2 size={14} className="text-[#059669]" />
+                  </h4>
+                  <p className="text-xs text-slate-500 truncate">{getLocation(job)}</p>
+                </div>
+              </div>
+
+              {job.contactName && (
+                <div className="flex items-center gap-2 text-xs text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                  <User size={13} className="text-[#059669]" />
+                  <span>Hiring Contact: <strong className="font-bold text-slate-900">{job.contactName}</strong></span>
+                </div>
+              )}
+
+              {job.website && (
+                <a
+                  href={job.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-xs font-bold text-[#059669] hover:underline bg-emerald-50/60 p-2.5 rounded-xl border border-emerald-100"
+                >
+                  <span className="truncate">Visit Employer Website</span>
+                  <ExternalLink size={13} className="flex-shrink-0" />
+                </a>
+              )}
+
+              <div className="pt-2 text-[11px] text-slate-500 flex items-center gap-1.5 font-medium">
+                <ShieldCheck size={14} className="text-[#059669]" />
+                <span>Verified recruiter on GetJobsCanada</span>
+              </div>
+            </div>
+
+            {/* Similar Opportunities Widget */}
+            {related.length > 0 && (
+              <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <h3 className="font-extrabold text-slate-900 text-sm tracking-wide">
+                    Similar Opportunities
                   </h3>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#FAF5EE] border border-[#C8782A]/10 flex items-center justify-center">
-                      <Building2 size={16} className="text-[#C8782A]" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-semibold text-sm text-[#1C1C1C]">
-                        {job.company}
-                      </p>
-                      <p className="text-xs text-[#6B3A2A]/55 truncate">
-                        {getLocation(job)}
-                      </p>
-                    </div>
-                  </div>
-                  {/* Contact Name*/}
-                  {job.contactName && (
-                    <div className="flex items-center gap-2 text-xs text-[#6B3A2A]/70 bg-[#FAF5EE] rounded-lg px-3 py-2 mb-2">
-                      <User size={12} className="text-[#C8782A]" />
-                      <span>
-                        Contact: <strong>{job.contactName}</strong>
-                      </span>
-                    </div>
-                  )}
-                  {(job.indigenousOwned || job.indigenousPreference) && (
-                    <div className="flex items-center gap-2 text-xs text-[#4a7a4e] bg-[#7A9E7E]/10 rounded-lg px-3 py-2 mb-2">
-                      <Leaf size={12} />
-                      Indigenous-owned organization
-                    </div>
-                  )}
-                  {job.remote && (
-                    <div className="flex items-center gap-2 text-xs text-[#1a64c4] bg-[#1a64c4]/10 rounded-lg px-3 py-2">
-                      <Wifi size={12} />
-                      Remote / Hybrid work available
-                    </div>
-                  )}
+                  <Link
+                    href={`/jobs?category=${encodeURIComponent(job.category)}`}
+                    className="text-xs font-bold text-[#059669] hover:underline"
+                  >
+                    View All
+                  </Link>
                 </div>
 
-                {/* Related Jobs */}
-                {related.length > 0 && (
-                  <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#C8782A]/10">
-                    <h3
-                      className="font-bold text-[#1C1C1C] mb-4 text-lg"
-                      style={{ fontFamily: "'Playfair Display', serif" }}
-                    >
-                      Similar Jobs
-                    </h3>
-                    <div className="flex flex-col gap-2">
-                      {related.map((rj) => (
-                        <RelatedCard key={rj._id} job={rj} />
-                      ))}
-                    </div>
+                <div className="space-y-3">
+                  {related.map((rj) => (
                     <Link
-                      href={`/jobs?category=${encodeURIComponent(job.category)}`}
-                      className="inline-flex items-center gap-1.5 text-xs text-[#C8782A] font-semibold mt-4 hover:gap-2.5 transition-all duration-200"
+                      key={rj._id}
+                      href={`/jobs/${rj._id || rj.id}`}
+                      className="group block p-3.5 rounded-2xl bg-slate-50/70 border border-slate-200/60 hover:border-[#059669]/40 hover:bg-white transition-all duration-200"
                     >
-                      More {job.category} jobs <ChevronRight size={12} />
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <h4 className="font-extrabold text-slate-900 text-xs group-hover:text-[#059669] transition-colors line-clamp-1">
+                            {rj.title}
+                          </h4>
+                          <p className="text-[11px] text-slate-500 font-medium truncate mt-0.5">
+                            {rj.company} • {rj.province}
+                          </p>
+                        </div>
+                        <ChevronRight size={14} className="text-slate-400 group-hover:text-[#059669] group-hover:translate-x-0.5 transition-transform flex-shrink-0 mt-0.5" />
+                      </div>
                     </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          </aside>
+
+          {/* ── Right Column (8 Cols): Main White Content Cards ──────────────── */}
+          <main className="lg:col-span-8 flex flex-col gap-6">
+
+            {/* About the Role */}
+            {job.descriptionHtml && (
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs">
+                <h2 className="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5 pb-4 border-b border-slate-100 mb-6">
+                  <FileText size={20} className="text-[#059669]" /> About the Role
+                </h2>
+                <div
+                  className="text-slate-700 leading-relaxed text-sm sm:text-base space-y-4
+                    [&>p]:leading-relaxed [&>p]:mb-3
+                    [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-2 [&>ul]:my-3 [&>ul]:text-slate-700
+                    [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-2 [&>ol]:my-3
+                    [&>h3]:text-base [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-2
+                    [&_li]:marker:text-[#059669]"
+                  dangerouslySetInnerHTML={{ __html: job.descriptionHtml }}
+                />
+              </div>
+            )}
+
+            {/* Qualifications & Requirements */}
+            {job.requirementsHtml && (
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs">
+                <h2 className="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5 pb-4 border-b border-slate-100 mb-6">
+                  <CheckCircle2 size={20} className="text-[#059669]" /> Qualifications & Requirements
+                </h2>
+                <div
+                  className="text-slate-700 leading-relaxed text-sm sm:text-base space-y-4
+                    [&>p]:leading-relaxed [&>p]:mb-3
+                    [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-2 [&>ul]:my-3 [&>ul]:text-slate-700
+                    [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-2 [&>ol]:my-3
+                    [&>h3]:text-base [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-2
+                    [&_li]:marker:text-[#059669]"
+                  dangerouslySetInnerHTML={{ __html: job.requirementsHtml }}
+                />
+              </div>
+            )}
+
+            {/* Position Summary & Specifications Matrix */}
+            <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs">
+              <h3 className="text-base font-extrabold text-slate-900 mb-4 tracking-tight flex items-center gap-2">
+                <Code2 size={18} className="text-[#059669]" /> Position Summary & Specifications
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50/70 rounded-2xl p-5 border border-slate-200/60">
+                {job.nocCode && (
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center text-xs font-mono font-bold shadow-xs">
+                      #
+                    </div>
+                    <div>
+                      <span className="text-[11px] text-slate-400 font-bold block">NOC Classification</span>
+                      <span className="text-xs font-bold text-slate-800 font-mono">{job.nocCode}</span>
+                    </div>
+                  </div>
+                )}
+
+                {job.experience && (
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-[#059669] flex items-center justify-center shadow-xs">
+                      <Briefcase size={16} />
+                    </div>
+                    <div>
+                      <span className="text-[11px] text-slate-400 font-bold block">Experience Level</span>
+                      <span className="text-xs font-bold text-slate-800">{job.experience} {parseInt(job.experience) > 1 ? "Years" : "Year"}</span>
+                    </div>
+                  </div>
+                )}
+
+                {job.startDate && (
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-[#059669] flex items-center justify-center shadow-xs">
+                      <Calendar size={16} />
+                    </div>
+                    <div>
+                      <span className="text-[11px] text-slate-400 font-bold block">Target Start Date</span>
+                      <span className="text-xs font-bold text-slate-800">{getStartDateLabel(job.startDate)}</span>
+                    </div>
+                  </div>
+                )}
+
+                {job.runDays && (
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-[#059669] flex items-center justify-center shadow-xs">
+                      <Clock size={16} />
+                    </div>
+                    <div>
+                      <span className="text-[11px] text-slate-400 font-bold block">Listing Duration</span>
+                      <span className="text-xs font-bold text-slate-800">{job.runDays} Days Active</span>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
-          </div>
+
+            {/* Mobile Bottom Floating Action Bar */}
+            <div className="lg:hidden sticky bottom-4 z-30 bg-white/95 backdrop-blur-md border border-slate-200/80 p-4 rounded-3xl shadow-xl flex items-center gap-3">
+              <Button
+                onClick={() => setIsApplyModalOpen(true)}
+                className="flex-1 h-12 bg-[#059669] hover:bg-[#047857] text-white font-extrabold text-sm rounded-2xl shadow-md flex items-center justify-center gap-2"
+              >
+                <Send size={16} /> How to Apply
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setIsShareModalOpen(true)}
+                className="h-12 w-12 border-slate-200 text-slate-700 rounded-2xl flex items-center justify-center p-0"
+              >
+                <Share2 size={18} />
+              </Button>
+            </div>
+
+          </main>
+
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }
