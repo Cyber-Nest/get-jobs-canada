@@ -49,11 +49,11 @@ const ICON_MAP: Record<string, React.ElementType> = {
 // ─── Color map matching GetJobsCanada theme ─────────────────────────────
 
 const COLOR_MAP: Record<string, { accent: string; bg: string; ring: string }> = {
-  Starter:   { accent: "#7A9E7E", bg: "#7A9E7E12", ring: "#7A9E7E40" },
-  Deluxe:    { accent: "#C8782A", bg: "#C8782A12", ring: "#C8782A40" },
-  Ultimate:  { accent: "#6B3A2A", bg: "#6B3A2A12", ring: "#6B3A2A40" },
-  "Pro Plan":{ accent: "#1C1C1C", bg: "#1C1C1C10", ring: "#1C1C1C30" },
-  Unlimited: { accent: "#8B5CF6", bg: "#8B5CF610", ring: "#8B5CF640" },
+  Starter:   { accent: "#059669", bg: "#ECFDF5", ring: "#10B98140" },
+  Deluxe:    { accent: "#0284C7", bg: "#F0F9FF", ring: "#0284C740" },
+  Ultimate:  { accent: "#7C3AED", bg: "#F5F3FF", ring: "#7C3AED40" },
+  "Pro Plan":{ accent: "#0F172A", bg: "#F8FAFC", ring: "#33415530" },
+  Unlimited: { accent: "#D97706", bg: "#FFFBEB", ring: "#D9770640" },
 };
 
 // ─── Single Package Card ───────────────────────────────────────────────────
@@ -80,7 +80,7 @@ function PackageCard({
   const [features, setFeatures] = useState<string[]>(pkg.features);
 
   const Icon = ICON_MAP[pkg.name] || Package;
-  const colors = COLOR_MAP[pkg.name] || COLOR_MAP["Deluxe"];
+  const colors = COLOR_MAP[pkg.name] || COLOR_MAP["Starter"];
 
   const isDirty =
     originalPrice !== pkg.originalPrice ||
@@ -169,7 +169,7 @@ function PackageCard({
 
   return (
     <div
-      className="rounded-2xl border bg-white overflow-hidden transition-all duration-300 flex flex-col justify-between"
+      className="rounded-2xl border bg-white overflow-hidden transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-md"
       style={{
         borderColor: colors.ring,
         boxShadow: editing ? `0 0 0 2px ${colors.ring}` : undefined,
@@ -178,29 +178,29 @@ function PackageCard({
       <div>
         {/* Card Header */}
         <div
-          className="px-5 py-4 flex items-center justify-between"
+          className="px-5 py-4 flex items-center justify-between border-b border-slate-100"
           style={{ background: colors.bg }}
         >
           <div className="flex items-center gap-3">
             <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm"
               style={{ background: `${colors.accent}18` }}
             >
               <Icon size={18} style={{ color: colors.accent }} />
             </div>
             <div>
               <p
-                className="font-bold text-base"
-                style={{ color: colors.accent, fontFamily: "'Playfair Display', serif" }}
+                className="font-extrabold text-base tracking-tight"
+                style={{ color: colors.accent }}
               >
                 {pkg.name}
               </p>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <Lock size={10} className="text-[#6B3A2A]/40" />
-                <span className="text-[10px] text-[#6B3A2A]/50 font-semibold tracking-wider uppercase">
-                  Name is fixed
+                <Lock size={10} className="text-slate-400" />
+                <span className="text-[10px] text-slate-500 font-semibold tracking-wider uppercase">
+                  Fixed Name
                 </span>
-                <span className="text-[#6B3A2A]/30">•</span>
+                <span className="text-slate-300">•</span>
                 <span className={`text-[10px] font-bold uppercase tracking-wider ${pkg.active !== false ? "text-emerald-600" : "text-rose-500"}`}>
                   {pkg.active !== false ? "Active" : "Inactive"}
                 </span>
@@ -210,17 +210,18 @@ function PackageCard({
 
           <button
             onClick={() => (editing ? handleReset() : setEditing(true))}
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all"
+            className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl transition-all shadow-sm"
             style={{
               color: editing ? "#ef4444" : colors.accent,
-              background: editing ? "#fef2f2" : colors.bg,
+              background: editing ? "#fef2f2" : "#ffffff",
+              border: `1px solid ${colors.ring}`,
             }}
           >
             {editing ? (
               <>Cancel</>
             ) : (
               <>
-                <Edit3 size={12} /> Edit
+                <Edit3 size={13} /> Edit
               </>
             )}
           </button>
@@ -231,40 +232,40 @@ function PackageCard({
           {/* Prices */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[10px] font-bold tracking-wider text-[#6B3A2A]/50 uppercase block mb-1.5">
+              <label className="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1.5">
                 Original Price (CAD)
               </label>
               {editing ? (
-                <div className="flex items-center border border-[#C8782A]/20 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-[#C8782A]/30 bg-[#FAF5EE]">
-                  <span className="px-3 text-sm text-[#6B3A2A]/50 font-semibold">$</span>
+                <div className="flex items-center border border-slate-200 rounded-xl overflow-hidden focus-within:border-emerald-500 bg-slate-50">
+                  <span className="px-3 text-xs text-slate-400 font-bold">$</span>
                   <input
                     type="number"
                     min={0}
                     step={0.5}
                     value={originalPrice}
                     onChange={(e) => setOriginalPrice(Number(e.target.value))}
-                    className="flex-1 py-2 pr-3 text-sm text-[#1C1C1C] bg-transparent outline-none"
+                    className="flex-1 py-2 pr-3 text-sm font-semibold text-slate-900 bg-transparent outline-none"
                   />
                 </div>
               ) : (
-                <p className="text-xl font-black text-[#1C1C1C]">${originalPrice}</p>
+                <p className="text-xl font-black text-slate-900">${originalPrice}</p>
               )}
             </div>
 
             <div>
-              <label className="text-[10px] font-bold tracking-wider text-[#6B3A2A]/50 uppercase block mb-1.5">
+              <label className="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1.5">
                 Sale Price (CAD)
               </label>
               {editing ? (
-                <div className="flex items-center border border-[#C8782A]/20 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-[#C8782A]/30 bg-[#FAF5EE]">
-                  <span className="px-3 text-sm text-[#6B3A2A]/50 font-semibold">$</span>
+                <div className="flex items-center border border-slate-200 rounded-xl overflow-hidden focus-within:border-emerald-500 bg-slate-50">
+                  <span className="px-3 text-xs text-slate-400 font-bold">$</span>
                   <input
                     type="number"
                     min={0}
                     step={0.5}
                     value={discountedPrice}
                     onChange={(e) => setDiscountedPrice(Number(e.target.value))}
-                    className="flex-1 py-2 pr-3 text-sm text-[#1C1C1C] bg-transparent outline-none"
+                    className="flex-1 py-2 pr-3 text-sm font-semibold text-slate-900 bg-transparent outline-none"
                   />
                 </div>
               ) : (
@@ -278,7 +279,7 @@ function PackageCard({
           {/* Credits and Expiry */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[10px] font-bold tracking-wider text-[#6B3A2A]/50 uppercase block mb-1.5">
+              <label className="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1.5">
                 Credits (Job Postings)
               </label>
               {editing ? (
@@ -288,17 +289,17 @@ function PackageCard({
                   value={credits}
                   disabled={unlimitedJobs}
                   onChange={(e) => setCredits(Number(e.target.value))}
-                  className="w-full border border-[#C8782A]/20 rounded-xl px-3 py-2 text-sm text-[#1C1C1C] bg-[#FAF5EE] outline-none focus:ring-2 focus:ring-[#C8782A]/30 disabled:opacity-50"
+                  className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm font-semibold text-slate-900 bg-slate-50 outline-none focus:border-emerald-500 disabled:opacity-50"
                 />
               ) : (
-                <p className="text-base font-semibold text-[#1C1C1C]">
+                <p className="text-sm font-bold text-slate-800">
                   {unlimitedJobs ? "Unlimited" : `${credits} Job Posting(s)`}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="text-[10px] font-bold tracking-wider text-[#6B3A2A]/50 uppercase block mb-1.5">
+              <label className="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1.5">
                 Validity (Days)
               </label>
               {editing ? (
@@ -307,10 +308,10 @@ function PackageCard({
                   min={1}
                   value={expiryDays}
                   onChange={(e) => setExpiryDays(Number(e.target.value))}
-                  className="w-full border border-[#C8782A]/20 rounded-xl px-3 py-2 text-sm text-[#1C1C1C] bg-[#FAF5EE] outline-none focus:ring-2 focus:ring-[#C8782A]/30"
+                  className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm font-semibold text-slate-900 bg-slate-50 outline-none focus:border-emerald-500"
                 />
               ) : (
-                <p className="text-base font-semibold text-[#1C1C1C]">
+                <p className="text-sm font-bold text-slate-800">
                   {expiryDays} Days
                 </p>
               )}
@@ -332,23 +333,23 @@ function PackageCard({
                       setCredits(0);
                     }
                   }}
-                  className="rounded border-[#C8782A]/20 text-[#C8782A] focus:ring-[#C8782A]/30"
+                  className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
                 />
-                <label htmlFor={`unlimited-${pkg.name}`} className="text-xs font-semibold text-[#1C1C1C]">
+                <label htmlFor={`unlimited-${pkg.name}`} className="text-xs font-semibold text-slate-800">
                   Unlimited Job Postings
                 </label>
               </div>
 
-              <div className="flex items-center justify-between border border-[#C8782A]/10 rounded-xl px-3 py-2 bg-[#FAF5EE]/50">
-                <span className="text-xs font-semibold text-[#1C1C1C]">
+              <div className="flex items-center justify-between border border-slate-200 rounded-xl px-3 py-2 bg-slate-50">
+                <span className="text-xs font-semibold text-slate-800">
                   Active (Visible to public)
                 </span>
                 <button
                   type="button"
                   id={`active-toggle-${pkg.name}`}
                   onClick={() => setActive(!active)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#C8782A]/20 ${
-                    active ? "bg-emerald-500" : "bg-slate-300"
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
+                    active ? "bg-emerald-600" : "bg-slate-300"
                   }`}
                 >
                   <span
@@ -361,7 +362,7 @@ function PackageCard({
             </div>
           ) : (
             unlimitedJobs && (
-              <div className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg inline-block uppercase tracking-wider">
+              <div className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg inline-block uppercase tracking-wider">
                 Unlimited Jobs Activated
               </div>
             )
@@ -369,7 +370,7 @@ function PackageCard({
 
           {/* Badge */}
           <div>
-            <label className="text-[10px] font-bold tracking-wider text-[#6B3A2A]/50 uppercase block mb-1.5">
+            <label className="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1.5">
               Badge Text
             </label>
             {editing ? (
@@ -378,12 +379,12 @@ function PackageCard({
                 value={badge}
                 onChange={(e) => setBadge(e.target.value)}
                 placeholder="e.g. Most Popular • 50% OFF"
-                className="w-full border border-[#C8782A]/20 rounded-xl px-3 py-2 text-sm text-[#1C1C1C] bg-[#FAF5EE] outline-none focus:ring-2 focus:ring-[#C8782A]/30"
+                className="w-full border border-slate-200 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-900 bg-slate-50 outline-none focus:border-emerald-500"
               />
             ) : (
               <span
-                className="inline-block text-[11px] font-bold px-3 py-1 rounded-full"
-                style={{ background: `${colors.accent}18`, color: colors.accent }}
+                className="inline-block text-[11px] font-bold px-3 py-1 rounded-full border border-slate-200/60"
+                style={{ background: `${colors.accent}12`, color: colors.accent }}
               >
                 {badge || "—"}
               </span>
@@ -393,7 +394,7 @@ function PackageCard({
           {/* Tagline */}
           {editing && (
             <div>
-              <label className="text-[10px] font-bold tracking-wider text-[#6B3A2A]/50 uppercase block mb-1.5">
+              <label className="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1.5">
                 Tagline
               </label>
               <input
@@ -401,7 +402,7 @@ function PackageCard({
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
                 placeholder="e.g. FEATURES OF STARTER PLAN"
-                className="w-full border border-[#C8782A]/20 rounded-xl px-3 py-2 text-sm text-[#1C1C1C] bg-[#FAF5EE] outline-none focus:ring-2 focus:ring-[#C8782A]/30"
+                className="w-full border border-slate-200 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-900 bg-slate-50 outline-none focus:border-emerald-500"
               />
             </div>
           )}
@@ -409,14 +410,14 @@ function PackageCard({
           {/* Features */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-[10px] font-bold tracking-wider text-[#6B3A2A]/50 uppercase">
+              <label className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">
                 Features ({features.length})
               </label>
               {editing && (
                 <button
                   onClick={handleAddFeature}
-                  className="flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-lg"
-                  style={{ color: colors.accent, background: colors.bg }}
+                  className="flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-lg border border-slate-200 bg-white"
+                  style={{ color: colors.accent }}
                 >
                   <Plus size={11} /> Add
                 </button>
@@ -427,8 +428,8 @@ function PackageCard({
               {features.map((feature, idx) =>
                 editing ? (
                   <div key={idx} className="flex items-center gap-2">
-                    <div className="flex-1 flex items-center border border-[#C8782A]/20 rounded-xl overflow-hidden bg-[#FAF5EE] focus-within:ring-2 focus-within:ring-[#C8782A]/30">
-                      <span className="px-2.5 text-[10px]" style={{ color: colors.accent }}>
+                    <div className="flex-1 flex items-center border border-slate-200 rounded-xl overflow-hidden bg-slate-50 focus-within:border-emerald-500">
+                      <span className="px-2.5 text-xs font-bold" style={{ color: colors.accent }}>
                         ✓
                       </span>
                       <input
@@ -436,19 +437,19 @@ function PackageCard({
                         value={feature}
                         onChange={(e) => handleFeatureChange(idx, e.target.value)}
                         placeholder="Feature description"
-                        className="flex-1 py-2 pr-3 text-sm text-[#1C1C1C] bg-transparent outline-none"
+                        className="flex-1 py-2 pr-3 text-xs sm:text-sm text-slate-900 bg-transparent outline-none"
                       />
                     </div>
                     <button
                       onClick={() => handleRemoveFeature(idx)}
-                      className="text-red-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition-colors"
+                      className="text-slate-400 hover:text-rose-600 hover:bg-rose-50 p-1.5 rounded-lg transition-colors"
                       disabled={features.length <= 1}
                     >
                       <Trash2 size={13} />
                     </button>
                   </div>
                 ) : (
-                  <div key={idx} className="flex items-start gap-2 text-sm text-[#1C1C1C]/80">
+                  <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-700">
                     <span className="mt-0.5 font-bold text-xs" style={{ color: colors.accent }}>
                       ✓
                     </span>
@@ -463,21 +464,19 @@ function PackageCard({
 
       {/* Save / Reset Footer */}
       {editing && (
-        <div
-          className="px-5 pb-5 pt-3 flex gap-2"
-        >
+        <div className="px-5 pb-5 pt-3 flex gap-2">
           <button
             onClick={handleReset}
             disabled={saving}
-            className="flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-xl border border-[#C8782A]/20 text-[#6B3A2A] hover:bg-[#FAF5EE] transition-all disabled:opacity-50"
+            className="flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 transition-all disabled:opacity-50 shadow-sm"
           >
             <RefreshCw size={13} /> Reset
           </button>
           <button
             onClick={handleSave}
             disabled={saving || !isDirty}
-            className="flex-1 flex items-center justify-center gap-1.5 text-sm font-semibold py-2 rounded-xl text-white transition-all disabled:opacity-50"
-            style={{ background: isDirty ? colors.accent : "#ccc" }}
+            className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold py-2 rounded-xl text-white transition-all disabled:opacity-50 shadow-sm"
+            style={{ background: isDirty ? colors.accent : "#cbd5e1" }}
           >
             {saving ? (
               <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
@@ -547,64 +546,47 @@ export default function AdminPackagesPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between gap-4">
         <div>
-          <h1
-            className="text-2xl font-bold text-[#1C1C1C]"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
             Package Management
           </h1>
-          <p className="text-sm text-[#6B3A2A]/60 mt-1">
-            Update pricing, features and badge text for each package. Package names are fixed.
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Update pricing, features, and badge text for each package. Package names are fixed.
           </p>
         </div>
 
         <button
           onClick={fetchPackages}
-          className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-xl border border-[#C8782A]/20 text-[#6B3A2A] hover:bg-[#FAF5EE] transition-all"
+          className="flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 transition-all bg-white shadow-sm"
         >
-          <RefreshCw size={14} />
+          <RefreshCw size={14} className={loading ? "animate-spin text-emerald-600" : ""} />
           Refresh
         </button>
       </div>
-
-      {/* Info Banner */}
-      {/* <div className="mb-6 flex items-start gap-3 bg-[#FAF5EE] border border-[#C8782A]/20 rounded-2xl px-5 py-4">
-        <Lock size={16} className="text-[#C8782A] flex-shrink-0 mt-0.5" />
-        <div>
-          <p className="text-sm font-semibold text-[#1C1C1C]">
-            Package names are permanently fixed
-          </p>
-          <p className="text-xs text-[#6B3A2A]/60 mt-0.5">
-            Coupon codes are generated per package name (Starter, Deluxe, Ultimate, Pro Plan, Unlimited).
-            Changing names would break existing coupons, so only price, features and badge are editable.
-          </p>
-        </div>
-      </div> */}
 
       {/* Cards Grid */}
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="rounded-2xl bg-white border border-[#C8782A]/10 animate-pulse h-72" />
+            <div key={i} className="rounded-2xl bg-white border border-slate-200/80 animate-pulse h-72" />
           ))}
         </div>
       ) : packages.length === 0 ? (
-        <div className="flex flex-col items-center justify-center border-2 border-dashed border-[#C8782A]/20 rounded-2xl p-12 bg-white text-center">
-          <Package className="w-16 h-16 text-[#C8782A]/40 mb-4 animate-bounce" />
-          <h3 className="text-lg font-bold text-[#1C1C1C]" style={{ fontFamily: "'Playfair Display', serif" }}>
+        <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-3xl p-12 bg-white text-center">
+          <Package className="w-16 h-16 text-slate-300 mb-4 animate-bounce" />
+          <h3 className="text-lg font-bold text-slate-900">
             No Packages Found
           </h3>
-          <p className="text-sm text-[#6B3A2A]/60 max-w-sm mt-1 mb-6">
+          <p className="text-xs sm:text-sm text-slate-500 max-w-sm mt-1 mb-6">
             Database does not have any packages configured yet. Click below to seed the 5 standard hiring packages.
           </p>
           <button
             onClick={handleSeedPackages}
             disabled={seeding}
-            className="flex items-center gap-2 bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold px-6 py-3 rounded-xl shadow-md transition-all disabled:opacity-50"
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md transition-all disabled:opacity-50"
           >
             {seeding ? "Seeding..." : "Seed Default Packages"}
           </button>

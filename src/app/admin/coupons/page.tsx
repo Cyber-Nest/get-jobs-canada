@@ -50,11 +50,11 @@ interface Pagination {
 // ─── Package Config ─────────────────────────────────────────────────────────
 
 const PACKAGES = [
-  { name: "Starter", color: "#7A9E7E", bg: "#7A9E7E15", prefix: "ST" },
-  { name: "Deluxe", color: "#C8782A", bg: "#C8782A15", prefix: "DE" },
-  { name: "Ultimate", color: "#6B3A2A", bg: "#6B3A2A15", prefix: "UL" },
-  { name: "Pro Plan", color: "#1C1C1C", bg: "#1C1C1C10", prefix: "PP" },
-  { name: "Unlimited", color: "#8B5CF6", bg: "#8B5CF615", prefix: "UN" },
+  { name: "Starter", color: "#059669", bg: "#ECFDF5", prefix: "ST" },
+  { name: "Deluxe", color: "#0284C7", bg: "#F0F9FF", prefix: "DE" },
+  { name: "Ultimate", color: "#7C3AED", bg: "#F5F3FF", prefix: "UL" },
+  { name: "Pro Plan", color: "#0F172A", bg: "#F8FAFC", prefix: "PP" },
+  { name: "Unlimited", color: "#D97706", bg: "#FFFBEB", prefix: "UN" },
 ];
 
 // ─── Format date helper ───────────────────────────────────────────────────────
@@ -280,18 +280,15 @@ export default function CouponManagementPage() {
   // ─── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto space-y-6">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1
-            className="text-2xl font-bold text-[#1C1C1C]"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
             Coupon Management
           </h1>
-          <p className="text-sm text-[#6B3A2A]/60 mt-0.5">
-            Manage coupon codes for all packages
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Manage coupon codes and user assignments across all packages.
           </p>
         </div>
 
@@ -299,50 +296,32 @@ export default function CouponManagementPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={fetchStats}
-            className="p-2.5 rounded-xl border border-[#C8782A]/20 text-[#C8782A] hover:bg-[#C8782A]/8 transition-all"
+            className="p-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 transition-all shadow-sm"
             title="Refresh Stats"
           >
-            <RefreshCw size={16} />
+            <RefreshCw size={16} className={statsLoading ? "animate-spin text-emerald-600" : ""} />
           </button>
 
-          {/* Export Button — visible only when a package is selected */}
+          {/* Export Button */}
           {selectedPackage && (
             <button
               onClick={handleExport}
               disabled={exportLoading}
-              className="flex items-center gap-2 border border-[#C8782A]/30 text-[#C8782A] hover:bg-[#C8782A]/8 disabled:opacity-60 text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
+              className="flex items-center gap-2 border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 disabled:opacity-60 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl transition-all shadow-sm"
             >
               {exportLoading ? (
                 <>
-                  <span className="w-4 h-4 border-2 border-[#C8782A]/30 border-t-[#C8782A] rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-emerald-600/30 border-t-emerald-600 rounded-full animate-spin" />
                   Exporting...
                 </>
               ) : (
                 <>
-                  <FileDown size={15} />
+                  <FileDown size={15} className="text-emerald-600" />
                   Export Excel
                 </>
               )}
             </button>
           )}
-
-          {/* <button
-            onClick={handleSeed}
-            disabled={seeding}
-            className="flex items-center gap-2 bg-[#C8782A] hover:bg-[#B06820] disabled:opacity-60 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors"
-          >
-            {seeding ? (
-              <>
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <Ticket size={15} />
-                {seedDone ? "Re-Generate Coupons" : "Generate Coupons"}
-              </>
-            )}
-          </button> */}
         </div>
       </div>
 
@@ -359,46 +338,46 @@ export default function CouponManagementPage() {
             <div
               key={pkg.name}
               onClick={() => handleSelectPackage(pkg.name)}
-              className={`bg-white rounded-2xl p-5 border-2 cursor-pointer transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 ${
+              className={`bg-white rounded-2xl p-5 border cursor-pointer transition-all duration-200 hover:shadow-md ${
                 isSelected
-                  ? "border-[#C8782A] shadow-lg ring-1 ring-[#C8782A]/20"
-                  : "border-transparent hover:border-[#C8782A]/20"
+                  ? "border-emerald-500 shadow-md ring-2 ring-emerald-500/20"
+                  : "border-slate-200/80 hover:border-slate-300"
               }`}
             >
               {/* Icon + Name */}
               <div className="flex items-start justify-between mb-3">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm"
                   style={{ background: pkg.bg }}
                 >
                   <Ticket size={18} style={{ color: pkg.color }} />
                 </div>
                 {isSelected && (
-                  <span className="text-[10px] font-bold tracking-widest text-[#C8782A] uppercase bg-[#C8782A]/10 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold tracking-wider text-emerald-700 uppercase bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
                     Viewing
                   </span>
                 )}
               </div>
 
-              <h3 className="font-bold text-[#1C1C1C] text-sm">{pkg.name}</h3>
+              <h3 className="font-extrabold text-slate-900 text-sm tracking-tight">{pkg.name}</h3>
 
               {statsLoading ? (
                 <div className="mt-3 space-y-1.5">
-                  <div className="h-3 bg-[#FAF5EE] rounded animate-pulse" />
-                  <div className="h-2 bg-[#FAF5EE] rounded animate-pulse w-3/4" />
+                  <div className="h-3 bg-slate-100 rounded animate-pulse" />
+                  <div className="h-2 bg-slate-100 rounded animate-pulse w-3/4" />
                 </div>
               ) : (
                 <>
-                  <p className="text-xs text-[#6B3A2A]/60 mt-1">
+                  <p className="text-xs text-slate-500 mt-1">
                     Used{" "}
-                    <span className="font-bold text-[#1C1C1C]">
+                    <span className="font-bold text-slate-900">
                       {stat?.used ?? 0}
                     </span>{" "}
                     / {stat?.total ?? 100}
                   </p>
 
                   {/* Progress bar */}
-                  <div className="mt-3 h-1.5 bg-[#FAF5EE] rounded-full overflow-hidden">
+                  <div className="mt-3 h-1.5 bg-slate-100 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -409,15 +388,15 @@ export default function CouponManagementPage() {
                   </div>
 
                   {/* Stats row */}
-                  <div className="mt-3 flex items-center justify-between text-[10px] text-[#6B3A2A]/50">
+                  <div className="mt-3 flex items-center justify-between text-[10px] text-slate-500">
                     <span>
-                      <span className="font-semibold text-emerald-600">
+                      <span className="font-bold text-emerald-600">
                         {stat?.assigned ?? 0}
                       </span>{" "}
                       assigned
                     </span>
                     <span>
-                      <span className="font-semibold text-[#6B3A2A]">
+                      <span className="font-bold text-slate-700">
                         {stat?.unassigned ?? 0}
                       </span>{" "}
                       unassigned
@@ -429,7 +408,7 @@ export default function CouponManagementPage() {
                       e.stopPropagation();
                       handleSelectPackage(pkg.name);
                     }}
-                    className="mt-4 w-full text-xs font-semibold py-2 rounded-xl border border-[#C8782A]/20 text-[#C8782A] hover:bg-[#C8782A] hover:text-white transition-all"
+                    className="mt-4 w-full text-xs font-bold py-2 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 transition-all shadow-sm"
                   >
                     View Coupons
                   </button>
@@ -444,23 +423,23 @@ export default function CouponManagementPage() {
       {selectedPackage && (
         <div
           id="coupon-table-section"
-          className="bg-white rounded-2xl border border-[#C8782A]/10 overflow-hidden"
+          className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden"
         >
           {/* Table Header */}
-          <div className="px-6 py-4 border-b border-[#C8782A]/10 flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="flex items-center gap-2.5">
               <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                className="w-8 h-8 rounded-lg flex items-center justify-center shadow-sm"
                 style={{ background: selectedPkgConfig?.bg }}
               >
                 <Ticket size={15} style={{ color: selectedPkgConfig?.color }} />
               </div>
               <div>
-                <h3 className="font-bold text-[#1C1C1C] text-sm">
+                <h3 className="font-bold text-slate-900 text-sm">
                   {selectedPackage} — Coupons
                 </h3>
                 {pagination && (
-                  <p className="text-xs text-[#6B3A2A]/50">
+                  <p className="text-xs text-slate-400">
                     {pagination.total} results
                   </p>
                 )}
@@ -473,14 +452,14 @@ export default function CouponManagementPage() {
               <div className="relative">
                 <Search
                   size={13}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B3A2A]/40"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
                 />
                 <input
                   type="text"
                   placeholder="Search code..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value.toUpperCase())}
-                  className="pl-8 pr-3 py-2 text-xs border border-[#C8782A]/20 rounded-xl outline-none focus:ring-2 focus:ring-[#C8782A]/20 w-40"
+                  className="pl-8 pr-3 py-2 text-xs border border-slate-200 rounded-xl outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 w-40 bg-white shadow-sm"
                 />
               </div>
 
@@ -488,7 +467,7 @@ export default function CouponManagementPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="text-xs border border-[#C8782A]/20 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C8782A]/20 bg-white text-[#6B3A2A]"
+                className="text-xs border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white text-slate-700 font-semibold shadow-sm cursor-pointer"
               >
                 <option value="">All Status</option>
                 <option value="Unused">Unused</option>
@@ -499,7 +478,7 @@ export default function CouponManagementPage() {
               <select
                 value={assignedFilter}
                 onChange={(e) => setAssignedFilter(e.target.value)}
-                className="text-xs border border-[#C8782A]/20 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C8782A]/20 bg-white text-[#6B3A2A]"
+                className="text-xs border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white text-slate-700 font-semibold shadow-sm cursor-pointer"
               >
                 <option value="">All Assignment</option>
                 <option value="true">Assigned</option>
@@ -512,7 +491,7 @@ export default function CouponManagementPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-[#FAF5EE]">
+                <tr className="bg-slate-50/80 border-b border-slate-200/80">
                   {[
                     "Coupon Code",
                     "Assigned User",
@@ -524,7 +503,7 @@ export default function CouponManagementPage() {
                   ].map((h) => (
                     <th
                       key={h}
-                      className="text-left px-4 py-3 text-[10px] font-bold tracking-widest text-[#6B3A2A]/50 uppercase whitespace-nowrap"
+                      className="text-left px-4 py-3 text-[11px] font-bold tracking-wider text-slate-500 uppercase whitespace-nowrap"
                     >
                       {h}
                     </th>
@@ -532,13 +511,13 @@ export default function CouponManagementPage() {
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-[#C8782A]/6">
+              <tbody className="divide-y divide-slate-100">
                 {tableLoading ? (
                   Array.from({ length: 5 }).map((_, i) => (
                     <tr key={i}>
                       {Array.from({ length: 7 }).map((__, j) => (
                         <td key={j} className="px-4 py-3.5">
-                          <div className="h-3.5 bg-[#FAF5EE] rounded animate-pulse" />
+                          <div className="h-3.5 bg-slate-100 rounded animate-pulse" />
                         </td>
                       ))}
                     </tr>
@@ -547,7 +526,7 @@ export default function CouponManagementPage() {
                   <tr>
                     <td
                       colSpan={7}
-                      className="px-4 py-12 text-center text-sm text-[#6B3A2A]/40"
+                      className="px-4 py-12 text-center text-sm text-slate-500"
                     >
                       No coupons found. Try adjusting filters or generate
                       coupons first.
@@ -562,11 +541,11 @@ export default function CouponManagementPage() {
                     return (
                       <tr
                         key={coupon._id}
-                        className="hover:bg-[#FAF5EE]/50 transition-colors"
+                        className="hover:bg-slate-50/60 transition-colors"
                       >
                         {/* Coupon Code */}
                         <td className="px-4 py-3.5">
-                          <span className="font-mono font-bold text-[#C8782A] text-xs bg-[#C8782A]/8 px-2.5 py-1 rounded-lg tracking-wider">
+                          <span className="font-mono font-bold text-emerald-700 text-xs bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg tracking-wider">
                             {coupon.code}
                           </span>
                         </td>
@@ -575,28 +554,28 @@ export default function CouponManagementPage() {
                         <td className="px-4 py-3.5">
                           {coupon.assignedName || coupon.assignedEmail ? (
                             <div className="flex flex-col">
-                              <span className="text-xs font-semibold text-[#1C1C1C]">
+                              <span className="text-xs font-semibold text-slate-900">
                                 {coupon.assignedName || "—"}
                               </span>
 
-                              <span className="text-[11px] text-[#6B3A2A]/60 mt-0.5">
+                              <span className="text-[11px] text-slate-400 mt-0.5">
                                 {coupon.assignedEmail || "—"}
                               </span>
                             </div>
                           ) : (
-                            <span className="text-[#6B3A2A]/30 text-xs">—</span>
+                            <span className="text-slate-300 text-xs">—</span>
                           )}
                         </td>
 
                         {/* Assigned At */}
-                        <td className="px-4 py-3.5 text-xs text-[#6B3A2A]/60 whitespace-nowrap">
+                        <td className="px-4 py-3.5 text-xs text-slate-500 whitespace-nowrap">
                           {coupon.assignedAt ? (
                             <span className="flex items-center gap-1.5">
                               <Clock size={11} className="text-amber-500" />
                               {fmtDate(coupon.assignedAt)}
                             </span>
                           ) : (
-                            <span className="text-[#6B3A2A]/30">—</span>
+                            <span className="text-slate-300">—</span>
                           )}
                         </td>
 
@@ -604,21 +583,21 @@ export default function CouponManagementPage() {
                         <td className="px-4 py-3.5">
                           {coupon.redeemedName || coupon.redeemedEmail ? (
                             <div className="flex flex-col">
-                              <span className="text-xs font-semibold text-[#1C1C1C]">
+                              <span className="text-xs font-semibold text-slate-900">
                                 {coupon.redeemedName || "—"}
                               </span>
 
-                              <span className="text-[11px] text-[#6B3A2A]/60 mt-0.5">
+                              <span className="text-[11px] text-slate-400 mt-0.5">
                                 {coupon.redeemedEmail || "—"}
                               </span>
                             </div>
                           ) : (
-                            <span className="text-[#6B3A2A]/30 text-xs">—</span>
+                            <span className="text-slate-300 text-xs">—</span>
                           )}
                         </td>
 
                         {/* Redeemed At */}
-                        <td className="px-4 py-3.5 text-xs text-[#6B3A2A]/60 whitespace-nowrap">
+                        <td className="px-4 py-3.5 text-xs text-slate-500 whitespace-nowrap">
                           {coupon.redeemedAt ? (
                             <span className="flex items-center gap-1.5">
                               <CheckCircle
@@ -628,17 +607,17 @@ export default function CouponManagementPage() {
                               {fmtDate(coupon.redeemedAt)}
                             </span>
                           ) : (
-                            <span className="text-[#6B3A2A]/30">—</span>
+                            <span className="text-slate-300">—</span>
                           )}
                         </td>
 
                         {/* Status */}
                         <td className="px-4 py-3.5">
                           <span
-                            className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${
+                            className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
                               isUsed
-                                ? "bg-emerald-100 text-emerald-700"
-                                : "bg-amber-50 text-amber-700"
+                                ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                : "bg-amber-50 text-amber-700 border border-amber-200"
                             }`}
                           >
                             {coupon.status}
@@ -655,13 +634,13 @@ export default function CouponManagementPage() {
                                 setAssignEmail("");
                                 setAssignError("");
                               }}
-                              className="flex items-center gap-1.5 text-xs font-semibold text-[#C8782A] border border-[#C8782A]/30 px-3 py-1.5 rounded-lg hover:bg-[#C8782A] hover:text-white transition-all"
+                              className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm"
                             >
                               <UserPlus size={12} />
                               Assign
                             </button>
                           ) : (
-                            <span className="text-[10px] text-[#6B3A2A]/30">
+                            <span className="text-[10px] font-semibold text-slate-400">
                               {isUsed ? "Redeemed" : "Assigned"}
                             </span>
                           )}
@@ -676,8 +655,8 @@ export default function CouponManagementPage() {
 
           {/* Pagination */}
           {pagination && pagination.totalPages > 1 && (
-            <div className="px-6 py-4 border-t border-[#C8782A]/10 flex items-center justify-between">
-              <p className="text-xs text-[#6B3A2A]/50">
+            <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between">
+              <p className="text-xs font-medium text-slate-500">
                 Page {pagination.page} of {pagination.totalPages} (
                 {pagination.total} total)
               </p>
@@ -685,7 +664,7 @@ export default function CouponManagementPage() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={pagination.page <= 1}
-                  className="p-2 rounded-lg border border-[#C8782A]/20 text-[#C8782A] hover:bg-[#C8782A]/8 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  className="p-2 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
                 >
                   <ChevronLeft size={14} />
                 </button>
@@ -707,10 +686,10 @@ export default function CouponManagementPage() {
                       <button
                         key={pg}
                         onClick={() => setPage(pg)}
-                        className={`w-8 h-8 rounded-lg text-xs font-semibold transition-all ${
+                        className={`w-8 h-8 rounded-xl text-xs font-bold transition-all shadow-sm ${
                           pg === pagination.page
-                            ? "bg-[#C8782A] text-white"
-                            : "border border-[#C8782A]/20 text-[#6B3A2A] hover:bg-[#C8782A]/8"
+                            ? "bg-emerald-600 text-white"
+                            : "border border-slate-200 text-slate-700 bg-white hover:bg-slate-50"
                         }`}
                       >
                         {pg}
@@ -724,7 +703,7 @@ export default function CouponManagementPage() {
                     setPage((p) => Math.min(pagination.totalPages, p + 1))
                   }
                   disabled={pagination.page >= pagination.totalPages}
-                  className="p-2 rounded-lg border border-[#C8782A]/20 text-[#C8782A] hover:bg-[#C8782A]/8 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  className="p-2 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
                 >
                   <ChevronRight size={14} />
                 </button>
@@ -738,29 +717,29 @@ export default function CouponManagementPage() {
       {assigningCoupon && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             onClick={() => setAssigningCoupon(null)}
           />
 
-          <div className="relative bg-white rounded-2xl shadow-2xl border border-[#C8782A]/10 p-6 w-full max-w-md">
+          <div className="relative bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 w-full max-w-md">
             {/* Close */}
             <button
               onClick={() => setAssigningCoupon(null)}
-              className="absolute right-4 top-4 text-[#6B3A2A]/40 hover:text-[#6B3A2A] p-1.5 rounded-lg hover:bg-[#FAF5EE] transition-all"
+              className="absolute right-4 top-4 text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition-all"
             >
               <X size={17} />
             </button>
 
             {/* Header */}
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-[#C8782A]/10 flex items-center justify-center">
-                <UserPlus size={18} className="text-[#C8782A]" />
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <UserPlus size={18} />
               </div>
               <div>
-                <h3 className="font-bold text-[#1C1C1C]">Assign Coupon</h3>
-                <p className="text-xs text-[#6B3A2A]/60">
+                <h3 className="font-bold text-slate-900 text-base">Assign Coupon</h3>
+                <p className="text-xs text-slate-500">
                   Code:{" "}
-                  <span className="font-mono font-bold text-[#C8782A]">
+                  <span className="font-mono font-bold text-emerald-600">
                     {assigningCoupon.code}
                   </span>
                 </p>
@@ -770,7 +749,7 @@ export default function CouponManagementPage() {
             {/* Form */}
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-bold tracking-wider text-[#6B3A2A]/60 uppercase mb-2">
+                <label className="block text-xs font-bold tracking-wider text-slate-500 uppercase mb-1.5">
                   Full Name
                 </label>
                 <input
@@ -778,12 +757,12 @@ export default function CouponManagementPage() {
                   value={assignName}
                   onChange={(e) => setAssignName(e.target.value)}
                   placeholder="e.g. John Doe"
-                  className="w-full border border-[#C8782A]/20 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#C8782A]/30 bg-[#FAF5EE]/50"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold tracking-wider text-[#6B3A2A]/60 uppercase mb-2">
+                <label className="block text-xs font-bold tracking-wider text-slate-500 uppercase mb-1.5">
                   Email Address
                 </label>
                 <input
@@ -791,12 +770,12 @@ export default function CouponManagementPage() {
                   value={assignEmail}
                   onChange={(e) => setAssignEmail(e.target.value)}
                   placeholder="john@example.com"
-                  className="w-full border border-[#C8782A]/20 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#C8782A]/30 bg-[#FAF5EE]/50"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50"
                 />
               </div>
 
               {assignError && (
-                <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2">
+                <p className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2">
                   {assignError}
                 </p>
               )}
@@ -804,7 +783,7 @@ export default function CouponManagementPage() {
               <div className="flex gap-2 pt-1">
                 <button
                   onClick={() => setAssigningCoupon(null)}
-                  className="flex-1 py-3 rounded-xl border border-[#C8782A]/20 text-[#6B3A2A] text-sm font-medium hover:bg-[#FAF5EE] transition-all"
+                  className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-all"
                 >
                   Cancel
                 </button>
@@ -813,7 +792,7 @@ export default function CouponManagementPage() {
                   disabled={
                     assignLoading || !assignName.trim() || !assignEmail.trim()
                   }
-                  className="flex-1 py-3 rounded-xl bg-[#C8782A] hover:bg-[#B06820] disabled:opacity-60 text-white text-sm font-semibold transition-all"
+                  className="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white text-sm font-bold transition-all shadow-sm"
                 >
                   {assignLoading ? (
                     <span className="flex items-center justify-center gap-2">
@@ -832,14 +811,14 @@ export default function CouponManagementPage() {
 
       {/* Empty state if no package selected */}
       {!selectedPackage && (
-        <div className="bg-white rounded-2xl border border-[#C8782A]/10 px-8 py-16 text-center">
-          <div className="w-14 h-14 bg-[#C8782A]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <BarChart3 size={24} className="text-[#C8782A]" />
+        <div className="bg-white rounded-2xl border border-slate-200/80 px-8 py-16 text-center shadow-sm">
+          <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-emerald-600">
+            <BarChart3 size={24} />
           </div>
-          <h3 className="font-bold text-[#1C1C1C] text-lg mb-2">
+          <h3 className="font-bold text-slate-900 text-lg mb-1">
             Select a Package
           </h3>
-          <p className="text-sm text-[#6B3A2A]/60 max-w-sm mx-auto">
+          <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto">
             Click on any package card above to view and manage its coupon codes.
           </p>
         </div>

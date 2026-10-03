@@ -55,9 +55,9 @@ export default function AdminLayout({
           : "Admin Panel";
 
   return (
-    <div className="min-h-screen bg-[#FAF5EE] flex">
+    <div className="min-h-screen bg-slate-50 flex">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex w-64 flex-col bg-white border-r border-[#C8782A]/10 fixed top-0 left-0 h-screen z-30">
+      <aside className="hidden lg:flex w-64 flex-col bg-white border-r border-slate-200/80 fixed top-0 left-0 h-screen z-30">
         <AdminSidebar adminEmail={adminEmail} onLogout={handleLogout} />
       </aside>
 

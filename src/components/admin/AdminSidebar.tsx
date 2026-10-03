@@ -99,20 +99,19 @@ export default function AdminSidebar({
   return (
     <div className="flex flex-col h-full bg-white">
       {/* Brand */}
-      <div className="h-20 px-5 border-b border-[#C8782A]/10 flex items-center">
+      <div className="h-20 px-5 border-b border-slate-200/80 flex items-center">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#C8782A] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-[#059669] flex items-center justify-center shadow-sm">
             <Shield size={17} className="text-white" />
           </div>
 
           <div>
-            <p className="text-[10px] font-black tracking-[0.18em] text-[#C8782A] uppercase">
+            <p className="text-[10px] font-black tracking-[0.18em] text-[#059669] uppercase">
               Admin
             </p>
 
             <p
-              className="text-base font-bold text-[#1C1C1C] leading-none mt-1"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="text-base font-extrabold text-slate-900 leading-none mt-0.5"
             >
               GetJobsCanada
             </p>
@@ -122,57 +121,57 @@ export default function AdminSidebar({
 
       {/* Overview Card */}
       <div className="px-4 pt-4">
-        <div className="rounded-2xl border border-[#C8782A]/10 bg-[#FAF5EE] p-4">
+        <div className="rounded-2xl border border-emerald-200/60 bg-emerald-50/60 p-4">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#C8782A]/60">
+              <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-emerald-700/70">
                 Coupons Overview
               </p>
               {statsLoading ? (
-                <div className="h-4 w-20 bg-[#EADFD2] rounded animate-pulse mt-1" />
+                <div className="h-4 w-20 bg-emerald-200/60 rounded animate-pulse mt-1" />
               ) : (
-                <h3 className="text-sm font-semibold text-[#1C1C1C] mt-1">
+                <h3 className="text-sm font-extrabold text-slate-900 mt-1">
                   Total — {totalCoupons}
                 </h3>
               )}
             </div>
 
-            <div className="w-8 h-8 rounded-xl bg-[#C8782A]/10 flex items-center justify-center">
-              <Ticket size={15} className="text-[#C8782A]" />
+            <div className="w-8 h-8 rounded-xl bg-[#059669]/10 flex items-center justify-center">
+              <Ticket size={15} className="text-[#059669]" />
             </div>
           </div>
 
           {/* Used / Unused row */}
           <div className="grid grid-cols-2 gap-2 mb-3">
-            <div className="bg-white rounded-xl p-2.5">
+            <div className="bg-white rounded-xl p-2.5 border border-slate-100">
               {statsLoading ? (
-                <div className="h-5 w-8 bg-[#EADFD2] rounded animate-pulse mb-1" />
+                <div className="h-5 w-8 bg-slate-100 rounded animate-pulse mb-1" />
               ) : (
-                <p className="text-lg font-bold text-[#C8782A]">{usedCoupons}</p>
+                <p className="text-lg font-extrabold text-[#059669]">{usedCoupons}</p>
               )}
-              <p className="text-[10px] text-[#6B3A2A]/60">Used</p>
+              <p className="text-[10px] text-slate-500 font-medium">Used</p>
             </div>
-            <div className="bg-white rounded-xl p-2.5">
+            <div className="bg-white rounded-xl p-2.5 border border-slate-100">
               {statsLoading ? (
-                <div className="h-5 w-8 bg-[#EADFD2] rounded animate-pulse mb-1" />
+                <div className="h-5 w-8 bg-slate-100 rounded animate-pulse mb-1" />
               ) : (
-                <p className="text-lg font-bold text-[#1C1C1C]">
+                <p className="text-lg font-extrabold text-slate-900">
                   {totalCoupons - usedCoupons}
                 </p>
               )}
-              <p className="text-[10px] text-[#6B3A2A]/60">Unused</p>
+              <p className="text-[10px] text-slate-500 font-medium">Unused</p>
             </div>
           </div>
 
           {/* Progress bar */}
           <div>
-            <div className="flex items-center justify-between text-[11px] text-[#6B3A2A]/60 mb-1">
+            <div className="flex items-center justify-between text-[11px] text-slate-500 font-medium mb-1">
               <span>Usage</span>
               <span>{statsLoading ? "..." : `${usagePercentage}%`}</span>
             </div>
-            <div className="h-1.5 bg-[#EADFD2] rounded-full overflow-hidden">
+            <div className="h-1.5 bg-emerald-100 rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#C8782A] rounded-full transition-all duration-700"
+                className="h-full bg-[#059669] rounded-full transition-all duration-700"
                 style={{ width: statsLoading ? "0%" : `${usagePercentage}%` }}
               />
             </div>
@@ -182,7 +181,7 @@ export default function AdminSidebar({
 
       {/* Navigation */}
       <nav className="flex-1 px-4 py-5">
-        <p className="px-3 mb-3 text-[10px] font-bold tracking-[0.18em] uppercase text-[#C8782A]/50">
+        <p className="px-3 mb-3 text-[10px] font-black tracking-[0.18em] uppercase text-slate-400">
           Workspace
         </p>
 
@@ -196,10 +195,10 @@ export default function AdminSidebar({
                 key={item.label}
                 href={item.href}
                 onClick={onClose}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all ${
                   isActive
-                    ? "bg-[#C8782A] text-white"
-                    : "text-[#6B3A2A]/75 hover:bg-[#FAF5EE] hover:text-[#C8782A]"
+                    ? "bg-[#059669] text-white shadow-sm"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-[#059669]"
                 }`}
               >
                 <item.icon size={17} />
@@ -207,7 +206,7 @@ export default function AdminSidebar({
                 <span>{item.label}</span>
 
                 {item.href === "#" && (
-                  <span className="ml-auto text-[9px] px-2 py-0.5 rounded-full bg-[#FAF5EE] text-[#C8782A] font-semibold">
+                  <span className="ml-auto text-[9px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 font-bold">
                     Soon
                   </span>
                 )}
@@ -218,18 +217,18 @@ export default function AdminSidebar({
       </nav>
 
       {/* Footer */}
-      <div className="p-3 border-t border-[#C8782A]/10">
-        <div className="flex items-center gap-3 p-2.5 rounded-xl bg-[#FAF5EE] mb-3">
-          <div className="w-10 h-10 rounded-xl bg-[#C8782A] flex items-center justify-center text-white text-sm font-bold">
+      <div className="p-3 border-t border-slate-200/80">
+        <div className="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100 mb-3">
+          <div className="w-10 h-10 rounded-xl bg-[#059669] flex items-center justify-center text-white text-sm font-extrabold shadow-sm">
             {(adminEmail?.charAt(0) || "A").toUpperCase()}
           </div>
 
           <div className="min-w-0">
-            <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-[#C8782A]/60">
+            <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-slate-400">
               Logged In As
             </p>
 
-            <p className="text-xs font-medium text-[#1C1C1C] truncate mt-0.5">
+            <p className="text-xs font-semibold text-slate-900 truncate mt-0.5">
               {adminEmail || "admin@getjobscanada.ca"}
             </p>
           </div>
@@ -237,7 +236,7 @@ export default function AdminSidebar({
 
         <button
           onClick={onLogout}
-          className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 transition-all text-sm font-medium"
+          className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 transition-all text-sm font-bold"
         >
           <LogOut size={15} />
           Logout

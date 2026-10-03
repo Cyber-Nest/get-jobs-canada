@@ -304,7 +304,7 @@ export default function AdminProfileModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 cursor-pointer"
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 cursor-pointer"
           />
 
           {/* Modal Content */}
@@ -314,15 +314,15 @@ export default function AdminProfileModal({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ ease: "easeOut", duration: 0.2 }}
-              className="relative bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-md mx-auto pointer-events-auto border border-[#C8782A]/10"
+              className="relative bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-md mx-auto pointer-events-auto border border-slate-200"
             >
               {/* Header */}
-              <div className="bg-gradient-to-r from-[#C8782A] to-[#B06820] px-6 py-5 flex justify-between items-center">
+              <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-5 flex justify-between items-center">
                 <div>
-                  <h3 className="text-white font-bold text-xl tracking-wide">
+                  <h3 className="text-white font-bold text-xl tracking-tight">
                     Admin Profile
                   </h3>
-                  <p className="text-white/80 text-xs mt-1 font-medium">
+                  <p className="text-white/80 text-xs mt-0.5 font-medium">
                     {step === "view" && `View credentials (Email changes: ${emailChangeCount}/3)`}
                     {step === "edit" && `Change email & password (Email changes: ${emailChangeCount}/3)`}
                     {step === "otp" && "Verify identity with verification code"}
@@ -357,17 +357,17 @@ export default function AdminProfileModal({
                         <div
                           className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                             isDone
-                              ? "bg-[#7A9E7E] text-white shadow-sm"
+                              ? "bg-emerald-600 text-white shadow-sm"
                               : isActive
-                                ? "bg-[#C8782A] text-white shadow-md"
-                                : "bg-[#C8782A]/10 text-[#6B3A2A]/40"
+                                ? "bg-emerald-600 text-white shadow-md ring-2 ring-emerald-600/30"
+                                : "bg-slate-100 text-slate-400"
                           }`}
                         >
                           {isDone ? <CheckCircle size={14} /> : stepNum}
                         </div>
                         {idx < 2 && (
                           <div
-                            className={`w-10 h-0.5 rounded-full mx-1 ${isDone ? "bg-[#7A9E7E]" : "bg-[#C8782A]/15"}`}
+                            className={`w-10 h-0.5 rounded-full mx-1 ${isDone ? "bg-emerald-600" : "bg-slate-200"}`}
                           />
                         )}
                       </div>
@@ -377,13 +377,13 @@ export default function AdminProfileModal({
 
                 {/* Inline Errors/Success */}
                 {error && (
-                  <div className="flex items-start gap-2.5 bg-red-50 border border-red-100 text-red-700 text-sm rounded-xl px-4 py-3 mb-4 animate-in fade-in duration-200 font-medium">
+                  <div className="flex items-start gap-2.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs sm:text-sm rounded-xl px-4 py-3 mb-4 animate-in fade-in duration-200 font-medium">
                     <AlertCircle size={16} className="flex-shrink-0 mt-0.5" />
                     <span>{error}</span>
                   </div>
                 )}
                 {success && (
-                  <div className="flex items-start gap-2.5 bg-green-50 border border-green-100 text-green-700 text-sm rounded-xl px-4 py-3 mb-4 animate-in fade-in duration-200 font-medium">
+                  <div className="flex items-start gap-2.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs sm:text-sm rounded-xl px-4 py-3 mb-4 animate-in fade-in duration-200 font-medium">
                     <CheckCircle size={16} className="flex-shrink-0 mt-0.5" />
                     <span>{success}</span>
                   </div>
@@ -394,7 +394,7 @@ export default function AdminProfileModal({
                   <div className="space-y-5">
                     <div className="space-y-4">
                       <div>
-                        <Label className="text-[#6B3A2A] font-bold text-sm tracking-wide">
+                        <Label className="text-slate-700 font-bold text-xs uppercase tracking-wider">
                           Current Admin Email
                         </Label>
                         <div className="relative mt-1.5">
@@ -402,14 +402,14 @@ export default function AdminProfileModal({
                             type="text"
                             value={email}
                             readOnly
-                            className="bg-[#FAF5EE]/40 border-[#C8782A]/10 h-11 text-sm rounded-xl font-medium focus-visible:ring-0 cursor-default"
+                            className="bg-slate-50 border-slate-200 h-11 text-sm rounded-xl font-semibold text-slate-900 focus-visible:ring-0 cursor-default"
                           />
-                          <User size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6B3A2A]/40" />
+                          <User size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                         </div>
                       </div>
 
                       <div>
-                        <Label className="text-[#6B3A2A] font-bold text-sm tracking-wide">
+                        <Label className="text-slate-700 font-bold text-xs uppercase tracking-wider">
                           Current Admin Password
                         </Label>
                         <div className="relative mt-1.5">
@@ -417,12 +417,12 @@ export default function AdminProfileModal({
                             type={showPassword ? "text" : "password"}
                             value={showPassword ? password : "••••••••"}
                             readOnly
-                            className="bg-[#FAF5EE]/40 border-[#C8782A]/10 h-11 text-sm rounded-xl font-medium focus-visible:ring-0 cursor-default pr-10"
+                            className="bg-slate-50 border-slate-200 h-11 text-sm rounded-xl font-semibold text-slate-900 focus-visible:ring-0 cursor-default pr-10"
                           />
                           <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6B3A2A]/40 hover:text-[#C8782A] transition-colors p-1"
+                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-1"
                           >
                             {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                           </button>
@@ -433,7 +433,7 @@ export default function AdminProfileModal({
                     <Button
                       onClick={() => setStep("edit")}
                       disabled={loading}
-                      className="w-full h-11 bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold rounded-xl shadow-md transition-all cursor-pointer mt-2"
+                      className="w-full h-11 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-sm transition-all cursor-pointer mt-2"
                     >
                       Change Credentials
                     </Button>
@@ -446,11 +446,11 @@ export default function AdminProfileModal({
                     <div className="space-y-4">
                       <div>
                         <div className="flex justify-between items-center">
-                          <Label className="text-[#6B3A2A] font-bold text-sm tracking-wide">
+                          <Label className="text-slate-700 font-bold text-xs uppercase tracking-wider">
                             New Admin Email
                           </Label>
                           {emailChangeCount >= 3 && (
-                            <span className="text-xs font-semibold text-red-500 bg-red-50 px-2 py-0.5 rounded-md border border-red-100 animate-pulse">
+                            <span className="text-[10px] font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200 animate-pulse">
                               Limit reached (3/3)
                             </span>
                           )}
@@ -462,13 +462,13 @@ export default function AdminProfileModal({
                             onChange={(e) => setNewEmail(e.target.value)}
                             placeholder="new-admin@email.com"
                             disabled={emailChangeCount >= 3}
-                            className="border-[#C8782A]/20 focus-visible:ring-[#C8782A]/30 h-11 text-sm rounded-xl font-medium disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200"
+                            className="border-slate-200 focus-visible:ring-emerald-500 focus-visible:border-emerald-500 h-11 text-sm rounded-xl font-medium disabled:bg-slate-100 disabled:text-slate-400"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <Label className="text-[#6B3A2A] font-bold text-sm tracking-wide">
+                        <Label className="text-slate-700 font-bold text-xs uppercase tracking-wider">
                           New Admin Password
                         </Label>
                         <div className="relative mt-1.5">
@@ -477,12 +477,12 @@ export default function AdminProfileModal({
                             value={newPassword === "••••••••" ? "" : newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             placeholder="Enter new password (leave empty to keep current)"
-                            className="border-[#C8782A]/20 focus-visible:ring-[#C8782A]/30 h-11 text-sm rounded-xl font-medium pr-10"
+                            className="border-slate-200 focus-visible:ring-emerald-500 focus-visible:border-emerald-500 h-11 text-sm rounded-xl font-medium pr-10"
                           />
                           <button
                             type="button"
                             onClick={() => setShowNewPassword(!showNewPassword)}
-                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6B3A2A]/40 hover:text-[#C8782A] transition-colors p-1"
+                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-1"
                           >
                             {showNewPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                           </button>
@@ -500,14 +500,14 @@ export default function AdminProfileModal({
                           setNewPassword(password);
                         }}
                         disabled={loading}
-                        className="flex-1 h-11 border-[#C8782A]/20 text-[#6B3A2A] hover:bg-[#FAF5EE]/60 hover:text-black rounded-xl"
+                        className="flex-1 h-11 border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl font-semibold"
                       >
                         Cancel
                       </Button>
                       <Button
                         onClick={handleSendOTP}
                         disabled={loading}
-                        className="flex-1 h-11 bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold rounded-xl shadow-md transition-all cursor-pointer"
+                        className="flex-1 h-11 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-sm transition-all cursor-pointer"
                       >
                         {loading ? (
                           <span className="flex items-center gap-2 justify-center">
@@ -525,11 +525,11 @@ export default function AdminProfileModal({
                 {/* OTP VERIFICATION MODE */}
                 {step === "otp" && (
                   <div className="space-y-5 animate-in fade-in duration-300">
-                    <div className="text-center bg-[#FAF5EE]/60 rounded-2xl py-3.5 px-4 border border-[#C8782A]/10">
-                      <p className="text-xs font-semibold text-[#6B3A2A]/70">
-                        A 6-digit OTP code was sent to the old email:
+                    <div className="text-center bg-slate-50 rounded-2xl py-3.5 px-4 border border-slate-200">
+                      <p className="text-xs font-semibold text-slate-500">
+                        A 6-digit OTP code was sent to your current email:
                       </p>
-                      <p className="text-sm font-bold text-[#C8782A] break-all mt-1">
+                      <p className="text-xs sm:text-sm font-bold text-emerald-600 break-all mt-1">
                         {email}
                       </p>
                     </div>
@@ -544,30 +544,30 @@ export default function AdminProfileModal({
                         <InputOTPGroup>
                           <InputOTPSlot
                             index={0}
-                            className="border-[#C8782A]/20 focus:border-[#C8782A] w-11 h-12 text-base rounded-l-xl"
+                            className="border-slate-200 focus:border-emerald-500 w-11 h-12 text-base rounded-l-xl"
                           />
                           <InputOTPSlot
                             index={1}
-                            className="border-[#C8782A]/20 focus:border-[#C8782A] w-11 h-12 text-base"
+                            className="border-slate-200 focus:border-emerald-500 w-11 h-12 text-base"
                           />
                           <InputOTPSlot
                             index={2}
-                            className="border-[#C8782A]/20 focus:border-[#C8782A] w-11 h-12 text-base rounded-r-xl"
+                            className="border-slate-200 focus:border-emerald-500 w-11 h-12 text-base rounded-r-xl"
                           />
                         </InputOTPGroup>
-                        <InputOTPSeparator className="text-[#C8782A]/40 mx-1" />
+                        <InputOTPSeparator className="text-slate-400 mx-1" />
                         <InputOTPGroup>
                           <InputOTPSlot
                             index={3}
-                            className="border-[#C8782A]/20 focus:border-[#C8782A] w-11 h-12 text-base rounded-l-xl"
+                            className="border-slate-200 focus:border-emerald-500 w-11 h-12 text-base rounded-l-xl"
                           />
                           <InputOTPSlot
                             index={4}
-                            className="border-[#C8782A]/20 focus:border-[#C8782A] w-11 h-12 text-base"
+                            className="border-slate-200 focus:border-emerald-500 w-11 h-12 text-base"
                           />
                           <InputOTPSlot
                             index={5}
-                            className="border-[#C8782A]/20 focus:border-[#C8782A] w-11 h-12 text-base rounded-r-xl"
+                            className="border-slate-200 focus:border-emerald-500 w-11 h-12 text-base rounded-r-xl"
                           />
                         </InputOTPGroup>
                       </InputOTP>
@@ -576,9 +576,9 @@ export default function AdminProfileModal({
                     {/* Resend button / countdown */}
                     <div className="text-center min-h-[24px]">
                       {otpCountdown > 0 ? (
-                        <p className="text-xs font-semibold text-[#6B3A2A]/50">
+                        <p className="text-xs font-semibold text-slate-500">
                           Resend code in{" "}
-                          <span className="font-bold text-[#6B3A2A]">
+                          <span className="font-bold text-slate-800">
                             {otpCountdown}s
                           </span>
                         </p>
@@ -587,7 +587,7 @@ export default function AdminProfileModal({
                           type="button"
                           onClick={handleResendOTP}
                           disabled={loading}
-                          className="inline-flex items-center gap-1.5 text-xs text-[#C8782A] hover:text-[#B06820] font-bold transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1.5 text-xs text-emerald-600 hover:text-emerald-700 font-bold transition-colors cursor-pointer"
                         >
                           <RefreshCw
                             size={12}
@@ -600,13 +600,13 @@ export default function AdminProfileModal({
 
                     {/* Dev OTP Box */}
                     {devOtp && (
-                      <div className="bg-[#FAF5EE]/80 border border-[#C8782A]/15 rounded-2xl p-3 text-center">
-                        <p className="text-[10px] font-bold text-[#C8782A] uppercase tracking-wider mb-0.5">
+                      <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3 text-center">
+                        <p className="text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-0.5">
                           🛠️ Dev Mode Auto-OTP
                         </p>
-                        <p className="text-xs text-[#6B3A2A]/70 font-medium">
+                        <p className="text-xs text-amber-800 font-medium">
                           OTP:{" "}
-                          <span className="text-[#C8782A] font-mono text-sm font-bold tracking-wider">
+                          <span className="text-amber-900 font-mono text-sm font-bold tracking-wider">
                             {devOtp}
                           </span>
                         </p>
@@ -622,14 +622,14 @@ export default function AdminProfileModal({
                           setOtp("");
                         }}
                         disabled={loading}
-                        className="flex-1 h-11 border-[#C8782A]/20 text-[#6B3A2A] hover:bg-[#FAF5EE]/60 rounded-xl"
+                        className="flex-1 h-11 border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl font-semibold"
                       >
                         Back
                       </Button>
                       <Button
                         onClick={handleVerifyAndUpdate}
                         disabled={loading || otp.length < 6}
-                        className="flex-1 h-11 bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold rounded-xl shadow-md transition-all cursor-pointer"
+                        className="flex-1 h-11 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-sm transition-all cursor-pointer"
                       >
                         {loading ? (
                           <span className="flex items-center gap-2 justify-center">
