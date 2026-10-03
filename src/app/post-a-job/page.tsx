@@ -1439,7 +1439,7 @@ function PostAJobContent() {
                         Remote / Hybrid available
                       </span>
                     </label>
-                    <label className="flex items-center gap-3 cursor-pointer">
+                    {/* <label className="flex items-center gap-3 cursor-pointer">
                       <Switch
                         checked={indigenous}
                         onCheckedChange={setIndigenous}
@@ -1448,7 +1448,7 @@ function PostAJobContent() {
                       <span className="text-sm text-slate-800 font-extrabold">
                         Indigenous-owned organization
                       </span>
-                    </label>
+                    </label> */}
                   </div>
                 </div>
               </div>
