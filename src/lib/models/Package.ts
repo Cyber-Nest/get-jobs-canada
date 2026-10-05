@@ -9,7 +9,7 @@ export interface IPackage extends Document {
   features: string[];
   highlight: boolean;      // visual: highlighted card (Deluxe)
   darkVariant: boolean;    // visual: dark card (Unlimited)
-  order: number;           // display order
+  order: number;           // display order.
   credits: number;         // actual job posting credits assigned on purchase
   expiryDays: number;      // package validity duration in days
   unlimitedJobs: boolean;  // whether this plan offers unlimited postings
