@@ -56,10 +56,12 @@ export async function GET(request: NextRequest) {
 
     // Search Filter
     if (search?.trim()) {
+      const safeSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       query.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { company: { $regex: search, $options: "i" } },
-        { descriptionHtml: { $regex: search, $options: "i" } },
+        { title: { $regex: safeSearch, $options: "i" } },
+        { company: { $regex: safeSearch, $options: "i" } },
+        { category: { $regex: safeSearch, $options: "i" } },
+        { descriptionHtml: { $regex: safeSearch, $options: "i" } },
       ];
     }
 
@@ -95,18 +97,26 @@ export async function GET(request: NextRequest) {
 
         jobId: job.jobId || null,
 
-        title: job.title,
+        title: job.title || "",
 
-        company: job.company,
+        company: job.company || "",
+
+        city: job.city || "",
+
+        province: job.province || "",
 
         location:
           job.location || [job.city, job.province].filter(Boolean).join(", "),
 
-        salary: job.salary && job.salaryType ? `${job.salary}` : "",
+        salary: job.salary && job.salaryType ? `${job.salary}` : job.salary || "",
 
-        employmentType: job.employmentType,
+        salaryType: job.salaryType || "hour",
 
-        nocCode: job.nocCode,
+        employmentType: job.employmentType || "",
+
+        category: job.category || "",
+
+        nocCode: job.nocCode || "",
 
         experience: formattedExperience,
 
@@ -117,13 +127,27 @@ export async function GET(request: NextRequest) {
               ? "Immediate"
               : job.startDate === "1week"
                 ? "Within 1 week"
-                : job.startDate,
+                : job.startDate || "",
 
-        postDate: job.postDate,
+        descriptionHtml: job.descriptionHtml || job.description || "",
+
+        requirementsHtml: job.requirementsHtml || job.requirements || "",
+
+        contactEmail: job.contactEmail || "",
+
+        website: job.website || "",
+
+        postDate: job.postDate || job.postedAt || job.createdAt || new Date(),
 
         remote: Boolean(job.remote),
 
         indigenousOwned: Boolean(job.indigenousOwned),
+
+        indigenousPreference: Boolean(job.indigenousPreference),
+
+        package: job.package || "",
+
+        status: job.status || "active",
 
         vacancies: job.vacancies || null,
       };
