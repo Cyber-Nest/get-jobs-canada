@@ -165,17 +165,18 @@ function getLocation(job: Job): string {
 function filterJobs(jobs: Job[], filters: JobFilters): Job[] {
   return jobs.filter((job) => {
     if (filters.query) {
-      const query = filters.query.toLowerCase();
+      const query = filters.query.toLowerCase().trim();
       const matchesSearch =
-        job.title.toLowerCase().includes(query) ||
-        job.company.toLowerCase().includes(query) ||
-        job.category.toLowerCase().includes(query) ||
-        job.descriptionHtml?.toLowerCase().includes(query);
+        (job.title || "").toLowerCase().includes(query) ||
+        (job.company || "").toLowerCase().includes(query) ||
+        (job.category || "").toLowerCase().includes(query) ||
+        (job.descriptionHtml || "").toLowerCase().includes(query) ||
+        (getLocation(job) || "").toLowerCase().includes(query);
       if (!matchesSearch) return false;
     }
 
-    if (filters.province && job.province !== filters.province) return false;
-    if (filters.category && job.category !== filters.category) return false;
+    if (filters.province && (job.province || "") !== filters.province) return false;
+    if (filters.category && (job.category || "") !== filters.category) return false;
 
     if (filters.type) {
       const typeMap: Record<string, string> = {
@@ -185,7 +186,7 @@ function filterJobs(jobs: Job[], filters: JobFilters): Job[] {
         "Casual / Seasonal": "Casual",
         Volunteer: "Volunteer",
       };
-      const jobType = typeMap[job.employmentType] || job.employmentType;
+      const jobType = typeMap[job.employmentType || ""] || job.employmentType || "";
       if (jobType !== filters.type) return false;
     }
 
@@ -220,6 +221,8 @@ function JobCard({ job, viewMode = "grid" }: { job: Job; viewMode?: "grid" | "li
     <motion.div variants={fadeUp} className="w-full">
       <Link
         href={`/jobs/${job._id || job.id}`}
+        target="_blank"
+        rel="noopener noreferrer"
         className={`group relative block bg-white rounded-2xl border border-slate-200/80 hover:border-[#059669]/50 hover:shadow-md hover:shadow-emerald-950/5 transition-all duration-200 p-5 lg:p-6 overflow-hidden ${
           job.featured ? "ring-1 ring-[#059669]/30 bg-gradient-to-br from-emerald-50/20 via-white to-white" : ""
         } ${isList ? "flex flex-col md:flex-row md:items-center justify-between gap-6" : "flex flex-col justify-between h-full"}`}

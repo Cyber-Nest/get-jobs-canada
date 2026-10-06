@@ -841,36 +841,33 @@ function PostAJobContent() {
 
   if (submitted) {
     return (
-      <section className="bg-[#FAF5EE] min-h-[85vh] flex items-center justify-center py-20 px-4">
+      <section className="bg-gradient-to-b from-emerald-50/60 via-white to-slate-50/50 min-h-[85vh] flex items-center justify-center py-20 px-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="max-w-lg w-full bg-white rounded-3xl p-6 sm:p-10 border border-[#C8782A]/10 text-center shadow-lg mx-4"
+          className="max-w-lg w-full bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 text-center shadow-xl mx-4 relative overflow-hidden"
         >
-          <div className="w-16 h-16 rounded-full bg-[#7A9E7E]/15 flex items-center justify-center mx-auto mb-6">
-            <CheckCircle size={32} className="text-[#7A9E7E]" />
+          <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-[#059669] border border-emerald-100 flex items-center justify-center mx-auto mb-6 shadow-xs">
+            <CheckCircle size={32} className="text-[#059669]" />
           </div>
-          <h1
-            className="text-2xl sm:text-3xl font-bold text-[#1C1C1C] mb-3"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">
             Posting Submitted!
           </h1>
-          <p className="text-[#6B3A2A]/70 leading-relaxed mb-2">
-            Thank you, <strong>{contactName}</strong> from{" "}
-            <strong>{company}</strong>. Your job posting for{" "}
-            <strong>{title}</strong> has been received.
+          <p className="text-slate-600 leading-relaxed mb-6 text-sm sm:text-base font-medium">
+            Thank you, <strong className="text-slate-900 font-bold">{contactName}</strong> from{" "}
+            <strong className="text-slate-900 font-bold">{company}</strong>. Your job posting for{" "}
+            <strong className="text-[#059669] font-bold">{title}</strong> has been received.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
             <Link href="/employers/dashboard" className="w-full sm:w-auto">
-              <Button className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold px-8 w-full sm:w-auto">
+              <Button className="bg-[#059669] hover:bg-[#047857] text-white font-extrabold px-8 rounded-2xl h-11 shadow-md w-full sm:w-auto">
                 Employer Dashboard
               </Button>
             </Link>
             <Button
               variant="outline"
-              className="border-[#C8782A]/30 text-[#6B3A2A] hover:bg-[#C8782A]/5 hover:text-black w-full sm:w-auto"
+              className="border-slate-200 text-slate-700 hover:bg-emerald-50 hover:text-[#059669] hover:border-emerald-200 font-bold rounded-2xl h-11 w-full sm:w-auto"
               onClick={() => {
                 setSubmitted(false);
                 setServerError("");

@@ -456,6 +456,42 @@ function getLocation(job: JobDetail): string {
   return parts.join(", ") || job.location || "Canada";
 }
 
+function formatDate(postDate?: string | Date): string {
+  if (!postDate) return "Recently posted";
+  const date = new Date(postDate);
+  if (isNaN(date.getTime())) return "Recently posted";
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function getExpiryDate(expiresAt?: string | Date, postDate?: string | Date, runDays?: string): string {
+  if (expiresAt) {
+    const d = new Date(expiresAt);
+    if (!isNaN(d.getTime())) {
+      return d.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
+    }
+  }
+  if (postDate && runDays) {
+    const d = new Date(postDate);
+    if (!isNaN(d.getTime())) {
+      d.setDate(d.getDate() + Number(runDays));
+      return d.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      });
+    }
+  }
+  return "Open until filled";
+}
+
 function calculateClosingDate(postDate?: string | Date, runDays?: string): string {
   if (!postDate || !runDays) return "Open until filled";
   const closingDate = new Date(postDate);
@@ -734,12 +770,12 @@ export default function JobDetailPage() {
               </div>
 
               {/* Closing Date Footer */}
-              <div className="pt-4 border-t border-white/20 text-[11px] text-emerald-100 font-medium flex items-center justify-between">
+              {/* <div className="pt-4 border-t border-white/20 text-[11px] text-emerald-100 font-medium flex items-center justify-between">
                 <span>Application Deadline:</span>
                 <span className="font-extrabold text-white">
                   {calculateClosingDate(job.postDate, job.runDays)}
                 </span>
-              </div>
+              </div> */}
             </div>
 
             {/* Employer Profile Card */}
@@ -806,6 +842,8 @@ export default function JobDetailPage() {
                     <Link
                       key={rj._id}
                       href={`/jobs/${rj._id || rj.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="group block p-3.5 rounded-2xl bg-slate-50/70 border border-slate-200/60 hover:border-[#059669]/40 hover:bg-white transition-all duration-200"
                     >
                       <div className="flex items-start justify-between gap-2">
@@ -908,17 +946,39 @@ export default function JobDetailPage() {
                   </div>
                 )}
 
-                {job.runDays && (
+                {/* {job.runDays && (
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-[#059669] flex items-center justify-center shadow-xs">
                       <Clock size={16} />
                     </div>
                     <div>
-                      <span className="text-[11px] text-slate-400 font-bold block">Listing Duration</span>
+                      <span className="text-[11px] text-slate-400 font-bold block uppercase tracking-wider">Listing Duration</span>
                       <span className="text-xs font-bold text-slate-800">{job.runDays} Days Active</span>
                     </div>
                   </div>
-                )}
+                )} */}
+
+                {/* Posted Date */}
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-[#059669] flex items-center justify-center shadow-xs">
+                    <Calendar size={16} />
+                  </div>
+                  <div>
+                    <span className="text-[11px] text-slate-400 font-bold block uppercase tracking-wider">Posted Date</span>
+                    <span className="text-xs font-bold text-slate-800">{formatDate(job.postDate || job.postedAt)}</span>
+                  </div>
+                </div>
+
+                {/* Expiry Date */}
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-rose-50 border border-rose-200/80 text-rose-600 flex items-center justify-center shadow-xs">
+                    <Calendar size={16} />
+                  </div>
+                  <div>
+                    <span className="text-[11px] text-rose-400 font-extrabold block uppercase tracking-wider">Expiry Date</span>
+                    <span className="text-xs font-extrabold text-rose-600">{getExpiryDate(job.expiresAt, job.postDate || job.postedAt, job.runDays)}</span>
+                  </div>
+                </div>
               </div>
             </div>
 

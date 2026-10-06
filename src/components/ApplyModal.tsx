@@ -91,32 +91,29 @@ export default function ApplyModal({ jobId, jobTitle, company, onClose }: ApplyM
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 16 }}
         transition={{ duration: 0.3 }}
-        className="bg-white rounded-3xl w-full max-w-lg border border-[#C8782A]/10 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+        className="bg-white rounded-3xl w-full max-w-lg border border-slate-200/80 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
       >
         {submitted ? (
           /* ── Success ─────────────────────────────────────────────── */
           <div className="p-8 text-center">
-            <div className="w-14 h-14 rounded-full bg-[#7A9E7E]/15 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle size={28} className="text-[#7A9E7E]" />
+            <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto mb-4 text-[#059669]">
+              <CheckCircle size={28} className="text-[#059669]" />
             </div>
-            <h3
-              className="text-xl font-bold text-[#1C1C1C] mb-2"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
+            <h3 className="text-xl font-extrabold text-slate-900 mb-2">
               Application Submitted!
             </h3>
-            <p className="text-[#6B3A2A]/70 text-sm mb-2">
-              Your application for <strong>{jobTitle}</strong> at <strong>{company}</strong> has been received.
+            <p className="text-slate-600 text-sm mb-2 font-medium">
+              Your application for <strong className="text-slate-900">{jobTitle}</strong> at <strong className="text-slate-900">{company}</strong> has been received.
             </p>
-            <p className="text-[#6B3A2A]/50 text-xs mb-6">
-              You can track your application status in your{' '}
-              <a href="/dashboard/seeker" className="text-[#C8782A] underline hover:no-underline">
+            <p className="text-slate-400 text-xs mb-6">
+              You can track your application status in your{" "}
+              <a href="/dashboard/seeker" className="text-[#059669] font-bold underline hover:no-underline">
                 Job Seeker Dashboard
               </a>.
             </p>
             <Button
               onClick={onClose}
-              className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold w-full"
+              className="bg-[#059669] hover:bg-[#047857] text-white font-extrabold rounded-2xl w-full h-11"
             >
               Back to Job Listing
             </Button>
@@ -124,26 +121,23 @@ export default function ApplyModal({ jobId, jobTitle, company, onClose }: ApplyM
         ) : !isAuthenticated ? (
           /* ── Not logged in ───────────────────────────────────────── */
           <div className="p-8 text-center">
-            <div className="w-14 h-14 rounded-full bg-[#C8782A]/10 flex items-center justify-center mx-auto mb-4">
-              <AlertCircle size={28} className="text-[#C8782A]" />
+            <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto mb-4 text-[#059669]">
+              <AlertCircle size={28} className="text-[#059669]" />
             </div>
-            <h3
-              className="text-xl font-bold text-[#1C1C1C] mb-2"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
+            <h3 className="text-xl font-extrabold text-slate-900 mb-2">
               Sign In to Apply
             </h3>
-            <p className="text-[#6B3A2A]/70 text-sm mb-6">
+            <p className="text-slate-600 text-sm mb-6 font-medium">
               You need an account to apply for jobs and track your applications.
             </p>
             <div className="flex flex-col gap-3">
               <a href="/login">
-                <Button className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold w-full">
+                <Button className="bg-[#059669] hover:bg-[#047857] text-white font-extrabold rounded-2xl w-full h-11">
                   Sign In
                 </Button>
               </a>
               <a href="/register?type=jobseeker">
-                <Button variant="outline" className="w-full border-[#C8782A]/30 text-[#6B3A2A]">
+                <Button variant="outline" className="w-full border-slate-200 text-slate-700 hover:bg-emerald-50 hover:text-[#059669] font-bold rounded-2xl h-11">
                   Create an Account
                 </Button>
               </a>
@@ -152,20 +146,17 @@ export default function ApplyModal({ jobId, jobTitle, company, onClose }: ApplyM
         ) : (
           /* ── Form ────────────────────────────────────────────────── */
           <>
-            <div className="flex items-center justify-between px-7 py-5 border-b border-[#C8782A]/10 bg-[#FAF5EE] flex-shrink-0">
+            <div className="flex items-center justify-between px-7 py-5 border-b border-slate-100 bg-slate-50/70 flex-shrink-0">
               <div>
-                <h3
-                  className="font-bold text-[#1C1C1C]"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
+                <h3 className="font-extrabold text-slate-900 text-base">
                   Apply for this Role
                 </h3>
-                <p className="text-xs text-[#6B3A2A]/60 mt-0.5">{jobTitle} · {company}</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">{jobTitle} · {company}</p>
               </div>
               <button
                 type="button"
                 onClick={onClose}
-                className="text-[#6B3A2A]/40 hover:text-[#C8782A] transition-colors p-1 rounded-lg hover:bg-[#C8782A]/10"
+                className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-xl hover:bg-slate-200/60"
                 aria-label="Close"
               >
                 <X size={18} />
@@ -174,7 +165,7 @@ export default function ApplyModal({ jobId, jobTitle, company, onClose }: ApplyM
 
             <form onSubmit={handleSubmit} className="p-7 flex flex-col gap-5 overflow-y-auto">
               {serverError && (
-                <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3">
+                <div className="flex items-center gap-2 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold rounded-2xl px-4 py-3">
                   <AlertCircle size={14} className="flex-shrink-0" />
                   {serverError}
                 </div>
@@ -182,22 +173,22 @@ export default function ApplyModal({ jobId, jobTitle, company, onClose }: ApplyM
 
               {/* Cover Letter */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-[#6B3A2A]">
-                  Cover Letter <span className="text-[#6B3A2A]/40 font-normal">(optional)</span>
+                <label className="text-xs font-extrabold text-slate-700 uppercase tracking-wider">
+                  Cover Letter <span className="text-slate-400 font-normal lowercase">(optional)</span>
                 </label>
                 <textarea
                   value={coverLetter}
                   onChange={(e) => setCoverLetter(e.target.value)}
                   placeholder="Briefly introduce yourself and why you're a great fit for this role…"
                   rows={5}
-                  className="w-full rounded-xl border border-[#C8782A]/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#C8782A]/30 resize-none text-[#1C1C1C] placeholder:text-[#6B3A2A]/30"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs font-medium text-slate-900 focus:bg-white focus:border-[#059669] focus:outline-none focus:ring-2 focus:ring-[#059669]/20 resize-none placeholder:text-slate-400 transition-all"
                 />
               </div>
 
               {/* Resume Upload */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium text-[#6B3A2A]">
-                  Resume <span className="text-[#6B3A2A]/40 font-normal">(optional · PDF or Word, max 5 MB)</span>
+                <label className="text-xs font-extrabold text-slate-700 uppercase tracking-wider">
+                  Resume <span className="text-slate-400 font-normal lowercase">(optional · PDF or Word, max 5 MB)</span>
                 </label>
                 <input
                   ref={fileRef}
@@ -207,13 +198,13 @@ export default function ApplyModal({ jobId, jobTitle, company, onClose }: ApplyM
                   className="hidden"
                 />
                 {resumeFile ? (
-                  <div className="flex items-center gap-3 p-3 rounded-xl border border-[#7A9E7E]/30 bg-[#7A9E7E]/5">
-                    <FileText size={18} className="text-[#7A9E7E] flex-shrink-0" />
-                    <span className="text-sm text-[#1C1C1C] truncate flex-1">{resumeFile.name}</span>
+                  <div className="flex items-center gap-3 p-3 rounded-2xl border border-emerald-200 bg-emerald-50/60">
+                    <FileText size={18} className="text-[#059669] flex-shrink-0" />
+                    <span className="text-xs font-bold text-slate-900 truncate flex-1">{resumeFile.name}</span>
                     <button
                       type="button"
                       onClick={() => { setResumeFile(null); if (fileRef.current) fileRef.current.value = ''; }}
-                      className="text-[#6B3A2A]/40 hover:text-red-500 transition-colors"
+                      className="text-slate-400 hover:text-rose-600 transition-colors"
                     >
                       <X size={14} />
                     </button>
@@ -222,7 +213,7 @@ export default function ApplyModal({ jobId, jobTitle, company, onClose }: ApplyM
                   <button
                     type="button"
                     onClick={() => fileRef.current?.click()}
-                    className="flex items-center gap-2.5 p-3 rounded-xl border-2 border-dashed border-[#C8782A]/20 hover:border-[#C8782A]/40 hover:bg-[#FAF5EE] transition-all text-sm text-[#6B3A2A]/60 hover:text-[#C8782A]"
+                    className="flex items-center justify-center gap-2.5 p-3.5 rounded-2xl border-2 border-dashed border-slate-200 hover:border-[#059669]/50 hover:bg-emerald-50/40 transition-all text-xs font-bold text-slate-600 hover:text-[#059669] cursor-pointer"
                   >
                     <Upload size={16} />
                     Click to upload your resume
@@ -230,14 +221,14 @@ export default function ApplyModal({ jobId, jobTitle, company, onClose }: ApplyM
                 )}
               </div>
 
-              <p className="text-xs text-[#6B3A2A]/50 leading-relaxed">
+              <p className="text-[11px] text-slate-400 leading-relaxed font-medium">
                 By applying you agree to GetJobsCanada's privacy policy. Your information is shared only with the hiring employer.
               </p>
 
               <Button
                 type="submit"
                 disabled={loading || uploading}
-                className="bg-[#C8782A] hover:bg-[#B06820] text-white font-semibold w-full mt-1 disabled:opacity-60"
+                className="bg-[#059669] hover:bg-[#047857] text-white font-extrabold rounded-2xl h-11 w-full mt-1 disabled:opacity-60 shadow-md"
               >
                 {loading || uploading ? (
                   <span className="flex items-center gap-2">

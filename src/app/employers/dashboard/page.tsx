@@ -1378,7 +1378,7 @@ export default function EmployerDashboard() {
                     <JobCard
                       key={job._id}
                       job={job}
-                      onView={() => setViewJob(job)}
+                      onView={() => window.open(`/jobs/${job._id}`, "_blank")}
                       onEdit={() => handleEdit(job._id)}
                       onDelete={() => setJobToDelete(job)}
                       onStatusChange={handleStatusChange}

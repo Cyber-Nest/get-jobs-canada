@@ -133,7 +133,7 @@ function NewJobCard({ job }: { job: JobCardProps }) {
   return (
     <motion.div variants={fadeUp} whileHover={{ y: -5 }}>
       <div
-        onClick={() => router.push(`/jobs/${job._id}`)}
+        onClick={() => window.open(`/jobs/${job._id}`, "_blank")}
         className="group relative bg-white rounded-3xl border border-slate-200/90 hover:border-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-950/10 transition-all duration-300 p-6 cursor-pointer flex flex-col justify-between h-full overflow-hidden"
       >
         <div>
@@ -977,103 +977,7 @@ export default function HomePage() {
       </section>
 
       {/* ── 5. PROVINCIAL & REGIONAL HIRING HUBS (VISUAL CARDS) ──────────── */}
-      {/* <section className="bg-slate-900 text-white py-16 lg:py-24 border-y border-slate-800">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-left mb-12 max-w-3xl"
-          >
-            <motion.div
-              variants={fadeUp}
-              className="inline-flex items-center gap-2.5 p-1 pr-4 rounded-full bg-slate-800 border border-slate-700 shadow-xs mb-3"
-            >
-              <span className="bg-[#059669] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider leading-none">
-                REGIONAL DIRECTORY
-              </span>
-              <span className="text-xs font-semibold text-slate-300 leading-none">
-                Job Hubs by Province & Territory
-              </span>
-            </motion.div>
-
-            <motion.h2
-              variants={fadeUp}
-              className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight"
-            >
-              Explore Canadian Job Hubs
-            </motion.h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-            {[
-              {
-                prov: "Ontario",
-                cities: "Toronto, Ottawa, Mississauga, Hamilton",
-                count: "18,400+ Active Roles",
-                href: "/jobs?search=Ontario",
-              },
-              {
-                prov: "British Columbia",
-                cities: "Vancouver, Victoria, Kelowna, Surrey",
-                count: "12,100+ Active Roles",
-                href: "/jobs?search=British+Columbia",
-              },
-              {
-                prov: "Alberta",
-                cities: "Calgary, Edmonton, Red Deer, Lethbridge",
-                count: "9,800+ Active Roles",
-                href: "/jobs?search=Alberta",
-              },
-              {
-                prov: "Quebec",
-                cities: "Montreal, Quebec City, Laval, Gatineau",
-                count: "7,600+ Active Roles",
-                href: "/jobs?search=Quebec",
-              },
-              {
-                prov: "Atlantic Canada",
-                cities: "Halifax, St. John's, Fredericton, Charlottetown",
-                count: "4,500+ Active Roles",
-                href: "/jobs?search=Halifax",
-              },
-              {
-                prov: "Prairies & Territories",
-                cities: "Winnipeg, Regina, Saskatoon, Whitehorse, Yellowknife",
-                count: "5,200+ Active Roles",
-                href: "/jobs?search=Winnipeg",
-              },
-            ].map((region) => (
-              <Link
-                key={region.prov}
-                href={region.href}
-                className="group bg-slate-950 border border-slate-800 rounded-3xl p-6 hover:border-emerald-500/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-extrabold text-[#059669] uppercase tracking-wider">
-                      {region.prov}
-                    </span>
-                    <ArrowUpRight size={18} className="text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                  </div>
-
-                  <h3 className="font-extrabold text-white text-xl mb-2">
-                    {region.prov} Employment Hub
-                  </h3>
-                  <p className="text-slate-400 text-xs font-medium mb-4">
-                    Key Cities: {region.cities}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-slate-800/80 text-xs font-bold text-emerald-400">
-                  {region.count}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section> */}
+      {/*  */}
 
       {/* ── 6. DUAL COMMUNITY PORTAL (FOR CANDIDATES & EMPLOYERS) ─────────── */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-16 lg:py-24">
